@@ -29,7 +29,7 @@
             <ul class="list">
                 <li class="header">MAIN NAVIGATION</li>
                 <li>
-                    <a href="<?php echo base_url('user');?>">
+                    <a href="<?php echo base_url('admin');?>">
                         <i class="material-icons">face</i>
                         <span>Home</span>
                     </a>

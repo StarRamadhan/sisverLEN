@@ -15,8 +15,8 @@
             }else{
             // $url=base_url('user');
             // redirect($url);
-            $this->load->model('User_model');
-            $this->load->library('form_validation');
+            // $this->load->model('User_model');
+            // $this->load->library('form_validation');
         }
       }
 
@@ -27,10 +27,11 @@
           $datafield=$this->User_model->get_field();//panggil ke modell
 
            $data = array(
-             'content'=>'user/user/user_list',
-             'sidebar'=>'user/sidebar',
-             'css'=>'user/user/css',
-             'js'=>'user/user/js',
+             'content'=>'user/user/content',
+             'navbar'=>'user/user/navbar',
+             'sidebar'=>'user/user/sidebar',
+             // 'css'=>'user/user/css',
+             // 'js'=>'user/user/js',
              'datauser'=>$datauser,
              'datafield'=>$datafield,
              'module'=>'user',
@@ -43,8 +44,10 @@
 
         public function create(){
            $data = array(
-             'content'=>'user/user/user_form',
-             'sidebar'=>'user/sidebar',
+             'content'=>'user/user/content',
+             'navbar'=>'user/user/navbar',
+             'sidebar'=>'user/user/sidebar',
+
              'action'=>'user/user/create_action',
              'module'=>'user',
              'titlePage'=>'user',

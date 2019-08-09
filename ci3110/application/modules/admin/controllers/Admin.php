@@ -7,27 +7,53 @@ class Admin extends MY_Controller{
   {
     parent::__construct();
     //Codeigniter : Write Less Do More
-    $this->load->model(array('Dbs'));
-    // if($this->session->userdata('status')!='login'){
-    //   redirect(base_url('login'));
-    // }
-    // if($this->session->userdata('role')!=1){
-    //   redirect(redirect($_SERVER['HTTP_REFERER']));
-    // }
+
+    if($this->session->userdata('masuk')!=TRUE){
+      echo "Gak boleh masuk";
+      //redirect(base_url('login'));
+    }
+    if($this->session->userdata('akses')!='admin'){
+      //redirect(redirect($_SERVER['HTTP_REFERER']));
+      echo "Anda tidak punya wewenang disini";
+    }
+
+    $this->load->model(array('Admin_model'));
+
   }
 
-  function index()
+  public function index()
   {
 
-    $data = array(
-      'contain_view' => 'admin/home_v',
-      'sidebar'=>'admin/sidebar',//Ini buat menu yang ditampilkan di module admin {DIKIRIM KE TEMPLATE}
-      'css'=>'admin/assets/css',//Ini buat kirim css dari page nya  {DIKIRIM KE TEMPLATE}
-      'script'=>'admin/assets/script',//ini buat javascript apa aja yang di load di page {DIKIRIM KE TEMPLATE}
-      'titlePage'=>'HOME',//Ini Judul Page untuk tiap halaman
-     );
-    // $this->load->view('home_v', $data);
-    $this->template->load($data);//pake sistem template, semua view yang di module berupa body saja
-  }
+    $datauser=$this->Admin_model->get_all();//panggil ke modell
+    $datafield=$this->Admin_model->get_field();//panggil ke modell
 
+     $data = array(
+       'content'=>'admin/content',
+       'navbar'=>'admin/navbar',
+       'sidebar'=>'admin/sidebar',
+       // 'css'=>'user/user/css',
+       // 'js'=>'user/user/js',
+       'datauser'=>$datauser,
+       'datafield'=>$datafield,
+       'module'=>'user',
+       'titlePage'=>'user',
+       'controller'=>'user'
+      );
+    $this->template->load($data);
+  }
+  public function create(){
+    $datauser=$this->User_model->get_all();//panggil ke modell
+    $datafield=$this->User_model->get_field();//panggil ke modell
+     $data = array(
+       'content' => 'admin/content',
+       'sidebar'=>'admin/sidebar',//Ini buat menu yang ditampilkan di module admin {DIKIRIM KE TEMPLATE}
+       'navbar'=>'admin/navbar',
+
+       'action'=>'admin/create_action',
+       'module'=>'admin',
+       'titlePage'=>'admin',
+       'controller'=>'admin'
+      );
+    $this->template->load($data);
+  }
 }
