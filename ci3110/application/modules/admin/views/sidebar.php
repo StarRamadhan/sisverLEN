@@ -4,7 +4,7 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="../../images/user.png" width="48" height="48" alt="User" />
+                <img src="<?php echo base_url()?>images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -18,7 +18,7 @@
                         <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                        <li><a href="<?php echo base_url('login/logout');?>"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,8 +30,8 @@
                 <li class="header">MAIN NAVIGATION</li>
                 <li>
                     <a href="<?php echo base_url('admin');?>">
-                        <i class="material-icons">face</i>
-                        <span>Home</span>
+                      <i class="fas fa-home"></i> &nbsp Home
+                        <!-- <span>Home</span> -->
                     </a>
                 </li>
             </ul>

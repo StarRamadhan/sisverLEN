@@ -7,7 +7,7 @@
     {
 
         public $table = 'user';
-        public $id = 'id_user';
+        public $id = 'user_id';
         public $order = 'DESC';
 
         function __construct()
@@ -23,7 +23,6 @@
         }
 
         //get field
-
         function get_field(){
           $table=$this->table;
           $sql=$this->db->query("SELECT * FROM `$table`"); //ganti * untuk custom field yang ditampilkan pada table

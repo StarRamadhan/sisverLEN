@@ -35,7 +35,7 @@
                                     <?php endforeach; ?>
                                     <td>
                                       <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url().$module?>/user/edit/<?php echo $d->id_user ?>">Edit</a>
-                                      <a class="modalDelete" data-toggle="modal" data-target="#responsive-modal" value="<?php echo $d->id_user ?>" href="#"><i class="feather icon-trash"></i></a>
+                                      <a class="modalDelete" data-toggle="modal" data-target="#responsive-modal" value="<?php echo $d->user_id ?>" href="#"><i class="feather icon-trash"></i></a>
                                     </td>
 
                                   </tr>

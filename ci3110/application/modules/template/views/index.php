@@ -15,14 +15,19 @@
     <!-- Bootstrap Core Css -->
     <link href="<?php echo base_url()?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
+    <!-- Font Awesome5 -->
+    <link href="<?php echo base_url()?>plugins/font-awesome5/css/all.min.css"/>
+
     <!-- Waves Effect Css -->
     <link href="<?php echo base_url()?>plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
     <link href="<?php echo base_url()?>plugins/animate-css/animate.css" rel="stylesheet" />
 
-    <!--
-     DataTable Css -->
+    <!-- Bootstrap Select Css -->
+    <link href="<?php echo base_url()?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+    <!-- DataTable Css -->
     <link href="<?php echo base_url()?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom Css -->
@@ -94,6 +99,9 @@
     <!-- Bootstrap Core Js -->
     <script src="<?php echo base_url()?>plugins/bootstrap/js/bootstrap.js"></script>
 
+    <!-- Font Awesome5 -->
+    <script src="<?php echo base_url()?>plugins/font-awesome5/js/all.min.js"></script>
+
     <!-- Select Plugin Js -->
     <script src="<?php echo base_url()?>plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
@@ -103,6 +111,17 @@
     <!-- Waves Effect Plugin Js -->
     <script src="<?php echo base_url()?>plugins/node-waves/waves.js"></script>
 
+    <!-- Autosize Plugin Js -->
+    <script src="<?php echo base_url()?>plugins/autosize/autosize.js"></script>
+
+    <!-- FORM EDIT -->
+    <!-- Jquery Validation Plugin Css -->
+    <script src="<?php echo base_url()?>plugins/jquery-validation/jquery.validate.js"></script>
+    <!-- FORM Validation Plugin Css -->
+    <script src="<?php echo base_url()?>js/pages/forms/form-validation.js"></script>
+
+
+    <!-- TABEL -->
     <!-- Jquery DataTable Plugin Js -->
     <script src="<?php echo base_url()?>plugins/jquery-datatable/jquery.dataTables.js"></script>
     <script src="<?php echo base_url()?>plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
@@ -116,10 +135,14 @@
 
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
+    <!-- <script src="<?php //echo base_url()?>js/pages/forms/basic-form-elements.js"></script> -->
     <script src="<?php echo base_url()?>js/pages/tables/jquery-datatable.js"></script>
 
     <!-- Demo Js -->
     <script src="<?php echo base_url()?>js/demo.js"></script>
+
+
+
 </body>
 
 </html>

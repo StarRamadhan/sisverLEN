@@ -7,7 +7,7 @@ class Login extends MY_Controller{
   {
     parent::__construct();
     //Codeigniter : Write Less Do More
-    $this->load->model(array('Dbs'));
+    //$this->load->model(array('Dbs'));
     $this->load->model('login_model');
   }
 
@@ -32,34 +32,34 @@ class Login extends MY_Controller{
     if($cek_user->num_rows() > 0){ //jika login sebagai Admin
       $data=$cek_user->row_array();
       $this->session->set_userdata('masuk',TRUE);
-      echo $data['jabatan_user'];
+      echo $data['position'];
 
-      if ($data['jabatan_user']=='admin') {//AKSES KE Admin
+      if ($data['position']=='admin') {//AKSES KE Admin
         $this->session->set_userdata('akses','admin');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
         redirect(base_url('admin/'));
-      }if ($data['jabatan_user']=='manager') {//AKSES KE Manager
+      }if ($data['position']=='manager') {//AKSES KE Manager
         $this->session->set_userdata('akses','manager');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
         redirect(base_url('user/'));
-      }if ($data['jabatan_user']=='jurnal') {//AKSES KE Jurnal
+      }if ($data['position']=='jurnal') {//AKSES KE Jurnal
         $this->session->set_userdata('akses','jurnal');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
         redirect('page');
-      }if ($data['jabatan_user']=='verifikasi1') {//AKSES KE ADMIN
+      }if ($data['position']=='verifikasi1') {//AKSES KE ADMIN
         $this->session->set_userdata('akses','verifikasi');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
         redirect('page');
-      }if ($data['jabatan_user']=='verifikasi2') {//AKSES KE Verifikasi 2
+      }if ($data['position']=='verifikasi2') {//AKSES KE Verifikasi 2
         $this->session->set_userdata('akses','verifikasi');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
         redirect('page');
-      }if ($data['jabatan_user']=='verifikasi3') {//AKSES KE Verifikasi 3
+      }if ($data['position']=='verifikasi3') {//AKSES KE Verifikasi 3
         $this->session->set_userdata('akses','verifikasi');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);

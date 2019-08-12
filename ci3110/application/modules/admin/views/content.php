@@ -8,6 +8,15 @@
                             BASIC EXAMPLE
                         </h2>
                     </div>
+                    <?php if($this->session->flashdata('flashMessage')) {
+                      $flashMessage=$this->session->flashdata('flashMessage');?>
+                      <div class="alert alert-info alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          Success Update Data !!
+                      </div>
+                      <?php
+                      //echo "<script>alert('$flashMessage')</script>";
+                     } ?>
                     <div class="body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
@@ -16,7 +25,7 @@
                                     <?php foreach ($datafield as $d): ?>
                                       <th><?php echo str_replace("_"," ",$d) ?></th>
                                     <?php endforeach; ?>
-                                    <th>aksi</th>
+                                    <th>Action</th>
                                 </tr>
                               </thead>
                               <tfoot>
@@ -34,8 +43,7 @@
                                       <td><?php echo $d->$df ?></td>
                                     <?php endforeach; ?>
                                     <td>
-                                      <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url().$module?>/user/edit/<?php echo $d->id_user ?>">Edit</a>
-                                      <a class="modalDelete" data-toggle="modal" data-target="#responsive-modal" value="<?php echo $d->id_user ?>" href="#"><i class="feather icon-trash"></i></a>
+                                      <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>admin/edit/<?php echo $d->user_id ?>">Edit</a>
                                     </td>
 
                                   </tr>
