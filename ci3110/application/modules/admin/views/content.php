@@ -3,11 +3,18 @@
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
+
                     <div class="header">
-                        <h2>
-                            BASIC EXAMPLE
-                        </h2>
+                      <div class="row clearfix">
+                              <div class="col-md-6">
+                                <h2> Data User </h2>
+                              </div>
+                              <div class="col-md-6 text-right">
+                                <a href="<?php echo site_url('admin/create');?>" type="button" class="btn bg-blue waves-effect">Add New Users</a>
+                              </div>
+                          </div>
                     </div>
+
                     <?php if($this->session->flashdata('flashMessage')) {
                       $flashMessage=$this->session->flashdata('flashMessage');?>
                       <div class="alert alert-info alert-dismissible" role="alert">

@@ -41,7 +41,7 @@ class Admin extends MY_Controller{
     //$datauser=$this->Admin_model->get_all();//panggil ke modell
     //$datafield=$this->Admin_model->get_field();//panggil ke modell
      $data = array(
-       'content' => 'admin/content',
+       'content' => 'admin/create_data',
        'sidebar'=>'admin/sidebar',//Ini buat menu yang ditampilkan di module admin {DIKIRIM KE TEMPLATE}
        'navbar'=>'admin/navbar',
 
@@ -71,14 +71,14 @@ class Admin extends MY_Controller{
 
   public function create_action()
       {
-        $this->_rules();
-
-        if ($this->form_validation->run() == FALSE) {
+        // $this->_rules();
+        //
+        // if ($this->form_validation->run() == FALSE) {
             $this->create();
-        } else {
+        // } else {
               $data = array(
       					'username' => $this->input->post('username',TRUE),
-      					'password_enc' => $this->input->post('password_enc',TRUE),
+      					'password_enc' => md5($this->input->post('password_enc',TRUE)),
       					'password' => $this->input->post('password',TRUE),
       					'position' => $this->input->post('position',TRUE),
       					'phone_number' => $this->input->post('phone_number',TRUE),
@@ -87,8 +87,8 @@ class Admin extends MY_Controller{
 
               $this->Admin_model->insert($data);
               $this->session->set_flashdata('message', 'Create Record Success');
-              redirect(site_url('user/user'));
-            }
+              redirect(site_url('admin'));
+            //}
       }
 
   public function update_action()

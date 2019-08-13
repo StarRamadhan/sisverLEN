@@ -83,6 +83,7 @@
                               ?>
                           </select>
                         </div>
+                        <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>admin/">BACK</a>
                         <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                     </form>
                 </div>
