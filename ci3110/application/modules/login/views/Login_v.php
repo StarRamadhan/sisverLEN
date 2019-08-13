@@ -24,11 +24,6 @@
     <!-- Custom Css -->
     <link href="<?php echo base_url()?>css/style.css" rel="stylesheet">
 
-    <?php if($this->session->flashdata('flashMessage')) {
-      $flashMessage=$this->session->flashdata('flashMessage');
-      echo "<script>alert('$flashMessage')</script>";
-     } ?>
-
 </head>
 
 <body class="login-page">
@@ -66,14 +61,24 @@
                             <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
                         </div>
                     </div>
-                    <div class="row m-t-15 m-b--20">
+
+                    <?php if($this->session->flashdata('flashMessage')) {
+                      $flashMessage=$this->session->flashdata('flashMessage');?>
+                      <div class="alert alert-warning alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          Username or Password is Incorrect !!
+                      </div>
+                      <?php
+                      //echo "<script>alert('$flashMessage')</script>";
+                     } ?>
+                    <!-- <div class="row m-t-15 m-b--20">
                         <div class="col-xs-6">
                             <a href="sign-up.html">Register Now!</a>
                         </div>
                         <div class="col-xs-6 align-right">
                             <a href="forgot-password.html">Forgot Password?</a>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
