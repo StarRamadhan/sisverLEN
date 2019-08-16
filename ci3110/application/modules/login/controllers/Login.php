@@ -49,22 +49,30 @@ class Login extends MY_Controller{
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
         redirect('page');
-      }if ($data['position']=='verifikasi1') {//AKSES KE ADMIN
-        $this->session->set_userdata('akses','verifikasi');
+      }if (($data['position']=='verifikasi1') && ($data['position']=='verifikasi1') && ($data['position']=='verifikasi1')) {//AKSES KE Verifikasi
+        if ($data['position'] == 'verifikasi1') {
+          $this->session->set_userdata('akses','verifikasi1');
+        }elseif ($data['position'] == 'verifikasi2') {
+          $this->session->set_userdata('akses','verifikasi2');
+        }elseif ($data['position'] == 'verifikasi3') {
+          $this->session->set_userdata('akses','verifikasi3');
+        }
+        //$this->session->set_userdata('akses','verifikasi');
         $this->session->set_userdata('ses_id',$data['id_user']);
         $this->session->set_userdata('ses_nama',$data['nama_user']);
-        redirect('verifikasi1/');
-      }if ($data['position']=='verifikasi2') {//AKSES KE Verifikasi 2
-        $this->session->set_userdata('akses','verifikasi');
-        $this->session->set_userdata('ses_id',$data['id_user']);
-        $this->session->set_userdata('ses_nama',$data['nama_user']);
-        redirect('page');
-      }if ($data['position']=='verifikasi3') {//AKSES KE Verifikasi 3
-        $this->session->set_userdata('akses','verifikasi');
-        $this->session->set_userdata('ses_id',$data['id_user']);
-        $this->session->set_userdata('ses_nama',$data['nama_user']);
-        redirect('page');
+        redirect(base_url('verifikasi/'));
       }
+      // if ($data['position']=='verifikasi2') {//AKSES KE Verifikasi 2
+      //   $this->session->set_userdata('akses','verifikasi');
+      //   $this->session->set_userdata('ses_id',$data['id_user']);
+      //   $this->session->set_userdata('ses_nama',$data['nama_user']);
+      //   redirect('page');
+      // }if ($data['position']=='verifikasi3') {//AKSES KE Verifikasi 3
+      //   $this->session->set_userdata('akses','verifikasi');
+      //   $this->session->set_userdata('ses_id',$data['id_user']);
+      //   $this->session->set_userdata('ses_nama',$data['nama_user']);
+      //   redirect('page');
+      // }
       //Kalo login berhasil eksekusi disini
       // $ket = "berhasil login";
       // echo $ket;

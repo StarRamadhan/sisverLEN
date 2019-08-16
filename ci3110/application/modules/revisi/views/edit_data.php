@@ -6,20 +6,20 @@
                     <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="operator_id" value="<?php echo $dataedit->operator_id?>"readonly required>
-                                <label class="form-label">User Id</label>
+                                <input type="text" class="form-control" name="operator_id" value="<?php echo $dataedit->kode_ver?>"readonly required>
+                                <label class="form-label">Kode Ver</label>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="username" value="<?php echo $dataedit->username?>"required>
-                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" value="<?php echo $dataedit->keterangan?>"required>
+                                <label class="form-label">Keterangan</label>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" class="form-control" name="password" value="<?php echo $dataedit->password?>"required>
-                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" value="<?php echo $dataedit->user?>"required>
+                                <label class="form-label">User</label>
                             </div>
                         </div>
                         <div class="form-group form-float">

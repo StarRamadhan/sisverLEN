@@ -6,7 +6,7 @@
                     <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="operator_id" value="<?php echo $dataedit->operator_id?>"readonly required>
+                                <input type="text" class="form-control" name="user_id" value="<?php echo $dataedit->user_id?>"readonly required>
                                 <label class="form-label">User Id</label>
                             </div>
                         </div>
@@ -65,31 +65,7 @@
                                 <label class="form-label">Phone Number</label>
                             </div>
                         </div>
-                        <div class="form-group form-float">
-                          <select class="form-control show-tick" name="status" required>
-                              <option value="">-- Select Role --</option>
-                              <?php
-                                if ($dataedit->status == 'active') {
-                                    echo "<option value='active' selected>Active</option>";
-                                }else{
-                                  echo "<option value='active'>Active</option>";
-                                }
-                                if ($dataedit->status == 'nonactive') {
-                                    echo "<option value='nonactive' selected>Nonactive</option>";
-                                }else{
-                                  echo "<option value='nonactive'>Nonactive</option>";
-                                }
-                              ?>
-                          </select>
-                        </div>
-                        <div class="row clearfix">
-                          <div class="col-md-6 text-left">
-                            <a class='btn btn-default waves-effect waves-blue' type='button' href="<?php echo base_url()?>admin/">BACK</a>
-                          </div>
-                          <div class="col-md-6 text-right">
-                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
-                          </div>
-                        </div>
+                        <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                     </form>
                 </div>
             </div>

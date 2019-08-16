@@ -53,8 +53,8 @@ class Admin extends MY_Controller{
     $this->template->load($data);
   }
 
-  public function edit($user_id){
-    $dataedit=$this->Admin_model->get_by_id($user_id);
+  public function edit($operator_id){
+    $dataedit=$this->Admin_model->get_by_id($operator_id);
      $data = array(
        'content'=>'admin/edit_data',
        'sidebar'=>'admin/sidebar',
@@ -71,32 +71,27 @@ class Admin extends MY_Controller{
 
   public function create_action()
       {
-        // $this->_rules();
-        //
-        // if ($this->form_validation->run() == FALSE) {
-            $this->create();
-        // } else {
-              $data = array(
-      					'username' => $this->input->post('username',TRUE),
-      					'password_enc' => md5($this->input->post('password_enc',TRUE)),
-      					'password' => $this->input->post('password',TRUE),
-      					'position' => $this->input->post('position',TRUE),
-      					'phone_number' => $this->input->post('phone_number',TRUE),
-                'status' => $this->input->post('status',TRUE),
-              );
+        $this->create();
+        $data = array(
+					'username' => $this->input->post('username',TRUE),
+					'password_enc' => md5($this->input->post('password_enc',TRUE)),
+					'password' => $this->input->post('password',TRUE),
+					'position' => $this->input->post('position',TRUE),
+					'phone_number' => $this->input->post('phone_number',TRUE),
+          'status' => $this->input->post('status',TRUE),
+        );
 
-              $this->Admin_model->insert($data);
-              $this->session->set_flashdata('message', 'Create Record Success');
-              redirect(site_url('admin'));
-            //}
+        $this->Admin_model->insert($data);
+        $this->session->set_flashdata('message', 'Create Record Success');
+        redirect(site_url('admin'));
       }
 
   public function update_action()
   {
-      // $this->_rules();
-      // if ($this->form_validation->run() == FALSE) {
-      //     $this->edit($this->input->post('user_id', TRUE));
-      // } else {
+      $this->_rules();
+      if ($this->form_validation->run() == FALSE) {
+          $this->edit($this->input->post('operator_id', TRUE));
+      } else {
           $data = array(
             'username' => $this->input->post('username',TRUE),
             'password_enc' => md5($this->input->post('password',TRUE)),
@@ -105,23 +100,23 @@ class Admin extends MY_Controller{
             'phone_number' => $this->input->post('phone_number',TRUE),
             'status' => $this->input->post('status',TRUE),
           );
-          $this->Admin_model->update($this->input->post('user_id', TRUE), $data);
+          $this->Admin_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');
           //echo "berhasil";
           redirect(base_url('admin'));
-      //}
+      }
   }
 
-  // public function _rules()
-  // {
-  //     $this->form_validation->set_rules('username', 'username', 'trim|required');
-  //     //$this->form_validation->set_rules('password_enc', 'password_enc', 'trim|required');
-  //     $this->form_validation->set_rules('password', 'password', 'trim|required');
-  //     $this->form_validation->set_rules('position', 'position', 'trim|required');
-  //     $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
-  //     $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
-  //
-  //     $this->form_validation->set_rules('user_id', 'user_id', 'trim');
-  //     $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-  // }
+  public function _rules()
+  {
+      $this->form_validation->set_rules('username', 'username', 'trim|required');
+      //$this->form_validation->set_rules('password_enc', 'password_enc', 'trim|required');
+      $this->form_validation->set_rules('password', 'password', 'trim|required');
+      $this->form_validation->set_rules('position', 'position', 'trim|required');
+      $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
+
+
+      $this->form_validation->set_rules('operator_id', 'operator_id', 'trim');
+      $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+  }
 }

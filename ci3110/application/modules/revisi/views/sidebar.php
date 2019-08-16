@@ -29,9 +29,13 @@
             <ul class="list">
                 <li class="header">MAIN NAVIGATION</li>
                 <li>
-                    <a href="<?php echo base_url('admin');?>">
+                    <a href="<?php echo base_url('verifikasi');?>">
                         <i class="material-icons">face</i>
                         <span>Home</span>
+                    </a>
+                    <a href="<?php echo base_url('revisi');?>">
+                        <i class="material-icons">face</i>
+                        <span>Revisi</span>
                     </a>
                 </li>
             </ul>

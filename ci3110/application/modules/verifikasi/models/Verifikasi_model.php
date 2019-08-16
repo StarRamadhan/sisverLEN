@@ -3,11 +3,11 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Admin_model extends CI_Model
+    class Verifikasi_model extends CI_Model
     {
 
-        public $table = 'operator';
-        public $id = 'operator_id';
+        public $table = 'dokumen';
+        public $id = 'No_Verifikasi';
         public $order = 'DESC';
 
         function __construct()
@@ -20,6 +20,12 @@
         {
             $this->db->order_by($this->id, $this->order);
             return $this->db->get($this->table)->result();
+        }
+
+        function get_data_verif(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->list_fields();
         }
 
         //get field

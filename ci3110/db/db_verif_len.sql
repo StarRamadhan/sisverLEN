@@ -21,60 +21,74 @@ USE `db_verif_len`;
 DROP TABLE IF EXISTS `dokumen`;
 
 CREATE TABLE `dokumen` (
-  `tanggal_masuk` date NOT NULL,
-  `nomor_dokumen` varchar(50) NOT NULL,
-  `keterangan` text NOT NULL,
-  `tanggal_out_verif` date NOT NULL,
-  `tanggal_out_jurnal` date DEFAULT NULL,
-  `tanggal_out_manager` date DEFAULT NULL,
-  `status_dok_jurnal` varchar(10) DEFAULT NULL,
-  `status_dok_manager` varchar(10) DEFAULT NULL,
-  `nilai` int(11) NOT NULL,
-  `no_revisi` int(5) DEFAULT NULL,
-  `id_user` int(15) NOT NULL,
-  PRIMARY KEY (`nomor_dokumen`),
-  KEY `id_user` (`id_user`),
-  CONSTRAINT `dokumen_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON UPDATE CASCADE
+  `No` int(11) DEFAULT NULL,
+  `Tanggal_Masuk` date NOT NULL,
+  `Kode_Ver` enum('LB','LK','LM','LN','PB','PP','UM','') NOT NULL,
+  `No_Verifikasi` varchar(50) NOT NULL,
+  `Keterangan` text,
+  `User` varchar(20) NOT NULL,
+  `Mata_Uang` varchar(10) NOT NULL,
+  `Jumlah` int(11) NOT NULL,
+  `Tgl_Out_Verif` date NOT NULL,
+  `Tgl_Out_Jurnal` date NOT NULL,
+  `Tgl_Out_Manager` date NOT NULL,
+  `Status_Dok_Jurnal` varchar(10) NOT NULL,
+  `Status_Dok_Manager` varchar(10) NOT NULL,
+  `No_Revisi` int(5) DEFAULT NULL,
+  `operator_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`No_Verifikasi`),
+  KEY `operator_id` (`operator_id`),
+  CONSTRAINT `dokumen_ibfk_1` FOREIGN KEY (`operator_id`) REFERENCES `operator` (`operator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `dokumen` */
+
+insert  into `dokumen`(`No`,`Tanggal_Masuk`,`Kode_Ver`,`No_Verifikasi`,`Keterangan`,`User`,`Mata_Uang`,`Jumlah`,`Tgl_Out_Verif`,`Tgl_Out_Jurnal`,`Tgl_Out_Manager`,`Status_Dok_Jurnal`,`Status_Dok_Manager`,`No_Revisi`,`operator_id`) values (NULL,'2019-07-01','LB','0001/LM/07/2019\r\n','BIAYA PD KE POLDA JABAR TGL 20-21 JUNI 2019\r\n','Cahya','RP',546000,'0000-00-00','2019-07-02','2019-07-03','','',NULL,NULL);
+
+/*Table structure for table `operator` */
+
+DROP TABLE IF EXISTS `operator`;
+
+CREATE TABLE `operator` (
+  `operator_id` int(15) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password_enc` varchar(60) NOT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `position` enum('manager','verifikasi1','verifikasi2','verifikasi3','jurnal','admin','guest') NOT NULL,
+  `phone_number` varchar(20) NOT NULL,
+  `status` enum('active','nonactive') NOT NULL,
+  PRIMARY KEY (`operator_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+/*Data for the table `operator` */
+
+insert  into `operator`(`operator_id`,`username`,`password_enc`,`password`,`position`,`phone_number`,`status`) values (1,'admin','3d2172418ce305c7d16d4b05597c6a59','22222','admin','89534060766422','active'),(2,'Ba','dbc4d84bfcfe2284ba11beffb853a8c4','4444','manager','0897954652154','active'),(3,'Admin','b59c67bf196a4758191e42f76670ceba','1111','admin','0849879879878','nonactive'),(4,'Junaidi','2be9bd7a3434f7038ca27d1918de58bd','3333','manager','0849879875852','nonactive'),(5,'Sumarnia','6074c6aa3488f3c2dddff2a7ca821aab','5555','verifikasi2','0899996645212','active'),(6,'Haniatuns','e9510081ac30ffa83f10b68cde1cac07','6666','verifikasi3','0812125487888','active'),(7,'star','827ccb0eea8a706c4c34a16891f84e7b','12345','verifikasi1','0897954652154','active'),(8,'tata','d41d8cd98f00b204e9800998ecf8427e','tata','verifikasi2','3333','active'),(9,'Ojan','d41d8cd98f00b204e9800998ecf8427e','ojan','manager','091823098102','active');
 
 /*Table structure for table `revisi` */
 
 DROP TABLE IF EXISTS `revisi`;
 
 CREATE TABLE `revisi` (
-  `no_dokumen` varchar(50) DEFAULT NULL,
-  `no_revisi` int(11) DEFAULT NULL,
-  `ket_revisi` text,
-  `tgl_revisi` date DEFAULT NULL,
-  `nilai_revisi` int(20) DEFAULT NULL,
-  `id_user` varchar(50) DEFAULT NULL,
-  `tgl_out_verif` date DEFAULT NULL,
-  KEY `no_dokumen` (`no_dokumen`),
-  CONSTRAINT `revisi_ibfk_1` FOREIGN KEY (`no_dokumen`) REFERENCES `dokumen` (`nomor_dokumen`)
+  `No` varchar(11) DEFAULT NULL,
+  `Tanggal_Masuk` date DEFAULT NULL,
+  `Kode_Ver` text,
+  `No_Verifikasi` varchar(50) DEFAULT NULL,
+  `Keterangan` text,
+  `User` varchar(20) DEFAULT NULL,
+  `Mata_Uang` varchar(10) DEFAULT NULL,
+  `Jumlah` int(11) DEFAULT NULL,
+  `Tgl_Out_Verif` date DEFAULT NULL,
+  `Tgl_Out_Jurnal` date DEFAULT NULL,
+  `Tgl_Out_Manager` date DEFAULT NULL,
+  `Status_Dok_Jurnal` varchar(10) DEFAULT NULL,
+  `Status_Dok_Manager` varchar(10) DEFAULT NULL,
+  `No_Revisi` int(5) DEFAULT NULL,
+  KEY `no_dokumen` (`No`),
+  KEY `No_Verifikasi` (`No_Verifikasi`),
+  CONSTRAINT `revisi_ibfk_1` FOREIGN KEY (`No_Verifikasi`) REFERENCES `dokumen` (`No_Verifikasi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `revisi` */
-
-/*Table structure for table `user` */
-
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
-  `id_user` int(15) NOT NULL AUTO_INCREMENT,
-  `nama_user` varchar(50) NOT NULL,
-  `password_user` varchar(50) NOT NULL,
-  `password2_user` varchar(20) DEFAULT NULL,
-  `jabatan_user` enum('manager','verifikasi1','verifikasi2','verifikasi3','jurnal','admin') NOT NULL,
-  `no_telp` varchar(20) NOT NULL,
-  `foto` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
-/*Data for the table `user` */
-
-insert  into `user`(`id_user`,`nama_user`,`password_user`,`password2_user`,`jabatan_user`,`no_telp`,`foto`) values (1,'Pak Agan','934B535800B1CBA8F96A5D72F72F1611','2222','manager','0895340607664','1.jpg'),(2,'Pak Amir','DBC4D84BFCFE2284BA11BEFFB853A8C4','4444','verifikasi1','0897954652154',NULL),(3,'admin','B59C67BF196A4758191E42F76670CEBA','1111','admin','0879585462157',NULL),(4,'Junaidi','2BE9BD7A3434F7038CA27D1918DE58BD','3333','jurnal','0849879875852',NULL),(5,'Sumarni','6074C6AA3488F3C2DDDFF2A7CA821AAB','5555','verifikasi2','0899996645212',NULL),(6,'Haniatun','E9510081AC30FFA83F10B68CDE1CAC07','6666','verifikasi3','0812125487888',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
