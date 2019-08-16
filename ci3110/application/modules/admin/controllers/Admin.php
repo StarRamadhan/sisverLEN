@@ -41,7 +41,7 @@ class Admin extends MY_Controller{
     //$datauser=$this->Admin_model->get_all();//panggil ke modell
     //$datafield=$this->Admin_model->get_field();//panggil ke modell
      $data = array(
-       'content' => 'admin/content',
+       'content' => 'admin/create_data',
        'sidebar'=>'admin/sidebar',//Ini buat menu yang ditampilkan di module admin {DIKIRIM KE TEMPLATE}
        'navbar'=>'admin/navbar',
 
@@ -53,8 +53,8 @@ class Admin extends MY_Controller{
     $this->template->load($data);
   }
 
-  public function edit($user_id){
-    $dataedit=$this->Admin_model->get_by_id($user_id);
+  public function edit($operator_id){
+    $dataedit=$this->Admin_model->get_by_id($operator_id);
      $data = array(
        'content'=>'admin/edit_data',
        'sidebar'=>'admin/sidebar',
@@ -71,30 +71,26 @@ class Admin extends MY_Controller{
 
   public function create_action()
       {
-        $this->_rules();
+        $this->create();
+        $data = array(
+					'username' => $this->input->post('username',TRUE),
+					'password_enc' => md5($this->input->post('password_enc',TRUE)),
+					'password' => $this->input->post('password',TRUE),
+					'position' => $this->input->post('position',TRUE),
+					'phone_number' => $this->input->post('phone_number',TRUE),
+          'status' => $this->input->post('status',TRUE),
+        );
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->create();
-        } else {
-              $data = array(
-      					'username' => $this->input->post('username',TRUE),
-      					'password_enc' => $this->input->post('password_enc',TRUE),
-      					'password' => $this->input->post('password',TRUE),
-      					'position' => $this->input->post('position',TRUE),
-      					'phone_number' => $this->input->post('phone_number',TRUE),
-              );
-
-              $this->Admin_model->insert($data);
-              $this->session->set_flashdata('message', 'Create Record Success');
-              redirect(site_url('user/user'));
-            }
+        $this->Admin_model->insert($data);
+        $this->session->set_flashdata('message', 'Create Record Success');
+        redirect(site_url('admin'));
       }
 
   public function update_action()
   {
       $this->_rules();
       if ($this->form_validation->run() == FALSE) {
-          $this->edit($this->input->post('user_id', TRUE));
+          $this->edit($this->input->post('operator_id', TRUE));
       } else {
           $data = array(
             'username' => $this->input->post('username',TRUE),
@@ -102,8 +98,9 @@ class Admin extends MY_Controller{
             'password' => $this->input->post('password',TRUE),
             'position' => $this->input->post('position',TRUE),
             'phone_number' => $this->input->post('phone_number',TRUE),
+            'status' => $this->input->post('status',TRUE),
           );
-          $this->Admin_model->update($this->input->post('user_id', TRUE), $data);
+          $this->Admin_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');
           //echo "berhasil";
           redirect(base_url('admin'));
@@ -119,7 +116,7 @@ class Admin extends MY_Controller{
       $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
 
 
-      $this->form_validation->set_rules('user_id', 'user_id', 'trim');
+      $this->form_validation->set_rules('operator_id', 'operator_id', 'trim');
       $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
   }
 }

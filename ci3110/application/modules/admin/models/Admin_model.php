@@ -6,8 +6,8 @@
     class Admin_model extends CI_Model
     {
 
-        public $table = 'user';
-        public $id = 'user_id';
+        public $table = 'operator';
+        public $id = 'operator_id';
         public $order = 'DESC';
 
         function __construct()
