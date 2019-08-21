@@ -8,6 +8,7 @@
 
         public $table = 'dokumen';
         public $id = 'No_Verifikasi';
+        public $tgl_masuk = 'Tanggal_Masuk';
         public $order = 'DESC';
 
         function __construct()
@@ -18,14 +19,35 @@
         // get all
         function get_all()
         {
-            $this->db->order_by($this->id, $this->order);
-            return $this->db->get($this->table)->result();
+            $table=$this->table;
+            $sql=$this->db->query("SELECT * From dokumen order by Tanggal_Masuk DESC");
+            return $sql->result();
+            // $this->db->order_by($this->tgl_masuk, $this->order);
+            // return $this->db->get($this->table)->result();
         }
 
         function get_data_verif(){
           $table=$this->table;
           $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->list_fields();
+          return $sql->result();
+        }
+
+        function get_last_num(){
+          $table=$this->table;
+          //$sql=$this->db->query("SELECT No from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT MAX(No) as maks from dokumen where  MONTH(Tanggal_Masuk)=MONTH(CURRENT_DATE) and YEAR(Tanggal_Masuk)=YEAR(CURRENT_DATE)");
+          return $sql->row();
+        }
+        function get_num_row($nownumber){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT COUNT(NO) AS nomor FROM dokumen WHERE NO=$nownumber"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql;
+        }
+
+        function get_last_date(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT Tanggal_Masuk from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->row();
         }
 
         //get field

@@ -7,17 +7,21 @@
                       <div class="row clearfix">
                             <div class="col-md-6 text-left">
                               <h2> Data User </h2>
+                              <!-- <p><?php
+                                //$sql=$this->db->query("SELECT * from dokumen order by Tanggal_Masuk DESC limit 1");
+
+                              ;?></p> -->
                             </div>
                             <div class="col-md-6 text-right">
                               <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
                             </div>
                         </div>
                     </div>
-                    <?php if($this->session->flashdata('flashMessage')) {
-                      $flashMessage=$this->session->flashdata('flashMessage');?>
+                    <?php if($this->session->flashdata('message')) {
+                      $flashMessage=$this->session->flashdata('message');?>
                       <div class="alert alert-info alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          Success Update Data !!
+                          Success Add New Data !!
                       </div>
                       <?php
                       //echo "<script>alert('$flashMessage')</script>";
@@ -105,14 +109,14 @@
                                         </div>
                                         <div class="modal-footer">
                                             <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                        </div>
+                                            <!-- <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                        </div> -->
 
                                         <?php
                                      //endforeach; ?>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
