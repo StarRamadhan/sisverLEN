@@ -13,7 +13,7 @@
                               ;?></p> -->
                             </div>
                             <div class="col-md-6 text-right">
-                              <a href="<?php echo base_url('jurnal/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                              <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
                             </div>
                         </div>
                     </div>
@@ -31,9 +31,6 @@
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                               <thead>
                                 <tr>
-                                    <!-- <?php foreach ($datafield as $d): ?>
-                                      <th><?php echo str_replace("_"," ",$d) ?></th>
-                                    <?php endforeach; ?> -->
                                     <th>Tanggal</th>
                                     <th>No Verifikasi</th>
                                     <th>Kode Ver</th>
@@ -44,14 +41,6 @@
                                     <th>Lokasi</th>
                                 </tr>
                               </thead>
-                              <!-- <tfoot>
-                                <tr>
-                                    <?php foreach ($datafield as $d): ?>
-                                      <th><?php echo str_replace("_"," ",$d) ?></th>
-                                    <?php endforeach; ?>
-                                    <th>aksi</th>
-                                </tr>
-                              </tfoot> -->
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
@@ -64,13 +53,11 @@
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
                                     <td>
                                       <?php
-                                          $id_dok = $d->No_Verifikasi;
-                                          $dok_jurnal = $d->Status_Dok_Jurnal;
-                                          $dok_manager = $d->Status_Dok_Manager;
-                                          if ($dok_jurnal=="pending") {
+                                          $lok_dokumen = $d->Lok_Dokumen;
+                                          if ($lok_dokumen=="jurnal") {
                                             $lokasi = "Jurnal";
                                             echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($dok_manager=="pending") {
+                                          }elseif ($lok_dokumen=="manager") {
                                             $lokasi = "Manager";
                                             echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }

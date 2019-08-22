@@ -53,21 +53,6 @@ class Admin extends MY_Controller{
     $this->template->load($data);
   }
 
-  public function edit($operator_id){
-    $dataedit=$this->Admin_model->get_by_id($operator_id);
-     $data = array(
-       'content'=>'admin/edit_data',
-       'sidebar'=>'admin/sidebar',
-       'navbar'=>'admin/navbar',
-       //'role'=>$this->Admin_model->gender_enums('user' , 'position' ),
-       'action'=>'admin/admin/update_action',
-       'dataedit'=>$dataedit,
-       'module'=>'admin',
-       'titlePage'=>'admin',
-       'controller'=>'admin'
-      );
-    $this->template->load($data);
-  }
 
   public function create_action()
       {
@@ -85,6 +70,22 @@ class Admin extends MY_Controller{
         $this->session->set_flashdata('message', 'Create Record Success');
         redirect(site_url('admin'));
       }
+
+  public function edit($operator_id){
+    $dataedit=$this->Admin_model->get_by_id($operator_id);
+    $data = array(
+      'content'=>'admin/edit_data',
+      'sidebar'=>'admin/sidebar',
+      'navbar'=>'admin/navbar',
+      //'role'=>$this->Admin_model->gender_enums('user' , 'position' ),
+      'action'=>'admin/admin/update_action',
+      'dataedit'=>$dataedit,
+      'module'=>'admin',
+      'titlePage'=>'admin',
+      'controller'=>'admin'
+    );
+    $this->template->load($data);
+  }
 
   public function update_action()
   {

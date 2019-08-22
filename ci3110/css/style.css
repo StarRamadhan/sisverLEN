@@ -5560,7 +5560,11 @@ fieldset[disabled] .form-control {
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   border-radius: 2px; }
-
+  .badge-pill {
+      padding-right: .6em;
+      padding-left: .6em;
+      border-radius: 10rem;
+  }
 .list-group-item {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;

@@ -37,7 +37,7 @@
     <link href="<?php echo base_url()?>css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-light-green">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -119,6 +119,7 @@
     <script src="<?php echo base_url()?>plugins/jquery-validation/jquery.validate.js"></script>
     <!-- FORM Validation Plugin Css -->
     <script src="<?php echo base_url()?>js/pages/forms/form-validation.js"></script>
+    <script src="<?php echo base_url()?>js/pages/ui/modals.js"></script>
 
 
     <!-- TABEL -->
@@ -142,7 +143,24 @@
 
     <!-- Demo Js -->
     <script src="<?php echo base_url()?>js/demo.js"></script>
+    <script>
+    $('li > a').click(function() {
+      $('li').removeClass('active');
+      $(this).parent().addClass('active');
+    });
+    </script>
+    <!-- <script>
+    jQuery(document).ready(function(){
 
+        jQuery('.li-trigger').click(function (event){
+            jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+            localStorage.setItem('clicked', 'yes');
+        });
+
+        if(localStorage.getItem('clicked')) {
+          jQuery('.li-trigger').click();
+        }
+    });</script> -->
 
 
 </body>

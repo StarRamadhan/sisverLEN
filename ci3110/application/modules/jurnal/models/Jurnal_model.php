@@ -3,14 +3,11 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Verifikasi_model extends CI_Model
+    class Jurnal_model extends CI_Model
     {
 
         public $table = 'dokumen';
         public $id = 'No_Verifikasi';
-
-        public $operator_id ='operator_id';
-        public $table_profil = 'operator';
         public $tgl_masuk = 'Tanggal_Masuk';
         public $order = 'DESC';
 
@@ -23,43 +20,37 @@
         function get_all()
         {
             $table=$this->table;
-            $sql=$this->db->query("SELECT * From dokumen order by Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT * FROM dokumen ORDER BY Tanggal_Masuk DESC");
             return $sql->result();
             // $this->db->order_by($this->tgl_masuk, $this->order);
             // return $this->db->get($this->table)->result();
         }
 
-        function get_data_verif(){
+        function get_data_jurnal(){
           $table=$this->table;
           $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
           return $sql->result();
         }
 
-        function get_last_num(){
-          $table=$this->table;
-          //$sql=$this->db->query("SELECT No from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
-          $sql=$this->db->query("SELECT MAX(No) as maks from dokumen where  MONTH(Tanggal_Masuk)=MONTH(CURRENT_DATE) and YEAR(Tanggal_Masuk)=YEAR(CURRENT_DATE)");
-          return $sql->row();
+        /////////////////////////////////////////////
+        function get_all_acc()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT * FROM dokumen WHERE Lok_Dokumen = 'manager'  ORDER BY Tanggal_Masuk DESC");
+            return $sql->result();
+            // $this->db->order_by($this->tgl_masuk, $this->order);
+            // return $this->db->get($this->table)->result();
         }
-        function get_num_row($nownumber){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT COUNT(NO) AS nomor FROM dokumen WHERE NO=$nownumber"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql;
+        /////////////////////////////////////////////
+        function get_all_not_acc()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT * FROM dokumen WHERE Lok_Dokumen = 'jurnal'  ORDER BY Tanggal_Masuk DESC");
+            return $sql->result();
+            // $this->db->order_by($this->tgl_masuk, $this->order);
+            // return $this->db->get($this->table)->result();
         }
-
-        function get_last_date(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT Tanggal_Masuk from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->row();
-        }
-
-        //get field
-        function get_field(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM `$table`"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->list_fields();
-        }
-
+        /////////////////////////////////////////////
         // get data by id
         function get_by_id($id)
         {

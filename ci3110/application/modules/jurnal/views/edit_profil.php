@@ -6,7 +6,7 @@
                     <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="user_id" value="<?php echo $dataedit->user_id?>"readonly required>
+                                <input type="text" class="form-control" name="operator_id" value="<?php echo $dataedit->operator_id?>"readonly required>
                                 <label class="form-label">User Id</label>
                             </div>
                         </div>

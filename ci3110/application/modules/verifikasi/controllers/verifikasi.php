@@ -29,6 +29,7 @@ class verifikasi extends MY_Controller{
     // $dataverif3=$this->Verifikasi_model->get_data_verif3();//panggil ke modell
 
      $data = array(
+//       'titleNavbar'=>'PT. LEN (PERSERO) - UNIT VERIFIKASI',
        'content'=>'verifikasi/content',
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
@@ -108,19 +109,19 @@ class verifikasi extends MY_Controller{
         $pk3 = date("m/Y");
         //$pk3 = date("m/Y", strtotime($lastdate->Tanggal_Masuk));
         $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
-        $statusdokumen = "aktif";
         //$pk2 =
         $data = array(
           'No' => $nownumber,
+          'operator_id' => $this->input->post('operator_id',TRUE),
           'Tanggal_Masuk' => $now,
+          'tgl_out_verif' => $now,
           'No_Verifikasi' => $primarykey,//$this->input->post('kode_ver',TRUE),
           //'No_Verifikasi' => $this->input->post('kode_ver',TRUE),
           'Kode_Ver' => $this->input->post('kode_ver',TRUE),
           'Mata_Uang' => $this->input->post('mata_uang',TRUE),
           'User' => $this->input->post('user',TRUE),
           'Keterangan' => $this->input->post('keterangan',TRUE),
-          'Jumlah' => $this->input->post('jumlah',TRUE),
-          'Status_Dokumen' => $statusdokumen,
+          'Jumlah' => $this->input->post('jumlah',TRUE)
           //'operator_id' => $this->input->post('')
         );
 
@@ -129,10 +130,10 @@ class verifikasi extends MY_Controller{
         redirect(base_url('verifikasi'));
       }
 
-  public function edit($no_verifikasi){
-    $dataedit=$this->Verifikasi_model->get_by_id($no_verifikasi);
+  public function edit_profil($operator_id){
+    $dataedit=$this->Verifikasi_model->get_by_id_profil($operator_id);
      $data = array(
-       'content'=>'verifikasi/edit_data',
+       'content'=>'verifikasi/edit_profil',
        'sidebar'=>'verifikasi/sidebar',
        'navbar'=>'verifikasi/navbar',
        //'role'=>$this->Verifikasi_model->gender_enums('user' , 'position' ),
@@ -149,10 +150,6 @@ class verifikasi extends MY_Controller{
 
   public function update_action()
   {
-      $this->_rules();
-      if ($this->form_validation->run() == FALSE) {
-          $this->edit($this->input->post('no_verifikasi', TRUE));
-      } else {
           $data = array(
             'username' => $this->input->post('username',TRUE),
             'password_enc' => md5($this->input->post('password',TRUE)),
@@ -160,11 +157,11 @@ class verifikasi extends MY_Controller{
             'position' => $this->input->post('position',TRUE),
             'phone_number' => $this->input->post('phone_number',TRUE),
           );
-          $this->Verifikasi_model->update($this->input->post('no_verifikasi', TRUE), $data);
+          $this->Verifikasi_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');
           //echo "berhasil";
           redirect(base_url('verifikasi'));
-      }
+
   }
 
   // public function _rules()

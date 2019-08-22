@@ -66,7 +66,7 @@ class Revisi extends MY_Controller{
       $pk2 = $this->input->post('kode_ver');
       $pk3 = substr($this->input->post('no_verifikasi'),-7);
       $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
-
+      $now = date('Y-m-d H:i:s');
           $data_dokumen = array(
             'kode_ver' =>$this->input->post('kode_ver',TRUE),
             'keterangan' => $this->input->post('keterangan',TRUE),
@@ -75,17 +75,17 @@ class Revisi extends MY_Controller{
             'mata_uang' => $this->input->post('mata_uang',TRUE),
             'jumlah' => $this->input->post('jumlah',TRUE),
 
-            'tgl_out_verif' => $this->input->post(""),
+            'tgl_out_verif' => $now,
             'tgl_out_jurnal' => $this->input->post(""),
             'tgl_out_manager' => $this->input->post(""),
             'status_dok_jurnal' => $this->input->post(""),
             'status_dok_manager' => $this->input->post(""),
-            'status_dokumen' => $this->input->post(""),
+            'status_dokumen' => $this->input->post("")
           );
 
           $revisi_selesai = "Selesai";
           $data = array(
-            'status_revisi' => $revisi_selesai
+            'status_revisi' => $revisi_selesai,
           );
 
           $this->Revisi_model->update_revisi($this->input->post('no', TRUE), $data);

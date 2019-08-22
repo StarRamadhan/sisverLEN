@@ -48,7 +48,7 @@ class Login extends MY_Controller{
         $this->session->set_userdata('akses','jurnal');
         $this->session->set_userdata('ses_id',$data['operator_id']);
         $this->session->set_userdata('ses_nama',$data['username']);
-        redirect('page');
+        redirect('jurnal/');
       }if (($data['position']=='verifikasi1') || ($data['position']=='verifikasi2') || ($data['position']=='verifikasi3')) {//AKSES KE Verifikasi
         if ($data['position'] == 'verifikasi1') {
           $this->session->set_userdata('akses','verifikasi1');

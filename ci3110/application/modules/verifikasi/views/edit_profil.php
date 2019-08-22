@@ -39,7 +39,7 @@
                                 if ($dataedit->position == 'jurnal') {
                                     echo "<option value='jurnal' selected>Journal</option>";
                                 }else{
-                                  echo "<option value='jurnal'>Journal</option>";
+                                  echo "<option value='journal'>Journal</option>";
                                 }
                                 if ($dataedit->position == 'verifikasi1') {
                                     echo "<option value='verifikasi1' selected>Verification 1</option>";
@@ -65,31 +65,7 @@
                                 <label class="form-label">Phone Number</label>
                             </div>
                         </div>
-                        <div class="form-group form-float">
-                          <select class="form-control show-tick" name="status" required>
-                              <option value="">-- Select Role --</option>
-                              <?php
-                                if ($dataedit->status == 'active') {
-                                    echo "<option value='active' selected>Active</option>";
-                                }else{
-                                  echo "<option value='active'>Active</option>";
-                                }
-                                if ($dataedit->status == 'nonactive') {
-                                    echo "<option value='nonactive' selected>Nonactive</option>";
-                                }else{
-                                  echo "<option value='nonactive'>Nonactive</option>";
-                                }
-                              ?>
-                          </select>
-                        </div>
-                        <div class="row clearfix">
-                          <div class="col-md-6 text-left">
-                            <a class='btn btn-default waves-effect waves-blue' type='button' href="<?php echo base_url()?>admin/">BACK</a>
-                          </div>
-                          <div class="col-md-6 text-right">
-                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
-                          </div>
-                        </div>
+                        <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                     </form>
                 </div>
             </div>

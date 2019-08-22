@@ -23,7 +23,7 @@
                               <option value='verifikasi2'>Verification 2</option>;
                               <option value='verifikasi3'>Verification 3</option>;
                               <option value='manager'>Manager</option>;
-                              <option value='journal'>Journal</option>;
+                              <option value='jurnal'>Journal</option>;
                               <option value='admin'>Admin</option>;
 
                       </select>
