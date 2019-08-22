@@ -4,90 +4,95 @@
 
                 <div class="body">
                     <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <input type="text" class="form-control" name="no" value="<?php echo $dataedit->No?>" required readonly>
+                              <label class="form-label">No Revisi</label>
+                          </div>
+                      </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="operator_id" value="<?php echo $dataedit->kode_ver?>"readonly required>
-                                <label class="form-label">Kode Ver</label>
+                                <input type="text" class="form-control" name="no_verifikasi" value="<?php echo $dataedit->No_Verifikasi?>" required readonly>
+                                <label class="form-label">No Dokumen</label>
                             </div>
                         </div>
+
+                        <div class="form-group form-float">
+                          <select class="form-control show-tick" name="kode_ver" required>
+                              <?php
+                                if ($dataedit->kode_ver == 'LB') {
+                                    echo "<option value='LB' selected>LB</option>";
+                                }else{
+                                  echo "<option value='LB'>LB</option>";
+                                }
+                                if ($dataedit->kode_ver == 'LK') {
+                                    echo "<option value='LK' selected>LK</option>";
+                                }else{
+                                  echo "<option value='LK'>LK</option>";
+                                }
+                                if ($dataedit->kode_ver == 'LM') {
+                                    echo "<option value='LM' selected>LM</option>";
+                                }else{
+                                  echo "<option value='LM'>LM</option>";
+                                }
+                                if ($dataedit->kode_ver == 'LN') {
+                                    echo "<option value='LN' selected>LN</option>";
+                                }else{
+                                  echo "<option value='LN'>LN</option>";
+                                }
+                                if ($dataedit->kode_ver == 'PB') {
+                                    echo "<option value='PB' selected>PB 2</option>";
+                                }else{
+                                  echo "<option value='PB'>PB</option>";
+                                }
+                                if ($dataedit->kode_ver == 'PP') {
+                                    echo "<option value='PP' selected>PP</option>";
+                                }else{
+                                  echo "<option value='PP'>PP</option>";
+                                }
+                                if ($dataedit->kode_ver == 'UM') {
+                                    echo "<option value='UM' selected>UM</option>";
+                                }else{
+                                  echo "<option value='UM'>UM</option>";
+                                }
+                              ?>
+                          </select>
+                        </div>
+
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="username" value="<?php echo $dataedit->keterangan?>"required>
+                                <input type="text" class="form-control" name="keterangan" value="<?php echo $dataedit->Keterangan?>" required>
                                 <label class="form-label">Keterangan</label>
                             </div>
                         </div>
+
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" class="form-control" name="password" value="<?php echo $dataedit->user?>"required>
+                                <input type="text" class="form-control" name="user" value="<?php echo $dataedit->User?>" required>
                                 <label class="form-label">User</label>
                             </div>
                         </div>
-                        <div class="form-group form-float">
-                          <select class="form-control show-tick" name="position" required>
-                              <option value="">-- Select Role --</option>
-                              <?php
-                                if ($dataedit->position == 'admin') {
-                                    echo "<option value='admin' selected>Admin</option>";
-                                }else{
-                                  echo "<option value='admin'>Admin</option>";
-                                }
-                                if ($dataedit->position == 'manager') {
-                                    echo "<option value='manager' selected>Manager</option>";
-                                }else{
-                                  echo "<option value='manager'>Manager</option>";
-                                }
-                                if ($dataedit->position == 'jurnal') {
-                                    echo "<option value='jurnal' selected>Journal</option>";
-                                }else{
-                                  echo "<option value='journal'>Journal</option>";
-                                }
-                                if ($dataedit->position == 'verifikasi1') {
-                                    echo "<option value='verifikasi1' selected>Verification 1</option>";
-                                }else{
-                                  echo "<option value='verifikasi1'>Verification 1</option>";
-                                }
-                                if ($dataedit->position == 'verifikasi2') {
-                                    echo "<option value='verifikasi2' selected>Verification 2</option>";
-                                }else{
-                                  echo "<option value='verifikasi2'>Verification 2</option>";
-                                }
-                                if ($dataedit->position == 'verifikasi3') {
-                                    echo "<option value='verifikasi3' selected>Verification 3</option>";
-                                }else{
-                                  echo "<option value='verifikasi3'>Verification 3</option>";
-                                }
-                              ?>
-                          </select>
-                        </div>
+
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="number" class="form-control" name="phone_number" value="<?php echo $dataedit->phone_number?>" required>
-                                <label class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" name="mata_uang" value="<?php echo $dataedit->Mata_Uang?>" required>
+                                <label class="form-label">Mata Uang</label>
                             </div>
                         </div>
+
                         <div class="form-group form-float">
-                          <select class="form-control show-tick" name="status" required>
-                              <option value="">-- Select Role --</option>
-                              <?php
-                                if ($dataedit->status == 'active') {
-                                    echo "<option value='active' selected>Active</option>";
-                                }else{
-                                  echo "<option value='active'>Active</option>";
-                                }
-                                if ($dataedit->status == 'nonactive') {
-                                    echo "<option value='nonactive' selected>Nonactive</option>";
-                                }else{
-                                  echo "<option value='nonactive'>Nonactive</option>";
-                                }
-                              ?>
-                          </select>
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="jumlah" value="<?php echo $dataedit->Jumlah?>" required>
+                                <label class="form-label">Jumlah</label>
+                            </div>
                         </div>
+
                         <div class="row clearfix">
                           <div class="col-md-6 text-left">
-                            <a class='btn btn-default waves-effect waves-blue' type='button' href="<?php echo base_url()?>admin/">BACK</a>
+                            <a class='btn btn-default waves-effect waves-blue' type='button' href="<?php echo base_url()?>revisi/">BACK</a>
                           </div>
                           <div class="col-md-6 text-right">
-                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                            <button class="btn btn-primary waves-effect" type="submit">UPDATE</button>
                           </div>
                         </div>
                     </form>

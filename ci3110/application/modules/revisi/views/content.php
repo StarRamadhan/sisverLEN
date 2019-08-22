@@ -6,10 +6,7 @@
                     <div class="header">
                       <div class="row clearfix">
                             <div class="col-md-6 text-left">
-                              <h2> Data User </h2>
-                            </div>
-                            <div class="col-md-6 text-right">
-                              <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                              <h2> Data Revisi </h2>
                             </div>
                         </div>
                     </div>
@@ -39,6 +36,8 @@
                                     <th>Jumlah</th>
                                     <th>Tgl Out Verif</th>
                                     <th>Tgl Out Jurnal</th>
+                                    <th>Alasan</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                               </thead>
@@ -62,8 +61,25 @@
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
                                     <td><?php echo $d->Tgl_Out_Verif?></td>
                                     <td><?php echo $d->Tgl_Out_Jurnal?></td>
+                                    <td><?php echo $d->Alasan_Revisi?></td>
+                                    <td><?php echo $d->Status_Revisi?></td>
                                     <td>
+                                      <!-- if ($d->Status_Revisi== 'Selesai') { ?>
+                                        <a class='btn bg-teal waves-effect' type='button'>-</a>
+                                      }else {
+
                                       <a class='btn bg-teal waves-effect' type='button' href="<?php echo base_url()?>revisi/edit/<?php echo $d->No ?>">Edit</a>
+                                    } -->
+                                    <?php
+                                        $status = $d->Status_Revisi;
+                                        if ($status=="Selesai") {
+                                        }elseif ($status=="") {?>
+                                          <button class='btn bg-teal waves-effect'  onclick=location.href='<?php echo base_url()?>revisi/edit/<?php echo $d->No ?>'>Edit</button>
+                                    <?php    }
+                                    ?>
+
+
+
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>
@@ -103,7 +119,7 @@
                                      //endforeach; ?>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

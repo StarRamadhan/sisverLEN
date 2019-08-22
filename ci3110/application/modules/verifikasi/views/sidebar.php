@@ -7,8 +7,8 @@
                 <img src="<?php echo base_url()?>images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                <div class="email">john.doe@example.com</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('ses_nama');?></div>
+                <div class="email"><?php echo $this->session->userdata('akses')?></div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
@@ -27,14 +27,14 @@
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">DASHBOARD</li>
                 <li>
                     <a href="<?php echo base_url('verifikasi');?>">
                         <i class="material-icons">face</i>
                         <span>Home</span>
                     </a>
                     <a href="<?php echo base_url('revisi');?>">
-                        <i class="material-icons">face</i>
+                        <i class="material-icons">assignment_late</i>
                         <span>Revisi</span>
                     </a>
                 </li>

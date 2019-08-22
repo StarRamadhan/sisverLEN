@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Jquery DataTable | Bootstrap Based Admin Template - Material Design</title>
+    <title>PT. LEN (PERSERO) - VERIFIKASI</title>
     <!-- Favicon-->
     <link rel="icon" href="<?php echo base_url()?>favicon.ico" type="image/x-icon">
 
@@ -135,7 +135,9 @@
 
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
-    <!-- <script src="<?php //echo base_url()?>js/pages/forms/basic-form-elements.js"></script> -->
+    <!-- <script src="<?php echo base_url()?>js/pages/forms/basic-form-elements.js"></script> -->
+    <!-- <?php //$this->load->view($js);?> -->
+
     <script src="<?php echo base_url()?>js/pages/tables/jquery-datatable.js"></script>
 
     <!-- Demo Js -->

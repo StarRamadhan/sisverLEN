@@ -7,8 +7,10 @@
     {
 
         public $table = 'revisi';
-        public $id = 'No_Verifikasi';
+        public $id = 'No';
         public $order = 'DESC';
+        public $table_dokumen = 'dokumen';
+        public $id_dokumen = 'No_Verifikasi';
 
         function __construct()
         {
@@ -43,6 +45,13 @@
             return $this->db->get($this->table)->row();
         }
 
+        function get_by_id_dokumen($id_dokumen)
+        {
+            $this->db->where($this->id, $id_dokumen);
+            return $this->db->get($this->$table_dokumen)->row();
+          }
+
+
         // insert data
         function insert($data)
         {
@@ -50,10 +59,17 @@
         }
 
         // update data
-        function update($id, $data)
+        function update($id_dokumen, $data_dokumen)
+        {
+            $this->db->where($this->id_dokumen, $id_dokumen);
+            $this->db->update($this->table_dokumen, $data_dokumen);
+
+        }
+        function update_revisi($id, $data)
         {
             $this->db->where($this->id, $id);
             $this->db->update($this->table, $data);
+
         }
 
         // delete data

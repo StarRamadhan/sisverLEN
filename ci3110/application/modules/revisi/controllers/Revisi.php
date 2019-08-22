@@ -18,7 +18,6 @@ class Revisi extends MY_Controller{
 
   public function index()
   {
-
     $datauser=$this->Revisi_model->get_all();//panggil ke modell
     $datafield=$this->Revisi_model->get_field();//panggil ke modell
     $dataverif=$this->Revisi_model->get_data_verif();//panggil ke modell
@@ -41,14 +40,14 @@ class Revisi extends MY_Controller{
     $this->template->load($data);
   }
 
-  public function edit($operator_id){
-    $dataedit=$this->Revisi_model->get_by_id($operator_id);
+  public function edit($No_verifikasi){
+    $dataedit=$this->Revisi_model->get_by_id($No_verifikasi);
      $data = array(
        'content'=>'revisi/edit_data',
        'sidebar'=>'revisi/sidebar',
        'navbar'=>'revisi/navbar',
        //'role'=>$this->Admin_model->gender_enums('user' , 'position' ),
-       'action'=>'revisi/revisi/update_action',
+       'action'=>'revisi/update_action',
        'dataedit'=>$dataedit,
        'module'=>'revisi',
        'titlePage'=>'revisi',
@@ -57,25 +56,45 @@ class Revisi extends MY_Controller{
     $this->template->load($data);
   }
 
-  public function update_action()
+  public function update_action($No_verifikasi, $No)
   {
-      $this->_rules();
-      if ($this->form_validation->run() == FALSE) {
-          $this->edit($this->input->post('No', TRUE));
-      } else {
-          $data = array(
-            'tanggal_masuk' => $this->input->post('username',TRUE),
-            'kode_ver' => md5($this->input->post('password',TRUE)),
-            'keterangan' => $this->input->post('password',TRUE),
-            'user' => $this->input->post('position',TRUE),
-            'mata_uang' => $this->input->post('phone_number',TRUE),
-            'jumlah' => $this->input->post('status',TRUE),
+      // $this->_rules();
+      // if ($this->form_validation->run() == FALSE) {
+      //     $this->edit($this->input->post('no', TRUE));
+      // } else {
+      $pk1 = substr($this->input->post('no_verifikasi'),0,4);
+      $pk2 = $this->input->post('kode_ver');
+      $pk3 = substr($this->input->post('no_verifikasi'),-7);
+      $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
+
+          $data_dokumen = array(
+            'kode_ver' =>$this->input->post('kode_ver',TRUE),
+            'keterangan' => $this->input->post('keterangan',TRUE),
+            'no_verifikasi' => $primarykey,
+            'user' => $this->input->post('user',TRUE),
+            'mata_uang' => $this->input->post('mata_uang',TRUE),
+            'jumlah' => $this->input->post('jumlah',TRUE),
+
+            'tgl_out_verif' => $this->input->post(""),
+            'tgl_out_jurnal' => $this->input->post(""),
+            'tgl_out_manager' => $this->input->post(""),
+            'status_dok_jurnal' => $this->input->post(""),
+            'status_dok_manager' => $this->input->post(""),
+            'status_dokumen' => $this->input->post(""),
           );
-          $this->Admin_model->update($this->input->post('no', TRUE), $data);
+
+          $revisi_selesai = "Selesai";
+          $data = array(
+            'status_revisi' => $revisi_selesai
+          );
+
+          $this->Revisi_model->update_revisi($this->input->post('no', TRUE), $data);
+          $this->Revisi_model->update($this->input->post('no_verifikasi', TRUE), $data_dokumen);
+
           $this->session->set_flashdata('flashMessage', 'Update Record Success');
           //echo "berhasil";
           redirect(base_url('revisi'));
-      }
+      //}
   }
 
 }

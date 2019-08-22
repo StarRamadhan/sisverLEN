@@ -34,7 +34,7 @@
                         <span>Home</span>
                     </a>
                     <a href="<?php echo base_url('revisi');?>">
-                        <i class="material-icons">face</i>
+                        <i class="material-icons">assignment_late</i>
                         <span>Revisi</span>
                     </a>
                 </li>
