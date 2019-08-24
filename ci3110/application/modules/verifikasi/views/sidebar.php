@@ -30,7 +30,14 @@
                 <li class="header">DASHBOARD</li>
                 <li class="li-trigger">
                     <a href="<?php echo base_url('verifikasi');?>">
-                        <i class="material-icons">dashboard</i>
+                        <i class="material-icons">assignment</i>
+                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
+                        <span>Your Document</span>
+                    </a>
+                </li>
+                <li class="li-trigger">
+                    <a href="<?php echo base_url('verifikasi/index_all');?>">
+                        <i class="material-icons">assignment</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
                         <span>All Document</span>
                     </a>
@@ -39,7 +46,14 @@
                     <a href="<?php echo base_url('revisi');?>">
                         <i class="material-icons">assignment_late</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>All Document</span>
+                        <span>Your Rejected</span>
+                    </a>
+                </li>
+                <li class="li-trigger">
+                    <a href="<?php echo base_url('revisi/index_all');?>">
+                        <i class="material-icons">assignment_late</i>
+                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
+                        <span>Rejected</span>
                     </a>
                 </li>
                 <li class="header">SETTING</li>
@@ -50,7 +64,7 @@
                     </a>
                 </li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('verifikasi');?>">
+                    <a href="<?php echo base_url('login/logout');?>">
                         <i class="material-icons">power_settings_new</i>
                         <span>Logout</span>
                     </a>

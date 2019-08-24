@@ -29,42 +29,35 @@
             <ul class="list">
                 <li class="header">DASHBOARD</li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('verifikasi');?>">
-                        <i class="material-icons">assignment</i>
+                    <a href="<?php echo base_url('manager/dokumen_not_acc');?>">
+                        <i class="material-icons">dashboard</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Your Document</span>
+                        <span>Not Acc</span>
                     </a>
                 </li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('verifikasi/index_all');?>">
-                        <i class="material-icons">assignment</i>
+                    <a href="<?php echo base_url('manager/dokumen_acc/');?>">
+                        <i class="material-icons">assignment_late</i>
+                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
+                        <span>Document Acc</span>
+                    </a>
+                </li>
+                <li class="li-trigger">
+                    <a href="<?php echo base_url('manager');?>">
+                        <i class="material-icons">dashboard</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
                         <span>All Document</span>
                     </a>
                 </li>
-                <li class="li-trigger">
-                    <a href="<?php echo base_url('revisi');?>">
-                        <i class="material-icons">assignment_late</i>
-                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Your Rejected</span>
-                    </a>
-                </li>
-                <li class="li-trigger">
-                    <a href="<?php echo base_url('revisi/index_all');?>">
-                        <i class="material-icons">assignment_late</i>
-                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Rejected</span>
-                    </a>
-                </li>
                 <li class="header">SETTING</li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('verifikasi/edit_profil/').$this->session->userdata('ses_id');?>">
+                    <a href="<?php echo base_url('manager/edit_profil/').$this->session->userdata('ses_id');?>">
                         <i class="material-icons">face</i>
                         <span>Profile</span>
                     </a>
                 </li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('login/logout');?>">
+                    <a href="<?php echo base_url('manager');?>">
                         <i class="material-icons">power_settings_new</i>
                         <span>Logout</span>
                     </a>

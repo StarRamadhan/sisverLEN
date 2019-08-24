@@ -20,12 +20,36 @@ class Revisi extends MY_Controller{
   {
     $datauser=$this->Revisi_model->get_all();//panggil ke modell
     $datafield=$this->Revisi_model->get_field();//panggil ke modell
-    $dataverif=$this->Revisi_model->get_data_verif();//panggil ke modell
+    $dataverif=$this->Revisi_model->get_data_revisi();//panggil ke modell
     // $dataverif2=$this->Verifikasi_model->get_data_verif2();//panggil ke modell
     // $dataverif3=$this->Verifikasi_model->get_data_verif3();//panggil ke modell
 
      $data = array(
-       'content'=>'revisi/content',
+       'content'=>'revisi/revisi/content',
+       'navbar'=>'revisi/navbar',
+       'sidebar'=>'revisi/sidebar',
+       // 'css'=>'user/user/css',
+       // 'js'=>'user/user/js',
+       'datauser'=>$datauser,
+       'datafield'=>$datafield,
+       '$dataverif'=>$dataverif,
+       'module'=>'revisi',
+       'titlePage'=>'revisi',
+       'controller'=>'revisi'
+      );
+    $this->template->load($data);
+  }
+
+  public function index_all()
+  {
+    $datauser=$this->Revisi_model->get_all_revisi();//panggil ke modell
+    $datafield=$this->Revisi_model->get_field();//panggil ke modell
+    $dataverif=$this->Revisi_model->get_data_revisi();//panggil ke modell
+    // $dataverif2=$this->Verifikasi_model->get_data_verif2();//panggil ke modell
+    // $dataverif3=$this->Verifikasi_model->get_data_verif3();//panggil ke modell
+
+     $data = array(
+       'content'=>'revisi/revisi/content_all',
        'navbar'=>'revisi/navbar',
        'sidebar'=>'revisi/sidebar',
        // 'css'=>'user/user/css',
@@ -78,14 +102,12 @@ class Revisi extends MY_Controller{
             'tgl_out_verif' => $now,
             'tgl_out_jurnal' => $this->input->post(""),
             'tgl_out_manager' => $this->input->post(""),
-            'status_dok_jurnal' => $this->input->post(""),
-            'status_dok_manager' => $this->input->post(""),
             'status_dokumen' => $this->input->post("")
           );
 
           $revisi_selesai = "Selesai";
           $data = array(
-            'status_revisi' => $revisi_selesai,
+            'Status_Dokumen' => $revisi_selesai,
           );
 
           $this->Revisi_model->update_revisi($this->input->post('no', TRUE), $data);

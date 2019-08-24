@@ -6,22 +6,15 @@
                     <div class="header">
                       <div class="row clearfix">
                             <div class="col-md-6 text-left">
-                              <h2> Data User </h2>
-                              <!-- <p><?php
-                                //$sql=$this->db->query("SELECT * from dokumen order by Tanggal_Masuk DESC limit 1");
-
-                              ;?></p> -->
-                            </div>
-                            <div class="col-md-6 text-right">
-                              <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                              <h2> Data Revisi </h2>
                             </div>
                         </div>
                     </div>
-                    <?php if($this->session->flashdata('message')) {
-                      $flashMessage=$this->session->flashdata('message');?>
+                    <?php if($this->session->flashdata('flashMessage')) {
+                      $flashMessage=$this->session->flashdata('flashMessage');?>
                       <div class="alert alert-info alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          Success Add New Data !!
+                          Success Update Data !!
                       </div>
                       <?php
                       //echo "<script>alert('$flashMessage')</script>";
@@ -31,44 +24,57 @@
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                               <thead>
                                 <tr>
-                                    <th>Tanggal</th>
+                                    <!-- <?php foreach ($datafield as $d): ?>
+                                      <th><?php echo str_replace("_"," ",$d) ?></th>
+                                    <?php endforeach; ?> -->
+                                    <th>Tanggal Masuk</th>
+                                    <th>No</th>
                                     <th>No Verifikasi</th>
-                                    <th>Kode Ver</th>
                                     <th>Keterangan</th>
                                     <th>User</th>
                                     <th>MU</th>
                                     <th>Jumlah</th>
-                                    <th>Lokasi</th>
+                                    <th>Tgl Out Verif</th>
+                                    <th>Tgl Out Jurnal</th>
+                                    <th>Alasan</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                               </thead>
+                              <!-- <tfoot>
+                                <tr>
+                                    <?php foreach ($datafield as $d): ?>
+                                      <th><?php echo str_replace("_"," ",$d) ?></th>
+                                    <?php endforeach; ?>
+                                    <th>aksi</th>
+                                </tr>
+                              </tfoot> -->
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
                                     <td><?php echo $d->Tanggal_Masuk?></td>
+                                    <td><?php echo $d->No?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
-                                    <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
                                     <td><?php echo $d->User?></td>
                                     <td><?php echo $d->Mata_Uang?></td>
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
+                                    <td><?php echo $d->Tgl_Out_Verif?></td>
+                                    <td><?php echo $d->Tgl_Out_Jurnal?></td>
+                                    <td><?php echo $d->Alasan_Revisi?></td>
+                                    <td><?php echo $d->Status_Dokumen?></td>
                                     <td>
-                                      <?php
-                                          $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="jurnal") {
-                                            $lokasi = "Jurnal";
-                                            echo '<button type="button" data-color="red" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="manager") {
-                                            $lokasi = "Manager";
-                                            echo '<button type="button" data-color="red" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="finish") {
-                                            $lokasi = "Finish";
-                                            echo '<button type="button" data-color="red" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }else {
-                                            echo '<button type="button" data-color="red" class="btn bg-cyan waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">Verifikasi</button>';
-                                          }
-                                      ?>
+                                      
+                                    <?php
+                                        $status = $d->Status_Dokumen;
+                                        if ($status=="Selesai") {
+                                        }elseif ($status=="") {?>
+                                          <button class='btn bg-teal waves-effect'  onclick=location.href='<?php echo base_url()?>revisi/edit/<?php echo $d->No ?>'>Edit</button>
+                                    <?php    }
+                                    ?>
 
-                                      <!-- <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>verifikasi/edit/<?php echo $d->No_Verifikasi;?>">Edit</a> -->
+
+
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>
@@ -76,7 +82,7 @@
                             </table>
                         </div>
                         <!-- Default Size MODAL -->
-                        <!-- <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                        <!-- <div class="mfodal fade" id="defaultModal" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <?php //foreach ($datauser as $d):
@@ -101,8 +107,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-                                            <!-- <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                        </div> -->
+                                        </div>
 
                                         <?php
                                      //endforeach; ?>

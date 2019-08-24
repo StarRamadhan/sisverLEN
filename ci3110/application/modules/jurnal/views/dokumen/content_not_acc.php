@@ -74,32 +74,60 @@
                                       <!-- <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>verifikasi/edit/<?php echo $d->No_Verifikasi;?>">Edit</a> -->
                                     </td>
                                     <td style="text-align:center;">
-                                            <button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#mdModal">MODAL - SMALL SIZE</button>
+                                      <button type="button" class="btn bg-red waves-effect" data-toggle="modal" data-target="#mdModal1">Reject</button>
+                                      <div class="modal fade" id="mdModal1" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content modal-col-red">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                              <input type="text" class="form-control" name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>">
+                                              <p>Are You Sure Want to Reject document : <?php echo $d->No_Verifikasi?></p>
+                                              <br>
+                                              <p>Reason :</p>
+                                              <textarea type="text" class="form-control" name="alasan"required></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancel</button>
+                                              <button type="button" class="btn btn-link waves-effect" onclick=location.href='<?php echo base_url()?>revisi/edit/'>Continue</button>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                      </div>
+
                                     </td>
                                     <td style="text-align:center;">
-                                            <button class='btn bg-green waves-effect' onclick=location.href='<?php echo base_url()?>jurnal/edit/'>Acc</button>
+                                      <?php $IdRmodal = str_replace("/","","A".$d->No_Verifikasi);?>
+                                            <button type="button" class='btn bg-green waves-effect' data-toggle="modal" data-target="<?php echo "#".$IdRmodal;?>">Approve</button>
+                                            <div class="modal fade" id="<?php echo $IdRmodal;?>" tabindex="-1" role="dialog">
+                                              <div class="modal-dialog" role="document">
+                                                <div class="modal-content modal-col-green">
+                                                  <div class="modal-header">
+                                                    <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <input type="text" class="form-control hidden" name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
+                                                    <p>Are You Sure Want to Accept document : <?php echo $d->No_Verifikasi?></p>
+                                                    <br>
+                                                    <p>Reason :</p>
+                                                    <textarea type="text" class="form-control" name="alasan"required></textarea>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-link waves-effect" onclick=location.href='<?php echo base_url()?>jurnal/edit/'>Continue</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
 
-                            <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                    <input type="text" class="form-control" name="keterangan" value="<?php echo $dataedit->Keterangan?>" required>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-link waves-effect" onclick=location.href='<?php echo base_url()?>revisi/edit/'>SAVE CHANGES</button>
-                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+
                         </div>
 
                                 </div>

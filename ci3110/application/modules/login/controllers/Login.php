@@ -43,7 +43,7 @@ class Login extends MY_Controller{
         $this->session->set_userdata('akses','manager');
         $this->session->set_userdata('ses_id',$data['operator_id']);
         $this->session->set_userdata('ses_nama',$data['username']);
-        redirect(base_url('user/'));
+        redirect('manager/');
       }if ($data['position']=='jurnal') {//AKSES KE Jurnal
         $this->session->set_userdata('akses','jurnal');
         $this->session->set_userdata('ses_id',$data['operator_id']);

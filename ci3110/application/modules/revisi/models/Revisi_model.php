@@ -20,11 +20,25 @@
         // get all
         function get_all()
         {
-            $this->db->order_by($this->id, $this->order);
-            return $this->db->get($this->table)->result();
+            $id_O=$this->session->userdata('ses_id');
+            $table=$this->table;
+            $sql=$this->db->query("SELECT dokumen.*,revisi.* FROM dokumen,`revisi` WHERE `dokumen`.`No_Verifikasi` = `revisi`.`No_Verifikasi` AND dokumen.operator_id=$id_O");
+            return $sql->result();
+            // $this->db->order_by($this->id, $this->order);
+            // return $this->db->get($this->table)->result();
         }
 
-        function get_data_verif(){
+        function get_all_revisi()
+        {
+            $id_O=$this->session->userdata('ses_id');
+            $table=$this->table;
+            $sql=$this->db->query("SELECT dokumen.*,revisi.* FROM dokumen,`revisi` WHERE `dokumen`.`No_Verifikasi` = `revisi`.`No_Verifikasi`");
+            return $sql->result();
+            // $this->db->order_by($this->id, $this->order);
+            // return $this->db->get($this->table)->result();
+        }
+
+        function get_data_revisi(){
           $table=$this->table;
           //$sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
           $sql=$this->db->query("SELECT revisi.*,dokumen.* FROM revisi,`dokumen` WHERE revisi.`No_Verifikasi`=`dokumen`.`No_Verifikasi`"); //ganti * untuk custom field yang ditampilkan pada table

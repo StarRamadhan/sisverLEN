@@ -18,19 +18,38 @@ class verifikasi extends MY_Controller{
 
   public function index()
   {
-
     $datauser=$this->Verifikasi_model->get_all();//panggil ke modell
     $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
     $dataverif=$this->Verifikasi_model->get_data_verif();//panggil ke modell
     $lastdate=$this->Verifikasi_model->get_last_date();
-    //$lastnumber=$this->Verifikasi_model->get_last_num();
-
-    // $dataverif2=$this->Verifikasi_model->get_data_verif2();//panggil ke modell
-    // $dataverif3=$this->Verifikasi_model->get_data_verif3();//panggil ke modell
-
      $data = array(
 //       'titleNavbar'=>'PT. LEN (PERSERO) - UNIT VERIFIKASI',
-       'content'=>'verifikasi/content',
+       'content'=>'verifikasi/dokumen/content',
+       'navbar'=>'verifikasi/navbar',
+       'sidebar'=>'verifikasi/sidebar',
+       'datauser'=>$datauser,
+       'datafield'=>$datafield,
+       'dataverif'=>$dataverif,
+       'module'=>'verifikasi',
+       'titlePage'=>'verifikasi',
+       'controller'=>'verifikasi'
+       //'js'=> 'verifikasi/js',
+       // 'css'=>'user/user/css',
+       // 'js'=>'user/user/js',
+       //'lastnumber'=>$lastnumber,
+      );
+    $this->template->load($data);
+  }
+
+  public function index_all()
+  {
+    $datauser=$this->Verifikasi_model->get_all_document();//panggil ke modell
+    $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
+    $dataverif=$this->Verifikasi_model->get_data_verif_all();//panggil ke modell
+    $lastdate=$this->Verifikasi_model->get_last_date();
+     $data = array(
+//       'titleNavbar'=>'PT. LEN (PERSERO) - UNIT VERIFIKASI',
+       'content'=>'verifikasi/dokumen/content_all',
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
        'datauser'=>$datauser,
@@ -107,6 +126,7 @@ class verifikasi extends MY_Controller{
         $pk1 = sprintf("%04s", $nownumber);
         $pk2 = $this->input->post('kode_ver');
         $pk3 = date("m/Y");
+        $statusDok = "jurnal";
         //$pk3 = date("m/Y", strtotime($lastdate->Tanggal_Masuk));
         $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
         //$pk2 =
@@ -114,15 +134,15 @@ class verifikasi extends MY_Controller{
           'No' => $nownumber,
           'operator_id' => $this->input->post('operator_id',TRUE),
           'Tanggal_Masuk' => $now,
-          'tgl_out_verif' => $now,
+          'Tgl_Out_Verif' => $now,
           'No_Verifikasi' => $primarykey,//$this->input->post('kode_ver',TRUE),
           //'No_Verifikasi' => $this->input->post('kode_ver',TRUE),
           'Kode_Ver' => $this->input->post('kode_ver',TRUE),
           'Mata_Uang' => $this->input->post('mata_uang',TRUE),
           'User' => $this->input->post('user',TRUE),
           'Keterangan' => $this->input->post('keterangan',TRUE),
-          'Jumlah' => $this->input->post('jumlah',TRUE)
-          //'operator_id' => $this->input->post('')
+          'Jumlah' => $this->input->post('jumlah',TRUE),
+          'Lok_Dokumen' => $statusDok
         );
 
         $this->Verifikasi_model->insert($data);

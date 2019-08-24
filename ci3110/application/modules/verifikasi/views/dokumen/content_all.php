@@ -12,11 +12,30 @@
 
                               ;?></p> -->
                             </div>
-                            <div class="col-md-6 text-right">
-                              <a href="<?php echo base_url('jurnal/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content modal-col-blue">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
+                                    vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
+                                    Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
+                                    nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
+                                    Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <?php if($this->session->flashdata('message')) {
                       $flashMessage=$this->session->flashdata('message');?>
                       <div class="alert alert-info alert-dismissible" role="alert">
@@ -63,7 +82,13 @@
                                     <td><?php echo $d->Mata_Uang?></td>
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
                                     <td>
-                                      <?php
+                                      <?php if ($d->Lok_Dokumen=="") {
+                                        echo '-';
+                                      }else {
+                                        echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$d->Lok_Dokumen.'</button>';
+                                      }?>
+
+                                      <!-- <?php
                                           $id_dok = $d->No_Verifikasi;
                                           $dok_jurnal = $d->Status_Dok_Jurnal;
                                           $dok_manager = $d->Status_Dok_Manager;
@@ -74,7 +99,7 @@
                                             $lokasi = "Manager";
                                             echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }
-                                      ?>
+                                      ?> -->
 
                                       <!-- <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>verifikasi/edit/<?php echo $d->No_Verifikasi;?>">Edit</a> -->
                                     </td>

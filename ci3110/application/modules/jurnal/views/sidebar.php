@@ -32,14 +32,14 @@
                     <a href="<?php echo base_url('jurnal/dokumen_not_acc');?>">
                         <i class="material-icons">dashboard</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Not Acc</span>
+                        <span>Need Respon</span>
                     </a>
                 </li>
                 <li class="li-trigger">
                     <a href="<?php echo base_url('jurnal/dokumen_acc/');?>">
                         <i class="material-icons">assignment_late</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Document Acc</span>
+                        <span>Document Accepted</span>
                     </a>
                 </li>
                 <li class="li-trigger">

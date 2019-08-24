@@ -15,13 +15,24 @@
                               <div class="form-group form-float">
                                 <select class="form-control show-tick" name="kode_ver" required>
                                     <option value="">-- Kode Verifikasi --</option>
-                                        <option value='LB'>LB</option>
-                                        <option value='LK'>LK</option>
-                                        <option value='LM'>LM</option>
-                                        <option value='LN'>LN</option>
-                                        <option value='PB'>PB</option>
-                                        <option value='PP'>PP</option>
-                                        <option value='UM'>UM</option>
+                                    <?php
+                                      if ($this->session->userdata('akses')=='verifikasi1') {
+                                        echo "<option value='UM'>UM</option>";
+                                        echo "<option value='PB'>PB</option>";
+                                        echo "<option value='LN'>LN</option>";
+                                        echo "<option value='LK'>LK</option>";
+                                        echo "<option value='LB'>LB</option>";
+                                      }elseif ($this->session->userdata('akses')=='verifikasi2') {
+                                        echo "<option value='LM'>LM</option>";
+                                        echo "<option value='UM'>UM</option>";
+                                        echo "<option value='PB'>PB</option>";
+                                        echo "<option value='LN'>LN</option>";
+                                        echo "<option value='LK'>LK</option>";
+                                        echo "<option value='LB'>LB</option>";
+                                      }elseif ($this->session->userdata('akses')=='verifikasi3') {
+                                        echo "<option value='PP'>PP</option>";
+                                      }
+                                    ?>
                                 </select>
                               </div>
                               <div class="form-group form-float">

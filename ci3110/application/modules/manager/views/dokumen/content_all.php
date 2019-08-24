@@ -54,17 +54,12 @@
                                     <td>
                                       <?php
                                           $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="jurnal") {
-                                            $lokasi = "Jurnal";
-                                            echo '<button type="button" data-color="red" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="manager") {
+                                          if ($lok_dokumen=="manager") {
                                             $lokasi = "Manager";
-                                            echo '<button type="button" data-color="red" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                            echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }elseif ($lok_dokumen=="finish") {
                                             $lokasi = "Finish";
-                                            echo '<button type="button" data-color="red" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }else {
-                                            echo '<button type="button" data-color="red" class="btn bg-cyan waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">Verifikasi</button>';
+                                            echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }
                                       ?>
 
@@ -75,43 +70,10 @@
                               </tbody>
                             </table>
                         </div>
-                        <!-- Default Size MODAL -->
-                        <!-- <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <?php //foreach ($datauser as $d):
-                                      $id_dok = $datauser->No_Verifikasi;
-                                      $dok_jurnal = $datauser->Status_Dok_Jurnal;
-                                      $dok_manager = $datauser->Status_Dok_Manager;
-                                      if ($dok_jurnal=="pending") {
-                                        $lokasi = "Dokumen Berada di Bagian Jurnal";
-                                      }elseif ($dok_manager=="pending") {
-                                        $lokasi = "Dokumen Berada di Bagian Manager";
-                                      }
-                                        ?>
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="defaultModalLabel"><?php echo $id_dok?></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
-                                            vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
-                                            Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
-                                            nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
-                                            Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-                                            <!-- <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                        </div> -->
-
-                                        <?php
-                                     //endforeach; ?>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->

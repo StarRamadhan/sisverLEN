@@ -22,31 +22,51 @@
         // get all
         function get_all()
         {
+            $id_O=$this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT * From dokumen order by Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT * From dokumen where operator_id=$id_O and Lok_Dokumen <> 'revisi' order by Tanggal_Masuk DESC");
             return $sql->result();
             // $this->db->order_by($this->tgl_masuk, $this->order);
             // return $this->db->get($this->table)->result();
         }
 
+        function get_all_document()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT * From dokumen where Lok_Dokumen <> 'revisi' order by Tanggal_Masuk DESC");
+            return $sql->result();
+            // $this->db->order_by($this->tgl_masuk, $this->order);
+            // return $this->db->get($this->table)->result();
+        }
+
+        //get data dari tabel operator dan dokumen
         function get_data_verif(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,operator WHERE dokumen.`operator_id`=operator.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
           return $sql->result();
         }
 
+        function get_data_verif_all(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,operator"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->result();
+        }
+
+        //get max nomor
         function get_last_num(){
           $table=$this->table;
           //$sql=$this->db->query("SELECT No from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
           $sql=$this->db->query("SELECT MAX(No) as maks from dokumen where  MONTH(Tanggal_Masuk)=MONTH(CURRENT_DATE) and YEAR(Tanggal_Masuk)=YEAR(CURRENT_DATE)");
           return $sql->row();
         }
+
+        //get nomor untuk validasi agar tidak terjadi duplikat nomor
         function get_num_row($nownumber){
           $table=$this->table;
           $sql=$this->db->query("SELECT COUNT(NO) AS nomor FROM dokumen WHERE NO=$nownumber"); //ganti * untuk custom field yang ditampilkan pada table
           return $sql;
         }
-
+        //get tanggal terakhir yang diinput
         function get_last_date(){
           $table=$this->table;
           $sql=$this->db->query("SELECT Tanggal_Masuk from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
