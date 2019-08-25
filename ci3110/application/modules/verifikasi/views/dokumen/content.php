@@ -7,17 +7,20 @@
                       <div class="row clearfix">
                             <div class="col-md-6 text-left">
                               <h2> Data User </h2>
-                              <!-- <p><?php
-                                //$sql=$this->db->query("SELECT * from dokumen order by Tanggal_Masuk DESC limit 1");
-
-                              ;?></p> -->
                             </div>
                             <div class="col-md-6 text-right">
                               <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
                             </div>
-                        </div>
+                      </div>
+                      <div class="row clearfix">
+                            <div class="col-md-6 text-left">
+                              <a href="<?php echo base_url('verifikasi/export_data');?>" type="button" class="btn bg-blue waves-effect">Export My Data</a>
+                            </div>
+                      <div class="col-md-6 text-right">                          
+                      </div>
+                      </div>
                     </div>
-                    
+
                     <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content modal-col-blue">

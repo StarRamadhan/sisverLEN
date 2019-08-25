@@ -113,6 +113,10 @@
             $this->db->delete($this->table);
         }
 
+        function ambil_view(){
+          return $this->db->get($this->table)->result();
+        }
+
     }
 
     /* Crudlab by Kostlab */

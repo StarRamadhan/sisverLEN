@@ -56,6 +56,18 @@
                         <span>Rejected</span>
                     </a>
                 </li>
+
+                <?php if ($this->session->userdata('akses')=='verifikasi2') {  ?>
+                  <li class="li-trigger">
+                    <a href="<?php echo base_url('revisi/index_all');?>">
+                        <i class="material-icons">assignment_late</i>
+                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
+                        <span>Need Attention</span>
+                    </a>
+                  </li>
+                <?php } ?>
+
+
                 <li class="header">SETTING</li>
                 <li class="li-trigger">
                     <a href="<?php echo base_url('verifikasi/edit_profil/').$this->session->userdata('ses_id');?>">
