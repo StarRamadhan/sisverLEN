@@ -43,12 +43,12 @@ class Login extends MY_Controller{
         $this->session->set_userdata('akses','manager');
         $this->session->set_userdata('ses_id',$data['operator_id']);
         $this->session->set_userdata('ses_nama',$data['username']);
-        redirect(base_url('user/'));
-      }if ($data['position']=='jurnal') {//AKSES KE Jurnal
-        $this->session->set_userdata('akses','jurnal');
+        redirect(base_url('manager'));
+      }if ($data['position']=='jurnalis') {//AKSES KE Jurnal
+        $this->session->set_userdata('akses','jurnalis');
         $this->session->set_userdata('ses_id',$data['operator_id']);
         $this->session->set_userdata('ses_nama',$data['username']);
-        redirect('page');
+        redirect(base_url('jurnalis'));
       }if (($data['position']=='verifikasi1') || ($data['position']=='verifikasi2') || ($data['position']=='verifikasi3')) {//AKSES KE Verifikasi
         if ($data['position'] == 'verifikasi1') {
           $this->session->set_userdata('akses','verifikasi1');
@@ -93,29 +93,6 @@ class Login extends MY_Controller{
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
-}
-
-public function email($subject,$isi,$emailtujuan){
-
-$config['protocol'] = 'smtp';
-$config['smtp_host'] = 'ssl://smtp.gmail.com';
-$config['smtp_port'] = '465';
-$config['smtp_user'] = 'shopagansta@gmail.com';
-$config['smtp_pass'] = 'faztars123'; //ini pake akun pass google email
-$config['mailtype'] = 'html';
-$config['charset'] = 'iso-8859-1';
-$config['wordwrap'] = 'TRUE';
-$config['newline'] = "\r\n";
-
-$this->load->library('email', $config);
-$this->email->initialize($config);
-
-$this->email->from('shopagansta@gmail.com');
-$this->email->to($emailtujuan);
-$this->email->subject($subject);
-$this->email->message($isi);
-$this->email->set_mailtype('html');
-$this->email->send();
 }
 
   function logout(){

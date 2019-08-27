@@ -18,51 +18,119 @@ class verifikasi extends MY_Controller{
 
   public function index()
   {
-
+    $count_rejected =$this->Verifikasi_model->count_rejected();
     $datauser=$this->Verifikasi_model->get_all();//panggil ke modell
     $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
-    $dataverif=$this->Verifikasi_model->get_data_verif();//panggil ke modell
     $lastdate=$this->Verifikasi_model->get_last_date();
-    //$lastnumber=$this->Verifikasi_model->get_last_num();
-
-    // $dataverif2=$this->Verifikasi_model->get_data_verif2();//panggil ke modell
-    // $dataverif3=$this->Verifikasi_model->get_data_verif3();//panggil ke modell
-
-     $data = array(
+    $data = array(
        'content'=>'verifikasi/content',
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
        'datauser'=>$datauser,
+       'count_rejected' => $count_rejected,
        'datafield'=>$datafield,
-       'dataverif'=>$dataverif,
+       'customSearch' =>'verifikasi/customSearch',
+       // 'dataverif'=>$dataverif,
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
        'controller'=>'verifikasi'
-       //'js'=> 'verifikasi/js',
-       // 'css'=>'user/user/css',
-       // 'js'=>'user/user/js',
-       //'lastnumber'=>$lastnumber,
       );
     $this->template->load($data);
   }
 
+  public function customSearch(){
+    $countResponse =$this->Verifikasi_model->count_need_response();
+    $datauser=$this->Verifikasi_model->get_data_search();
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $data = array(
+       'content'=>'verifikasi/content_search',
+       'navbar'=>'verifikasi/navbar',
+       'sidebar'=>'verifikasi/sidebar',
+       //'customSearch' =>'jurnalis/customSearch',
+       'countResponse' => $countResponse,
+       'count_rejected' => $count_rejected,
+       'datauser'=>$datauser,
+       'module'=>'verifikasi',
+       'titlePage'=>'verifikasi',
+       'controller'=>'verifikasi'
+      );
+    $ses_startdate = $this->input->post('dateStart',TRUE);
+    $ses_enddate = $this->input->post('dateEnd',TRUE);
+    $ses_by = $this->input->post('by',TRUE);
+    $this->session->set_flashdata('ses_startdate', $ses_startdate);
+    $this->session->set_flashdata('ses_enddate', $ses_enddate);
+    $this->session->set_flashdata('ses_by', $ses_by);
+    $this->template->load($data);
+
+  }
+
+  public function document_need_response(){
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $countResponse =$this->Verifikasi_model->count_need_response();
+    $datauser=$this->Verifikasi_model->get_all_need_response();//panggil ke modell
+    //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
+    $data = array(
+       'content'=>'verifikasi/content_need_response',
+       'navbar'=>'verifikasi/navbar',
+       'sidebar'=>'verifikasi/sidebar',
+       'datauser'=>$datauser,
+       'countResponse' => $countResponse,
+       'count_rejected' => $count_rejected,
+       //'dataverif'=>$dataverif,
+       'module'=>'verifikasi',
+       'titlePage'=>'verifikasi',
+       'controller'=>'verifikasi',
+       'reject'=>'verifikasi/verifikasi/reject',
+       'approve'=>'verifikasi/verifikasi/approve'
+      );
+    $this->template->load($data);
+  }
+
+  public function reject(){
+    $data = array(
+      'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
+      'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
+      'kode_ver' =>$this->input->post('kode_ver',TRUE),
+      'keterangan' => $this->input->post('keterangan',TRUE),
+      'mata_uang' => $this->input->post('mata_uang',TRUE),
+      'jumlah' => $this->input->post('jumlah',TRUE),
+      'alasan_revisi' => $this->input->post('alasan',true)
+    );
+    $dataResponse = array(
+      'Lok_Dokumen' => 'reject',
+    );
+    $this->Verifikasi_model->insert_reject($data);
+    $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
+    $this->session->set_flashdata('rejectMessage', 'Reject Success');
+    redirect(base_url('verifikasi/document_need_response'));
+  }
+
+
+  public function approve(){
+    $now = date('Y-m-d');
+    $dataResponse = array(
+      'Lok_Dokumen' => 'manager',
+      'Tgl_Out_Jurnal' =>$now
+    );
+    $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
+    $this->session->set_flashdata('approveMessage', 'Approve Success');
+    redirect(base_url('verifikasi/document_need_response'));
+  }
+
+
   public function create(){
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $countResponse =$this->Verifikasi_model->count_need_response();
     $lastdate=$this->Verifikasi_model->get_last_date();
     $lastnumber=$this->Verifikasi_model->get_last_num();
-    //$lastnumber=$this->Verifikasi_model->get_last_num();
-    //$numrows=$this->Verifikasi_model->get_num_row();
-    //$testing=$this->Verifikasi_model->get_num_row($nownumber);
-    //$datauser=$this->Verifikasi_model->get_all();//panggil ke modell
-    //$datafield=$this->Verifikasi_model->get_field();//panggil ke modell
      $data = array(
-       //'testing'=>$testing,
-       //'numrows'=>$numrows,
-       //'js'=> 'verifikasi/js',
        'content' => 'verifikasi/create_data',
        'sidebar'=>'verifikasi/sidebar',//Ini buat menu yang ditampilkan di module verifikasi {DIKIRIM KE TEMPLATE}
        'navbar'=>'verifikasi/navbar',
        'lastnumber'=>$lastnumber,
        'lastdate'=>$lastdate,
+       'countResponse' => $countResponse,
+       'count_rejected' => $count_rejected,
        'action'=>'verifikasi/create_action',
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
@@ -73,13 +141,13 @@ class verifikasi extends MY_Controller{
 
   public function create_action()
       {
-        //defining DATE
+        //INISIALISASI TANGGAL
         $lastdate=$this->Verifikasi_model->get_last_date();
-        //$numrows=$this->Verifikasi_model->get_num_row();
         $lastmonth= date("m", strtotime($lastdate->Tanggal_Masuk));
         $monthnow=date('m');
         $yearnow=date('Y');
-        //CASE OF DATE FOR NUMBERING
+
+        //PENENTUAN NOMOR BERDASARKAN TANGGAL
         if ($lastmonth!=$monthnow) {
           $lastnumber=1;
           $nownumber=($lastnumber->maks+1);
@@ -92,50 +160,44 @@ class verifikasi extends MY_Controller{
           }
 
         }
-//        $nownumber=($lastnumber->maks+1);
-
-        // $numrows=$this->Verifikasi_model->get_num_row($nownumber,$monthnow,$yearnow);
-        // if($numrows->num_rows() > 1){
-        //   $nownumber=$nownumber+1;
-        // }
-
         $timezone = date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
-
-        //MAKING PRIMARY KEY
+        //PEMBUATAN KODE UNIK
         $pk1 = sprintf("%04s", $nownumber);
         $pk2 = $this->input->post('kode_ver');
         $pk3 = date("m/Y");
-        //$pk3 = date("m/Y", strtotime($lastdate->Tanggal_Masuk));
         $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
-        //$pk2 =
         $data = array(
           'No' => $nownumber,
+          'operator_id' => $this->input->post('operator_id',TRUE),
           'Tanggal_Masuk' => $now,
-          'No_Verifikasi' => $primarykey,//$this->input->post('kode_ver',TRUE),
-          //'No_Verifikasi' => $this->input->post('kode_ver',TRUE),
+          'tgl_out_verif' => $now,
+          'No_Verifikasi' => $primarykey,
           'Kode_Ver' => $this->input->post('kode_ver',TRUE),
           'Mata_Uang' => $this->input->post('mata_uang',TRUE),
           'User' => $this->input->post('user',TRUE),
           'Keterangan' => $this->input->post('keterangan',TRUE),
-          'Jumlah' => $this->input->post('jumlah',TRUE)
-          //'operator_id' => $this->input->post('')
+          'Jumlah' => $this->input->post('jumlah',TRUE),
+          'Lok_Dokumen' => 'jurnalis'
         );
-
         $this->Verifikasi_model->insert($data);
         $this->session->set_flashdata('message', 'Create Record Success');
         redirect(base_url('verifikasi'));
       }
 
-  public function edit($no_verifikasi){
-    $dataedit=$this->Verifikasi_model->get_by_id($no_verifikasi);
+  //LOAD HALAMAN EDIT
+  public function edit_profil($operator_id){
+    $dataedit=$this->Verifikasi_model->get_by_id_profil($operator_id);
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+
      $data = array(
-       'content'=>'verifikasi/edit_data',
+       'content'=>'verifikasi/edit_profil',
        'sidebar'=>'verifikasi/sidebar',
        'navbar'=>'verifikasi/navbar',
        //'role'=>$this->Verifikasi_model->gender_enums('user' , 'position' ),
        'action'=>'verifikasi/verifikasi/update_action',
        'dataedit'=>$dataedit,
+       'count_rejected' => $count_rejected,
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
        'controller'=>'verifikasi'
@@ -143,38 +205,17 @@ class verifikasi extends MY_Controller{
     $this->template->load($data);
   }
 
-
-
+  //AKSI EDIT DATA
   public function update_action()
   {
-      $this->_rules();
-      if ($this->form_validation->run() == FALSE) {
-          $this->edit($this->input->post('no_verifikasi', TRUE));
-      } else {
           $data = array(
             'username' => $this->input->post('username',TRUE),
             'password_enc' => md5($this->input->post('password',TRUE)),
             'password' => $this->input->post('password',TRUE),
-            'position' => $this->input->post('position',TRUE),
             'phone_number' => $this->input->post('phone_number',TRUE),
           );
-          $this->Verifikasi_model->update($this->input->post('no_verifikasi', TRUE), $data);
+          $this->Verifikasi_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');
-          //echo "berhasil";
           redirect(base_url('verifikasi'));
-      }
   }
-
-  // public function _rules()
-  // {
-  //     $this->form_validation->set_rules('username', 'username', 'trim|required');
-  //     //$this->form_validation->set_rules('password_enc', 'password_enc', 'trim|required');
-  //     $this->form_validation->set_rules('password', 'password', 'trim|required');
-  //     $this->form_validation->set_rules('position', 'position', 'trim|required');
-  //     $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
-  //
-  //
-  //     $this->form_validation->set_rules('no_verifikasi', 'no_verifikasi', 'trim');
-  //     $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-  // }
 }

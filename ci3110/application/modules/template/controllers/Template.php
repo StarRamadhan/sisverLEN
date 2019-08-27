@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Template extends MY_Controller{
+class template extends MY_Controller{
 
   public function __construct()
   {

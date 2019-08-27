@@ -6,10 +6,10 @@
                     <div class="header">
                       <div class="row clearfix">
                             <div class="col-md-6 text-left">
-                              <h2> Data User </h2>
+                              <h2> Manage Operator Data </h2>
                             </div>
                             <div class="col-md-6 text-right">
-                              <a href="<?php echo base_url('admin/create');?>" type="button" class="btn bg-blue waves-effect">Add New Users</a>
+                              <a href="<?php echo base_url('admin/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
                             </div>
                         </div>
                     </div>
@@ -17,35 +17,22 @@
                       $flashMessage=$this->session->flashdata('flashMessage');?>
                       <div class="alert alert-info alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          Success Update Data !!
+                          Success Update Data !!!
                       </div>
-                      <?php
-                      //echo "<script>alert('$flashMessage')</script>";
-                     } ?>
+                      <?php } ?>
                     <div class="body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                               <thead>
                                 <tr>
-                                    <!-- <?php foreach ($datafield as $d): ?>
-                                      <th><?php echo str_replace("_"," ",$d) ?></th>
-                                    <?php endforeach; ?> -->
                                     <th>Id</th>
                                     <th>Username</th>
                                     <th>Password</th>
                                     <th>Position</th>
                                     <th>Phone</th>
-                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                               </thead>
-                              <!-- <tfoot>
-                                <tr>
-                                    <?php foreach ($datafield as $d): ?>
-                                      <th><?php echo str_replace("_"," ",$d) ?></th>
-                                    <?php endforeach; ?>
-                                    <th>aksi</th>
-                                </tr>
-                              </tfoot> -->
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
@@ -53,38 +40,21 @@
                                     <td><?php echo $d->username ?>
                                       <?php
                                       if ($d->status=='active') {
-                                        echo '<br><button type="button" class="btn bg-cyan btn-xs waves-effect">'.$d->status.'</button></td>';
+                                        echo '<br><button type="button" class="btn bg-amber btn-xs waves-effect">'.$d->status.'</button></td>';
                                       }elseif ($d->status=='nonactive') {
-                                        echo '<br><button type="button" class="btn bg-orange btn-xs waves-effect">'.$d->status.'</button></td>';
+                                        echo '<br><button type="button" class="btn bg-grey btn-xs waves-effect">'.$d->status.'</button></td>';
                                       }
                                        ?>
                                     <td><?php echo $d->password ?></td>
                                     <td><?php echo $d->position ?></td>
                                     <td><?php echo $d->phone_number ?></td>
-                                    <!-- <td><?php echo $d->status ?></td> -->
                                     <td>
-                                      <a class='btn bg-teal waves-effect' type='button' href="<?php echo base_url()?>admin/edit/<?php echo $d->operator_id ?>">Edit</a>
+                                      <a class='btn bg-cyan waves-effect' type='button' href="<?php echo base_url()?>admin/edit/<?php echo $d->operator_id ?>">Edit</a>
                                     </td>
 
                                   </tr>
                                 <?php endforeach; ?>
-
                               </tbody>
-                              <!-- <tbody>
-                                <?php foreach ($datauser as $d): ?>
-                                  <tr>
-                                    <?php foreach ($datafield as $df): ?>
-                                      <td><?php echo $d->$df ?></td>
-                                    <?php endforeach; ?>
-                                    <td>
-                                      <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>admin/edit/<?php echo $d->operator_id ?>">Edit</a>
-                                    </td>
-
-                                  </tr>
-                                <?php endforeach; ?>
-
-                              </tbody> -->
-
                             </table>
                         </div>
                     </div>

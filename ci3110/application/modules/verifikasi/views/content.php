@@ -4,19 +4,39 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
+                      <h2 class="card-inside-title">Filter</h2>
                       <div class="row clearfix">
-                            <div class="col-md-6 text-left">
-                              <h2> Data User </h2>
-                              <!-- <p><?php
-                                //$sql=$this->db->query("SELECT * from dokumen order by Tanggal_Masuk DESC limit 1");
-
-                              ;?></p> -->
+                        <form method="post" id="form_advanced_validation" action="<?php echo base_url().$customSearch ?>">
+                          <div class="col-md-4 text-left">
+                            <div class="input-daterange input-group">
+                                <div class="form-line">
+                                    <input type="text" id="dateStart" class="form-control" name='dateStart' placeholder="Date start..." autocomplete="off">
+                                </div>
+                                <span class="input-group-addon">to</span>
+                                <div class="form-line">
+                                    <input type="text" id="dateEnd" class="form-control" name='dateEnd' placeholder="Date end..." autocomplete="off">
+                                </div>
                             </div>
-                            <div class="col-md-6 text-right">
-                              <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-line">
+                              <select class="form-control show-tick" name="by" required>
+                                  <option value="">-- Select One --</option>
+                                  <option value="all"> All Document </option>
+                                  <option value="me"> By Me </option>
+                              </select>
                             </div>
+                          </div>
+                          <div class="col-md-3 text-left">
+                            <button type="submit" class="btn bg-blue-grey waves-effect waves-float"><i class="material-icons">search</i></button>
+                          </div>
+                        </form>
+                        <div class="col-md-3 text-right">
+                          <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
                         </div>
+                      </div>
                     </div>
+
                     <?php if($this->session->flashdata('message')) {
                       $flashMessage=$this->session->flashdata('message');?>
                       <div class="alert alert-info alert-dismissible" role="alert">
@@ -28,7 +48,7 @@
                      } ?>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="tableVerif">
                               <thead>
                                 <tr>
                                     <!-- <?php foreach ($datafield as $d): ?>
@@ -64,62 +84,31 @@
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
                                     <td>
                                       <?php
-                                          $id_dok = $d->No_Verifikasi;
-                                          $dok_jurnal = $d->Status_Dok_Jurnal;
-                                          $dok_manager = $d->Status_Dok_Manager;
-                                          if ($dok_jurnal=="pending") {
-                                            $lokasi = "Jurnal";
-                                            echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($dok_manager=="pending") {
+                                          $lok_dokumen = $d->Lok_Dokumen;
+                                          if ($lok_dokumen=="jurnalis") {
+                                            $lokasi = "Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="manager") {
                                             $lokasi = "Manager";
-                                            echo '<button type="button" data-color="red" class="btn bg-indigo waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="finish") {
+                                            $lokasi = "Finish";
+                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="reject") {
+                                            $lokasi = "Reject";
+                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }
                                       ?>
-
-                                      <!-- <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>verifikasi/edit/<?php echo $d->No_Verifikasi;?>">Edit</a> -->
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
                         </div>
-                        <!-- Default Size MODAL -->
-                        <!-- <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <?php //foreach ($datauser as $d):
-                                      $id_dok = $datauser->No_Verifikasi;
-                                      $dok_jurnal = $datauser->Status_Dok_Jurnal;
-                                      $dok_manager = $datauser->Status_Dok_Manager;
-                                      if ($dok_jurnal=="pending") {
-                                        $lokasi = "Dokumen Berada di Bagian Jurnal";
-                                      }elseif ($dok_manager=="pending") {
-                                        $lokasi = "Dokumen Berada di Bagian Manager";
-                                      }
-                                        ?>
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="defaultModalLabel"><?php echo $id_dok?></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
-                                            vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
-                                            Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
-                                            nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
-                                            Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-                                            <!-- <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                        </div> -->
-
-                                        <?php
-                                     //endforeach; ?>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- #END# Basic Examples -->
-        <!-- Exportable Table -->
+    </div>
+</div>

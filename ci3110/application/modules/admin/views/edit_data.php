@@ -1,10 +1,10 @@
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
-
+                <div class="header"><h2>Edit Data For Operator Id : <?php echo $dataedit->operator_id; ?></h2></div>
                 <div class="body">
                     <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
-                        <div class="form-group form-float">
+                        <div class="form-group form-float hidden">
                             <div class="form-line">
                                 <input type="text" class="form-control" name="operator_id" value="<?php echo $dataedit->operator_id?>"readonly required>
                                 <label class="form-label">User Id</label>
@@ -36,10 +36,10 @@
                                 }else{
                                   echo "<option value='manager'>Manager</option>";
                                 }
-                                if ($dataedit->position == 'jurnal') {
-                                    echo "<option value='jurnal' selected>Journal</option>";
+                                if ($dataedit->position == 'jurnalis') {
+                                    echo "<option value='jurnalis' selected>Jurnalis</option>";
                                 }else{
-                                  echo "<option value='journal'>Journal</option>";
+                                  echo "<option value='jurnalis'>Jurnalis</option>";
                                 }
                                 if ($dataedit->position == 'verifikasi1') {
                                     echo "<option value='verifikasi1' selected>Verification 1</option>";
@@ -84,10 +84,10 @@
                         </div>
                         <div class="row clearfix">
                           <div class="col-md-6 text-left">
-                            <a class='btn btn-default waves-effect waves-blue' type='button' href="<?php echo base_url()?>admin/">BACK</a>
+                            <button class="btn btn-primary waves-effect waves-white" type="submit">SAVE</button>
                           </div>
                           <div class="col-md-6 text-right">
-                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                            <a class='btn btn-primary waves-effect waves-white' type='button' href="<?php echo base_url()?>admin/">CANCEL</a>
                           </div>
                         </div>
                     </form>

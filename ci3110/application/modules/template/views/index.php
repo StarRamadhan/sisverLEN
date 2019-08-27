@@ -24,6 +24,9 @@
     <!-- Animation Css -->
     <link href="<?php echo base_url()?>plugins/animate-css/animate.css" rel="stylesheet" />
 
+    <!-- Date Picker -->
+    <link href="<?php echo base_url()?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+
     <!-- Bootstrap Select Css -->
     <link href="<?php echo base_url()?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
@@ -33,11 +36,12 @@
     <!-- Custom Css -->
     <link href="<?php echo base_url()?>css/style.css" rel="stylesheet">
 
+
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo base_url()?>css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-light-green">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -79,12 +83,6 @@
 
     <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
-                <h2>
-                    JQUERY DATATABLES
-                    <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>
-                </h2>
-            </div>
             <!-- Basic Examples -->
             <?php $this->load->view($content);?>
             <!-- #END# Basic Examples -->
@@ -135,16 +133,35 @@
 
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
-    <!-- <script src="<?php echo base_url()?>js/pages/forms/basic-form-elements.js"></script> -->
-    <!-- <?php //$this->load->view($js);?> -->
+
+    <!-- Bootstrap Datepicker Plugin Js -->
+    <script src="<?php echo base_url()?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
     <script src="<?php echo base_url()?>js/pages/tables/jquery-datatable.js"></script>
-
+    <script src="<?php echo base_url()?>js/pages/ui/modals.js"></script>
     <!-- Demo Js -->
     <script src="<?php echo base_url()?>js/demo.js"></script>
+    <script>
+    $('li > a').click(function() {
+      $('li').removeClass('active');
+      $(this).parent().addClass('active');
+    });
 
-
-
+    $('#dateStart').datepicker({
+        format: 'yyyy-mm-dd',
+        closeText: "Ok",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: true,
+    });
+    $('#dateEnd').datepicker({
+        format: 'yyyy-mm-dd',
+        closeText: "Ok",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: true,
+    });
+    </script>
 </body>
 
 </html>
