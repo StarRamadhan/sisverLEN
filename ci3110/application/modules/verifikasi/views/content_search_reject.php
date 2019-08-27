@@ -28,11 +28,31 @@
                               </div>
                           </div>
                         </div>
+                        <div class="col-md-2">
+                          <div class="form-line">
+                            <select class="form-control show-tick" name="by" required>
+                              <option value="">-- Select One --</option>
+                                <?php if ($this->session->flashdata('ses_by')=='all') {
+                                        echo '<option value="all" selected> All Document </option>';
+                                      }else {
+                                        echo '<option value="all"> All Document </option>';
+                                      }
+                                      if ($this->session->userdata('ses_by')=='me') {
+                                        echo '<option value="me" selected> For Me </option>';
+                                      }else {
+                                        echo '<option value="me"> For Me </option>';
+                                }?>
+                            </select>
+                          </div>
+                        </div>
                         <div class="col-md-3 text-left">
                           <button type="submit" class="btn bg-blue-grey waves-effect waves-float">Search</button>&nbsp
-                          <a type="button" href="<?php echo base_url('jurnalis/dokumen_all')?>" class="btn bg-blue-grey waves-effect waves-float">Reset</a>
+                          <a type="button" href="<?php echo base_url('verifikasi/revisi')?>" class="btn bg-blue-grey waves-effect waves-float">Reset</a>
                         </div>
                       </form>
+                      <div class="col-md-3 text-right">
+                        <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                      </div>
                     </div>
 
                   </div>
@@ -43,7 +63,6 @@
                           Success Add New Data !!
                       </div>
                       <?php
-                      //echo "<script>alert('$flashMessage')</script>";
                      } ?>
                     <div class="body">
                         <div class="table-responsive">
@@ -57,43 +76,36 @@
                                     <th>User</th>
                                     <th>MU</th>
                                     <th>Jumlah</th>
-                                    <th>Lokasi</th>
+                                    <th>Alasan</th>
+                                    <th>Status</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->Tanggal_Masuk?></td>
+                                    <td>
+                                      <?php
+                                          $tgl_msk= $d->Tanggal_Masuk;
+                                          echo date("m-d-Y", strtotime($tgl_msk));
+                                        ?>
+                                    </td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
                                     <td><?php echo $d->User?></td>
                                     <td><?php echo $d->Mata_Uang?></td>
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
-                                    <td>
-                                      <?php
-                                          $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="jurnalis") {
-                                            $lokasi = "Jurnalis";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="verifikasi2/jurnalis") {
-                                            $lokasi = "Verifikasi2/Jurnalis";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="verifikasi3/jurnalis") {
-                                            $lokasi = "Verifikasi3/Jurnalis";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="manager") {
-                                            $lokasi = "Manager";
-                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="finish") {
-                                            $lokasi = "Finish";
-                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="reject") {
-                                            $lokasi = "Reject";
-                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }
-                                      ?>
-                                    </td>
+                                    <td><?php echo $d->Alasan_Revisi?></td>
+                                    <td><?php
+                                        $status = $d->Status_Revisi;
+                                        if ($status=="Done") {?>
+                                          <button class='btn bg-cyan waves-effect'>Done</button>
+                                    <?php
+                                        }elseif ($status=="") {?>
+                                          <button class='btn bg-red waves-effect'  onclick=location.href='<?php echo base_url()?>verifikasi/revisi/edit/<?php echo $d->No ?>'>Edit</button>
+                                    <?php
+                                        }
+                                    ?></td>
                                   </tr>
                                 <?php endforeach; ?>
                               </tbody>

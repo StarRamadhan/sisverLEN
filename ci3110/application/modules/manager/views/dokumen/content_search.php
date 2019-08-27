@@ -7,31 +7,31 @@
                     <h2 class="card-inside-title">Filter</h2>
                     <div class="row clearfix">
                       <form method="post" id="form_advanced_validation" action="<?php //echo base_url().$customSearch ?>">
-
-                          <div class="col-md-5 text-left">
-                            <div class="input-daterange input-group">
-                                <div class="form-line">
-                                    <input type="text" id="dateStart" class="form-control" name='dateStart' placeholder="Date start..." autocomplete="off">
-                                </div>
-                                <span class="input-group-addon">to</span>
-                                <div class="form-line">
-                                    <input type="text" id="dateEnd" class="form-control" name='dateEnd' placeholder="Date end..." autocomplete="off">
-                                </div>
-                            </div>
+                        <div class="col-md-4 text-left">
+                          <div class="input-daterange input-group">
+                              <div class="form-line">
+                                <?php if($this->session->flashdata('ses_startdate')) {
+                                  $flashStart=$this->session->flashdata('ses_startdate');
+                                  echo '<input type="text" id="dateStart" class="form-control" name="dateStart" value="'.$flashStart.'" placeholder="Date start..." autocomplete="off">';
+                                }else{
+                                  echo '<input type="text" id="dateStart" class="form-control" name="dateStart" placeholder="Date start..." autocomplete="off">';
+                                } ?>
+                              </div>
+                              <span class="input-group-addon">to</span>
+                              <div class="form-line">
+                                <?php if($this->session->flashdata('ses_enddate')) {
+                                  $flashEnd=$this->session->flashdata('ses_enddate');
+                                  echo '<input type="text" id="dateEnd" class="form-control" name="dateEnd" value="'.$flashEnd.'" placeholder="Date end..." autocomplete="off">';
+                                }else{
+                                  echo '<input type="text" id="dateEnd" class="form-control" name="dateEnd" placeholder="Date end..." autocomplete="off">';
+                                } ?>
+                              </div>
                           </div>
-                          <!-- <div class="col-md-2">
-                            <div class="form-line">
-                              <select class="form-control show-tick" name="by">
-                                  <option value="">-- Select One --</option>
-                                  <option value="all"> All Document </option>
-                                  <option value="me"> By Me </option>
-                              </select>
-                            </div>
-                          </div> -->
-                          <div class="col-md-3 text-left">
-                            <button type="submit" class="btn bg-blue-grey waves-effect waves-float">Search</button>&nbsp
-                            <a type="button" href="<?php echo base_url('jurnalis/dokumen_all')?>" class="btn bg-blue-grey waves-effect waves-float">Reset</a>
-                          </div>
+                        </div>
+                        <div class="col-md-3 text-left">
+                          <button type="submit" class="btn bg-blue-grey waves-effect waves-float">Search</button>&nbsp
+                          <a type="button" href="<?php echo base_url('manager/dokumen_all')?>" class="btn bg-blue-grey waves-effect waves-float">Reset</a>
+                        </div>
                       </form>
                     </div>
 
@@ -72,22 +72,27 @@
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
                                     <td>
                                       <?php
-                                          $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="jurnal") {
-                                            $lokasi = "Jurnal";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="manager") {
-                                            $lokasi = "Manager";
-                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="finish") {
-                                            $lokasi = "Finish";
-                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=='reject') {
-                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">Rejected</button>';
-                                          }
+                                      $lok_dokumen = $d->Lok_Dokumen;
+                                      if ($lok_dokumen=="jurnalis") {
+                                        $lokasi = "Jurnalis";
+                                        echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                      }elseif ($lok_dokumen=="verifikasi2/jurnalis") {
+                                        $lokasi = "Verifikasi2/Jurnalis";
+                                        echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                      }elseif ($lok_dokumen=="verifikasi3/jurnalis") {
+                                        $lokasi = "Verifikasi3/Jurnalis";
+                                        echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                      }elseif ($lok_dokumen=="manager") {
+                                        $lokasi = "Manager";
+                                        echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                      }elseif ($lok_dokumen=="finish") {
+                                        $lokasi = "Finish";
+                                        echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                      }elseif ($lok_dokumen=="reject") {
+                                        $lokasi = "Reject";
+                                        echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                      }
                                       ?>
-
-                                      <!-- <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>verifikasi/edit/<?php echo $d->No_Verifikasi;?>">Edit</a> -->
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>
@@ -98,6 +103,5 @@
                 </div>
             </div>
         </div>
-    </div>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->

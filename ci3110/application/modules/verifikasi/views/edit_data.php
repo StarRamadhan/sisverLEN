@@ -4,18 +4,32 @@
             <div class="header"><h2>From Document <?php echo $dataedit->No_Verifikasi?>, <br><br>Must Be Fixed : <?php echo $dataedit->Alasan_Revisi; ?></h2></div>
             <div class="body">
                 <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
-                  <div class="form-group form-float">
-                      <div class="form-line hidden">
-                          <input type="text" class="form-control" name="no" value="<?php echo $dataedit->No?>" required readonly>
-                          <label class="form-label">No Revisi</label>
-                      </div>
-                  </div>
+                  <div class="hidden">
+                    <div class="form-group form-float">
+                        <div class="form-line hidden">
+                            <input type="text" class="form-control" name="no" value="<?php echo $dataedit->No?>" required readonly>
+                            <label class="form-label">No Revisi</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="tanggal_masuk" value="<?php echo $dataedit->Tanggal_Masuk?>" required readonly>
+                            <label class="form-label">Tanggal Masuk</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="tgl_out_jurnal" value="<?php echo $dataedit->Tgl_Out_Jurnal?>" required readonly>
+                            <label class="form-label">Tanggal Out Jurnal</label>
+                        </div>
+                    </div>
                     <div class="form-group form-float">
                         <div class="form-line hidden">
                             <input type="text" class="form-control" name="no_verifikasi" value="<?php echo $dataedit->No_Verifikasi?>" required readonly>
                             <label class="form-label">No Dokumen</label>
                         </div>
                     </div>
+                  </div>
                     <div class="form-group form-float">
                       <select class="form-control show-tick" name="kode_ver" required>
                           <?php
@@ -152,10 +166,10 @@
 
                     <div class="row clearfix">
                       <div class="col-md-6 text-left">
-                        <a class='btn btn-default waves-effect waves-blue' type='button' href="<?php echo base_url()?>revisi/">BACK</a>
+                        <button class="btn btn-primary waves-effect" type="submit">UPDATE</button>
                       </div>
                       <div class="col-md-6 text-right">
-                        <button class="btn btn-primary waves-effect" type="submit">UPDATE</button>
+                        <a class='btn btn-primary waves-effect waves-blue' type='button' href="<?php echo base_url()?>verifikasi/revisi/">BACK</a>
                       </div>
                     </div>
                 </form>

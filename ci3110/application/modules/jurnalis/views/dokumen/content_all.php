@@ -18,30 +18,12 @@
                               </div>
                           </div>
                         </div>
-                        <!-- <div class="col-md-2">
-                          <div class="form-line">
-                            <select class="form-control show-tick" name="by">
-                                <option value="">-- Select One --</option>
-                                <option value="all"> All Document </option>
-                                <option value="me"> By Me </option>
-                            </select>
-                          </div>
-                        </div> -->
                         <div class="col-md-3 text-left">
                           <button type="submit" class="btn bg-blue-grey waves-effect waves-float"><i class="material-icons">search</i></button>
                         </div>
                       </form>
                     </div>
                   </div>
-                    <?php if($this->session->flashdata('message')) {
-                      $flashMessage=$this->session->flashdata('message');?>
-                      <div class="alert alert-info alert-dismissible" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          Success Add New Data !!
-                      </div>
-                      <?php
-                      //echo "<script>alert('$flashMessage')</script>";
-                     } ?>
                     <div class="body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
@@ -70,8 +52,14 @@
                                     <td>
                                       <?php
                                           $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="jurnal") {
-                                            $lokasi = "Jurnal";
+                                          if ($lok_dokumen=="jurnalis") {
+                                            $lokasi = "Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="verifikasi2/jurnalis") {
+                                            $lokasi = "Verifikasi2/Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="verifikasi3/jurnalis") {
+                                            $lokasi = "Verifikasi3/Jurnalis";
                                             echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }elseif ($lok_dokumen=="manager") {
                                             $lokasi = "Manager";
@@ -79,8 +67,9 @@
                                           }elseif ($lok_dokumen=="finish") {
                                             $lokasi = "Finish";
                                             echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=='rejected') {
-                                            echo '<button type="button" class="btn bg-cyan waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">Rejected</button>';
+                                          }elseif ($lok_dokumen=="reject") {
+                                            $lokasi = "Reject";
+                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }
                                       ?>
 
@@ -90,40 +79,6 @@
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
-                        </div>
-                        <!-- Default Size MODAL -->
-                        <!-- <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <?php //foreach ($datauser as $d):
-                                      $id_dok = $datauser->No_Verifikasi;
-                                      $dok_jurnal = $datauser->Status_Dok_Jurnal;
-                                      $dok_manager = $datauser->Status_Dok_Manager;
-                                      if ($dok_jurnal=="pending") {
-                                        $lokasi = "Dokumen Berada di Bagian Jurnal";
-                                      }elseif ($dok_manager=="pending") {
-                                        $lokasi = "Dokumen Berada di Bagian Manager";
-                                      }
-                                        ?>
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="defaultModalLabel"><?php echo $id_dok?></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
-                                            vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
-                                            Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
-                                            nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
-                                            Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-                                            <!-- <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                        </div> -->
-
-                                        <?php
-                                     //endforeach; ?>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

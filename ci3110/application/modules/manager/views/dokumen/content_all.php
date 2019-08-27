@@ -18,15 +18,6 @@
                               </div>
                           </div>
                         </div>
-                        <!-- <div class="col-md-2">
-                          <div class="form-line">
-                            <select class="form-control show-tick" name="by">
-                                <option value="">-- Select One --</option>
-                                <option value="all"> All Document </option>
-                                <option value="me"> By Me </option>
-                            </select>
-                          </div>
-                        </div> -->
                         <div class="col-md-3 text-left">
                           <button type="submit" class="btn bg-blue-grey waves-effect waves-float"><i class="material-icons">search</i></button>
                         </div>
@@ -60,7 +51,7 @@
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->operator_id?></td>
+                                    <td><?php echo $d->Tanggal_Masuk?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
@@ -71,21 +62,23 @@
                                       <?php
                                           $lok_dokumen = $d->Lok_Dokumen;
                                           if ($lok_dokumen=="jurnalis") {
-                                              $lokasi = "Jurnalis";
+                                            $lokasi = "Jurnalis";
                                             echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                              // echo $lokasi;
+                                          }elseif ($lok_dokumen=="verifikasi2/jurnalis") {
+                                            $lokasi = "Verifikasi2/Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="verifikasi3/jurnalis") {
+                                            $lokasi = "Verifikasi3/Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }elseif ($lok_dokumen=="manager") {
-                                              $lokasi = "Manager";
-//                                              echo $lokasi;
-                                           echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                            $lokasi = "Manager";
+                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }elseif ($lok_dokumen=="finish") {
-                                              $lokasi = "Finish";
-//                                              echo $lokasi;
-                                           echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=='reject') {
-                                              $lokasi = "Reject";
-//                                              echo $lokasi;
-                                           echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                            $lokasi = "Finish";
+                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="reject") {
+                                            $lokasi = "Reject";
+                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }
                                         ?>
                                     </td>

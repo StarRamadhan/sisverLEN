@@ -34,9 +34,16 @@
         //get data need Response
         function get_all_need_response()
         {
-            $posisi = $this->session->userdata('akses');
+            $role = $this->session->userdata('akses');
+            if ($role=="verifikasi1") {
+              $lokasi = "jurnalis";
+            }elseif ($role=="verifikasi2") {
+              $lokasi = "verifikasi2/jurnalis";
+            }elseif ($role=="verifikasi3") {
+              $lokasi = "verifikasi3/jurnalis";
+            }
             $table=$this->table;
-            $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = 'jurnalis' AND operator.position='$posisi' AND dokumen.`operator_id`=`operator`.`operator_id` ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.position='$role' AND dokumen.`operator_id`=`operator`.`operator_id` ORDER BY Tanggal_Masuk DESC");
             return $sql->result();
             // $this->db->order_by($this->tgl_masuk, $this->order);
             // return $this->db->get($this->table)->result();
@@ -82,14 +89,6 @@
               return $sql->result();
             }
           }
-            // }elseif ((!empty($start)) && (!empty($end)) && (!empty($by)) ) {
-            //   $sql=$this->db->query("SELECT dokumen.*,operator.position FROM dokumen,operator WHERE dokumen.operator_id=operator.operator_id AND operator.position='verifikasi2' AND Tanggal_Masuk BETWEEN  'star' AND '$end' ");
-            //   return $sql->result();
-            // }
-          //}
-
-          // $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = 'jurnalis' AND operator.position='verifikasi1' AND dokumen.`operator_id`=`operator`.`operator_id` ORDER BY Tanggal_Masuk DESC");
-          // return $sql->result();
         }
 
         //COUNT DATA REJECTED
@@ -97,7 +96,7 @@
         {
             $hakakses = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' AND revisi.Status_Revisi IS NULL ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
         }
 
@@ -109,11 +108,18 @@
 
         function count_need_response()
         {
+            $role = $this->session->userdata('akses');
+            if ($role=="verifikasi1") {
+              $lokasi = "jurnalis";
+            }elseif ($role=="verifikasi2") {
+              $lokasi = "verifikasi2/jurnalis";
+            }elseif ($role=="verifikasi3") {
+              $lokasi = "verifikasi3/jurnalis";
+            }
+            // $akses = $this->session->userdata('akses');
             $table=$this->table;
-            $sql=$this->db->query("SELECT * FROM dokumen WHERE Lok_Dokumen = 'manager' ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.operator_id=dokumen.operator_id and operator.position='$role' ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
-            // $this->db->order_by($this->tgl_masuk, $this->order);
-            // return $this->db->get($this->table)->result();
         }
 
         // //get data dari tabel operator dan dokumen

@@ -19,6 +19,7 @@ class verifikasi extends MY_Controller{
   public function index()
   {
     $count_rejected =$this->Verifikasi_model->count_rejected();
+    $countResponse =$this->Verifikasi_model->count_need_response();
     $datauser=$this->Verifikasi_model->get_all();//panggil ke modell
     $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
     $lastdate=$this->Verifikasi_model->get_last_date();
@@ -27,6 +28,7 @@ class verifikasi extends MY_Controller{
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
        'datauser'=>$datauser,
+       'countResponse' => $countResponse,
        'count_rejected' => $count_rejected,
        'datafield'=>$datafield,
        'customSearch' =>'verifikasi/customSearch',
@@ -92,9 +94,13 @@ class verifikasi extends MY_Controller{
       'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
       'kode_ver' =>$this->input->post('kode_ver',TRUE),
       'keterangan' => $this->input->post('keterangan',TRUE),
+      'user' => $this->input->post('user',TRUE),
       'mata_uang' => $this->input->post('mata_uang',TRUE),
       'jumlah' => $this->input->post('jumlah',TRUE),
-      'alasan_revisi' => $this->input->post('alasan',true)
+      'tgl_out_verif' => $this->input->post('tgl_out_verif',TRUE),
+      'tgl_out_jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
+      'alasan_revisi' => $this->input->post('alasan',true),
+      'operator_id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'reject',
@@ -167,6 +173,15 @@ class verifikasi extends MY_Controller{
         $pk2 = $this->input->post('kode_ver');
         $pk3 = date("m/Y");
         $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
+
+        $role = $this->session->userdata('akses');
+        if ($role=='verifikasi1') {
+            $lokasi = "jurnalis";
+        }else{
+            $lokasi = $role."/jurnalis";
+        }
+
+
         $data = array(
           'No' => $nownumber,
           'operator_id' => $this->input->post('operator_id',TRUE),
@@ -178,7 +193,7 @@ class verifikasi extends MY_Controller{
           'User' => $this->input->post('user',TRUE),
           'Keterangan' => $this->input->post('keterangan',TRUE),
           'Jumlah' => $this->input->post('jumlah',TRUE),
-          'Lok_Dokumen' => 'jurnalis'
+          'Lok_Dokumen' => $lokasi
         );
         $this->Verifikasi_model->insert($data);
         $this->session->set_flashdata('message', 'Create Record Success');
@@ -187,6 +202,7 @@ class verifikasi extends MY_Controller{
 
   //LOAD HALAMAN EDIT
   public function edit_profil($operator_id){
+    $countResponse =$this->Verifikasi_model->count_need_response();
     $dataedit=$this->Verifikasi_model->get_by_id_profil($operator_id);
     $count_rejected =$this->Verifikasi_model->count_rejected();
 
@@ -194,10 +210,10 @@ class verifikasi extends MY_Controller{
        'content'=>'verifikasi/edit_profil',
        'sidebar'=>'verifikasi/sidebar',
        'navbar'=>'verifikasi/navbar',
-       //'role'=>$this->Verifikasi_model->gender_enums('user' , 'position' ),
        'action'=>'verifikasi/verifikasi/update_action',
        'dataedit'=>$dataedit,
        'count_rejected' => $count_rejected,
+       'countResponse' => $countResponse,
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
        'controller'=>'verifikasi'

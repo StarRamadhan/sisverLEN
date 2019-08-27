@@ -23,10 +23,8 @@
         {
           $hakakses = $this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' ORDER BY No DESC");
+          $sql=$this->db->query("SELECT * FROM revisi WHERE revisi.Operator_Id='$hakakses' ORDER BY revisi.No DESC");
           return $sql->result();
-            // $this->db->order_by($this->no, $this->order);
-            // return $this->db->get($this->table)->result();
         }
 
         function get_data_verif(){
@@ -34,6 +32,48 @@
           //$sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
           $sql=$this->db->query("SELECT revisi.*,dokumen.* FROM revisi,`dokumen` WHERE revisi.`No_Verifikasi`=`dokumen`.`No_Verifikasi` ORDER BY 'No' DESC"); //ganti * untuk custom field yang ditampilkan pada table
           return $sql->list_fields();
+        }
+
+        function get_data_search(){
+          $table=$this->table;
+          $start=$this->input->post('dateStart',TRUE);
+          $end=$this->input->post('dateEnd',TRUE);
+          $by = $this->input->post('by',true);
+          $id_login = $this->session->userdata('ses_id');
+
+          if ((empty($start)) && (empty($end))) {
+            if ($by == 'me') {
+              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login'");
+              return $sql->result();
+            }elseif ($by == 'all') {
+              $sql=$this->db->query("SELECT * FROM revisi");
+              return $sql->result();
+            }
+          }if ((!empty($start)) && (!empty($end))) {
+            if ($by == 'me') {
+              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' ");
+              return $sql->result();
+            }elseif ($by == 'all') {
+              $sql=$this->db->query("SELECT * FROM revisi where Tanggal_Masuk BETWEEN '$start' AND '$end' ");
+              return $sql->result();
+            }
+          }if ((!empty($start)) && (empty($end))) {
+            if ($by == 'me') {
+              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$start'");
+              return $sql->result();
+            }elseif ($by == 'all') {
+              $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$start'");
+              return $sql->result();
+            }
+          }if ((empty($start)) && (!empty($end))) {
+            if ($by == 'me') {
+              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$end'");
+              return $sql->result();
+            }elseif ($by == 'all') {
+              $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$end'");
+              return $sql->result();
+            }
+          }
         }
 
         //get field
@@ -61,10 +101,25 @@
         {
             $hakakses = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT * FROM revisi WHERE revisi.Operator_Id='$hakakses' ORDER BY revisi.No DESC");
             return $sql->num_rows();
         }
 
+        function count_need_response()
+        {
+            $role = $this->session->userdata('akses');
+            if ($role=="verifikasi1") {
+              $lokasi = "jurnalis";
+            }elseif ($role=="verifikasi2") {
+              $lokasi = "verifikasi2/jurnalis";
+            }elseif ($role=="verifikasi3") {
+              $lokasi = "verifikasi3/jurnalis";
+            }
+            //$akses = $this->session->userdata('akses');
+            $table=$this->table_dokumen;
+            $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.operator_id=dokumen.operator_id and operator.position='$role' ORDER BY Tanggal_Masuk DESC");
+            return $sql->num_rows();
+        }
         // insert data
         function insert($data)
         {
@@ -80,7 +135,7 @@
         }
         function update_revisi($id, $data)
         {
-            $this->db->where($this->id, $id);
+            $this->db->where($this->no, $id);
             $this->db->update($this->table, $data);
 
         }

@@ -44,9 +44,13 @@ class jurnalis extends MY_Controller{
       'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
       'kode_ver' =>$this->input->post('kode_ver',TRUE),
       'keterangan' => $this->input->post('keterangan',TRUE),
+      'user' => $this->input->post('user',TRUE),
       'mata_uang' => $this->input->post('mata_uang',TRUE),
       'jumlah' => $this->input->post('jumlah',TRUE),
-      'alasan_revisi' => $this->input->post('alasan',true)
+      'tgl_out_verif' => $this->input->post('tgl_out_verif',TRUE),
+      'tgl_out_jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
+      'alasan_revisi' => $this->input->post('alasan',true),
+      'operator_id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'reject',
@@ -58,6 +62,7 @@ class jurnalis extends MY_Controller{
   }
 
   public function approve(){
+    date_default_timezone_set("Asia/Jakarta");
     $now = date('Y-m-d');
     $dataResponse = array(
       'Lok_Dokumen' => 'manager',
@@ -125,7 +130,13 @@ class jurnalis extends MY_Controller{
        'titlePage'=>'jurnalis',
        'controller'=>'jurnalis'
       );
-    $this->template->load($data);
+      $ses_startdate = $this->input->post('dateStart',TRUE);
+      $ses_enddate = $this->input->post('dateEnd',TRUE);
+      $ses_by = $this->input->post('by',TRUE);
+      $this->session->set_flashdata('ses_startdate', $ses_startdate);
+      $this->session->set_flashdata('ses_enddate', $ses_enddate);
+      $this->session->set_flashdata('ses_by', $ses_by);
+      $this->template->load($data);
   }
 
   public function edit_profil($operator_id){

@@ -33,7 +33,7 @@
                         <button class="btn btn-primary waves-effect waves-white" type="submit">SAVE</button>
                       </div>
                       <div class="col-md-6 text-right">
-                        <a class='btn btn-primary waves-effect waves-white' type='button' href="<?php echo base_url()?>jurnalis/">CANCEL</a>
+                        <a class='btn btn-primary waves-effect waves-white' type='button' href="<?php echo base_url()?>manager/">CANCEL</a>
                       </div>
                     </div>
                 </form>

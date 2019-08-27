@@ -27,7 +27,7 @@
                   <li class="li-trigger">
                       <a href="<?php echo base_url('verifikasi/document_need_response');?>">
                           <i class="material-icons">description</i>
-                          <span class="badge badge-pill bg-orange" style="color:white;">7</span>
+                          <span class="badge badge-pill bg-orange" style="color:white;"><?php echo $countResponse ?></span>
                           <span>Need Response</span>
                       </a>
                   </li>

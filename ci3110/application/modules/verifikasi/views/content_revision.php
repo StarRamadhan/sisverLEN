@@ -5,10 +5,32 @@
                 <div class="card">
                     <div class="header">
                       <div class="row clearfix">
-                            <div class="col-md-6 text-left">
-                              <h2> Data Revisi </h2>
+                        <form method="post" id="form_advanced_validation" action="<?php echo base_url().$customSearchReject ?>">
+                          <div class="col-md-4 text-left">
+                            <div class="input-daterange input-group">
+                                <div class="form-line">
+                                    <input type="text" id="dateStart" class="form-control" name='dateStart' placeholder="Date start..." autocomplete="off">
+                                </div>
+                                <span class="input-group-addon">to</span>
+                                <div class="form-line">
+                                    <input type="text" id="dateEnd" class="form-control" name='dateEnd' placeholder="Date end..." autocomplete="off">
+                                </div>
                             </div>
-                        </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-line">
+                              <select class="form-control show-tick" name="by" required>
+                                  <option value="">-- Select One --</option>
+                                  <option value="all"> All Document </option>
+                                  <option value="me"> For Me </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-3 text-left">
+                            <button type="submit" class="btn bg-blue-grey waves-effect waves-float"><i class="material-icons">search</i></button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                     <?php if($this->session->flashdata('flashMessage')) {
                       $flashMessage=$this->session->flashdata('flashMessage');?>
@@ -27,53 +49,36 @@
                                     <!-- <?php foreach ($datafield as $d): ?>
                                       <th><?php echo str_replace("_"," ",$d) ?></th>
                                     <?php endforeach; ?> -->
-                                    <th>Tanggal Masuk</th>
-                                    <th>No</th>
+                                    <th>Tanggal</th>
                                     <th>No Verifikasi</th>
                                     <th>Keterangan</th>
                                     <th>User</th>
                                     <th>MU</th>
                                     <th>Jumlah</th>
                                     <th>Alasan</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                               </thead>
-                              <!-- <tfoot>
-                                <tr>
-                                    <?php foreach ($datafield as $d): ?>
-                                      <th><?php echo str_replace("_"," ",$d) ?></th>
-                                    <?php endforeach; ?>
-                                    <th>aksi</th>
-                                </tr>
-                              </tfoot> -->
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
                                     <td><?php echo $d->Tanggal_Masuk?></td>
-                                    <td><?php echo $d->No?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Keterangan?></td>
                                     <td><?php echo $d->User?></td>
                                     <td><?php echo $d->Mata_Uang?></td>
                                     <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
                                     <td><?php echo $d->Alasan_Revisi?></td>
-                                    <td><?php echo $d->Status_Revisi?></td>
-                                    <td>
-                                    <?php
+                                    <td><?php
                                         $status = $d->Status_Revisi;
-                                        if ($status=="Selesai") {?>
-                                          <button class='btn bg-teal waves-effect'  onclick=location.href='<?php echo base_url()?>verifikasi/revisi/edit/<?php echo $d->No ?>'>Edit</button>
+                                        if ($status=="Done") {?>
+                                          <button class='btn bg-cyan waves-effect'>Done</button>
                                     <?php
                                         }elseif ($status=="") {?>
                                           <button class='btn bg-red waves-effect'  onclick=location.href='<?php echo base_url()?>verifikasi/revisi/edit/<?php echo $d->No ?>'>Edit</button>
                                     <?php
                                         }
-                                    ?>
-
-
-
-                                    </td>
+                                    ?></td>
                                   </tr>
                                 <?php endforeach; ?>
                               </tbody>

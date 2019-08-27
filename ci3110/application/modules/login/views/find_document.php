@@ -29,63 +29,80 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">PT. LEN (PERSERO)</a>
-            <small>Verifikasi - Akuntansi</small>
+            <a href="javascript:void(0);">RESULT :</a>
         </div>
         <div class="card">
             <div class="body">
-                <form id="loginform" method="POST" action="login/auth">
-                    <div class="msg">Sign in to start your session</div>
+              <?php
+
+          		if(count($find)>0)
+          		{
+          			foreach ($find as $data) {
+          		?>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="material-icons">person</i>
+                            <i class="material-icons">calendar_today</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                          <label>Tanggal : <?php echo $data->Tanggal_Masuk?></label>
                         </div>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="material-icons">lock</i>
+                            <i class="material-icons">vpn_key</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                          <label>No Verifikasi : <?php echo $data->No_Verifikasi?></label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">description</i>
+                        </span>
+                        <div class="form-line">
+                          <label>Keterangan : <?php echo $data->Keterangan?></label>
                         </div>
                     </div>
-                    </form>
-                    <p style="text-align:center;">OR</p>
-                    <div class="row">
-                      <form id="loginform" method="GET" action="<?php echo base_url('login/search/result')?>">
-                        <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">face</i>
+                        </span>
+                        <div class="form-line">
+                          <label>User : <?php echo $data->User?></label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">monetization_on</i>
+                        </span>
+                        <div class="form-line">
+                          <label>Jumlah : <?php echo $data->Jumlah." (".$data->Mata_Uang.")"?></label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">navigation</i>
+                        </span>
+                        <div class="form-line">
+                          <label>Lokasi : <?php echo $data->Lok_Dokumen?></label>
+                        </div>
+                    </div>
+                  <?php
+                          }
+                    		}else{?>
                           <div class="input-group">
                               <span class="input-group-addon">
-                                  <i class="material-icons">search</i>
+                                  <label style="text-align:center;"><h3>Your Document Not Found !!!</h3></label>
                               </span>
-                              <div class="form-line">
-                                  <input type="text" name='NoVerifikasi' class="form-control" placeholder="Find Your Document...">
-                              </div>
+
                           </div>
+                  <?php
+                    		}?>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <a type="button" href="<?php echo base_url('login')?>" class="btn btn-block bg-pink waves-effect" type="submit">BACK</a>
                         </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-block bg-cyan waves-effect" type="submit">SEARCH</button>
-                        </div>
-                      </form>
                     </div>
-                    <?php if($this->session->flashdata('flashMessage')) {
-                      $flashMessage=$this->session->flashdata('flashMessage');?>
-                      <div class="alert alert-warning alert-dismissible" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          Username or Password is Incorrect !!
-                      </div>
-                      <?php
-                     } ?>
-
-
             </div>
         </div>
     </div>

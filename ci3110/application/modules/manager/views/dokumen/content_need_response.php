@@ -8,7 +8,7 @@
 
                       <div class="row clearfix">
                             <div class="col-md-6 text-left">
-                              <h2> Data User </h2>
+                              <h2> Document Need Response  </h2>
                               <!-- <p><?php
                                 //$sql=$this->db->query("SELECT * from dokumen order by Tanggal_Masuk DESC limit 1");
 
@@ -18,7 +18,7 @@
                     </div>
                     <?php if($this->session->flashdata('rejectMessage')) {
                       $flashMessage=$this->session->flashdata('rejectMessage');?>
-                      <div class="alert alert-info alert-dismissible" role="alert">
+                      <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           Data Rejected !!
                       </div>
@@ -74,16 +74,23 @@
                                               <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
                                             </div>
                                             <div class="modal-body">
-                                              <input type="text" class="form-control " name="tanggal_masuk" value="<?php echo $d->Tanggal_Masuk?>"required>
-                                              <input type="text" class="form-control " name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
-                                              <input type="text" class="form-control " name="kode_ver" value="<?php echo $d->Kode_Ver?>"required>
-                                              <input type="text" class="form-control " name="keterangan" value="<?php echo $d->Keterangan?>"required>
-                                              <input type="text" class="form-control " name="mata_uang" value="<?php echo $d->Mata_Uang?>"required>
-                                              <input type="text" class="form-control " name="jumlah" value="<?php echo $d->Jumlah?>"required>
-                                              <p>Are You Sure Want to Accept document : <?php echo $d->No_Verifikasi?></p>
-                                              <br>
-                                              <p>Reason :</p>
-                                              <textarea type="text" class="form-control" name="alasan" required></textarea>
+                                              <h3>Are You Sure Want to Reject document : <?php echo $d->No_Verifikasi?></h3>
+                                              <div class="form_line">
+                                                <textarea type="text" rows="4" cols="40" class="form-control" name="alasan" placeholder="Reason?" required></textarea>
+                                              </div>
+                                              <div>
+                                                <input type="text" class="form-control " name="tanggal_masuk" value="<?php echo $d->Tanggal_Masuk?>"required>
+                                                <input type="text" class="form-control " name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
+                                                <input type="text" class="form-control " name="kode_ver" value="<?php echo $d->Kode_Ver?>"required>
+                                                <input type="text" class="form-control " name="keterangan" value="<?php echo $d->Keterangan?>"required>
+                                                <input type="text" class="form-control " name="user" value="<?php echo $d->User?>"required>
+                                                <input type="text" class="form-control " name="mata_uang" value="<?php echo $d->Mata_Uang?>"required>
+                                                <input type="text" class="form-control " name="jumlah" value="<?php echo $d->Jumlah?>"required>
+                                                <input type="text" class="form-control " name="tgl_out_verif" value="<?php echo $d->Tgl_Out_Verif?>"required>
+                                                <input type="text" class="form-control " name="tgl_out_jurnal" value="<?php echo $d->Tgl_Out_Jurnal?>"required>
+                                                <input type="text" class="form-control " name="operator_id" value="<?php echo $d->operator_id?>"required>
+                                              </div>
+
                                             </div>
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancel</button>
@@ -105,8 +112,8 @@
                                               <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
                                             </div>
                                             <div class="modal-body">
-                                              <input type="text" class="form-control " name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
-                                              <p>Are You Sure Want to Approve this Document : <?php echo $d->No_Verifikasi?></p>
+                                              <input type="text" class="form-control hidden" name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
+                                              <h3>Are You Sure Want to Approve this Document : <?php echo $d->No_Verifikasi?></h3>
                                               <br>
                                             </div>
                                             <div class="modal-footer">
@@ -122,13 +129,10 @@
                                 <?php endforeach; ?>
                               </tbody>
                             </table>
-
-
-                        </div>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->

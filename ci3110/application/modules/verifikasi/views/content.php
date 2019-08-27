@@ -88,6 +88,12 @@
                                           if ($lok_dokumen=="jurnalis") {
                                             $lokasi = "Jurnalis";
                                             echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="verifikasi2/jurnalis") {
+                                            $lokasi = "Verifikasi2/Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          }elseif ($lok_dokumen=="verifikasi3/jurnalis") {
+                                            $lokasi = "Verifikasi3/Jurnalis";
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }elseif ($lok_dokumen=="manager") {
                                             $lokasi = "Manager";
                                             echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
