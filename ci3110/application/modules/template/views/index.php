@@ -93,7 +93,7 @@
 
     <!-- Jquery Core Js -->
     <script src="<?php echo base_url()?>plugins/jquery/jquery.min.js"></script>
-
+    <script src="<?php echo base_url()?>plugins/jquery/jquery.js"></script>
     <!-- Bootstrap Core Js -->
     <script src="<?php echo base_url()?>plugins/bootstrap/js/bootstrap.js"></script>
 
@@ -161,6 +161,27 @@
         todayHighlight: true,
         clearBtn: true,
     });
+
+
+  var tgl1 = new Date();
+  tgl1.setMonth(tgl1.getMonth()-1);
+  tgl1.setDate(1);
+  var tgl2 = new Date();
+  tgl2.setMonth(tgl2.getMonth()-1);
+  tgl2.setDate(15);
+   // lastmonth = new Date(tgl.getMonth()-1, date.getDate()+15);
+
+  // tgl.setDate(tgl.getDate()-10);
+
+  $('#customDate').datepicker({
+      startDate: tgl1,
+      endDate:tgl2,
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      clearBtn: true,
+  });
+
+
     </script>
 </body>
 

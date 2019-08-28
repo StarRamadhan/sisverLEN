@@ -66,7 +66,7 @@
                      } ?>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <table class="table table-bordered table-striped table-hover js-exportable dataTable">
                               <thead>
                                 <tr>
                                     <th>Tanggal</th>
@@ -117,8 +117,6 @@
                                             echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
                                           }
                                       ?>
-
-                                      <!-- <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>verifikasi/edit/<?php echo $d->No_Verifikasi;?>">Edit</a> -->
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>

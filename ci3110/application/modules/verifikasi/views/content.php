@@ -31,8 +31,26 @@
                             <button type="submit" class="btn bg-blue-grey waves-effect waves-float"><i class="material-icons">search</i></button>
                           </div>
                         </form>
-                        <div class="col-md-3 text-right">
-                          <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                        <div class="col-md-3 text-left">
+                          <?php
+                            if ($this->session->userdata('akses')=='verifikasi1') {?>
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Add New Document <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu">
+                                      <li><a href="<?php echo base_url('verifikasi/create');?>">Current Date</a></li>
+                                      <li role="separator" class="divider"></li>
+                                      <li><a href="<?php echo base_url('verifikasi/custom_create');?>">Custom Date</a></li>
+                                  </ul>
+                              </div>
+                              <?php
+                            }else{?>
+                                  <a href="<?php echo base_url('verifikasi/create');?>" type="button" class="btn bg-blue waves-effect">Add New Data</a>
+                              <?php
+                            }
+                          ?>
+
                         </div>
                       </div>
                     </div>
@@ -48,7 +66,7 @@
                      } ?>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="tableVerif">
+                            <table class="table table-bordered table-striped table-hover js-exportable dataTable">
                               <thead>
                                 <tr>
                                     <!-- <?php foreach ($datafield as $d): ?>
@@ -64,14 +82,6 @@
                                     <th>Lokasi</th>
                                 </tr>
                               </thead>
-                              <!-- <tfoot>
-                                <tr>
-                                    <?php foreach ($datafield as $d): ?>
-                                      <th><?php echo str_replace("_"," ",$d) ?></th>
-                                    <?php endforeach; ?>
-                                    <th>aksi</th>
-                                </tr>
-                              </tfoot> -->
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>

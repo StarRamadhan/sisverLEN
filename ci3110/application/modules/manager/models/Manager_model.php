@@ -76,25 +76,30 @@
             return $this->db->get($this->table)->row();
         }
 
-
-        //get DATA SEARCH
+  //get DATA SEARCH
         function get_data_search(){
           $table=$this->table;
-            $start=$this->input->post('dateStart',TRUE);
-            $end=$this->input->post('dateEnd',TRUE);
-            //$by = $this->input->post('by',true);
-          //  if ((!empty($start)) && (!empty($end)) && (empty($by))) {
-              $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' ");
-              return $sql->result();
-            // }elseif ((!empty($start)) && (!empty($end)) && (!empty($by)) ) {
-            //   $sql=$this->db->query("SELECT dokumen.*,operator.position FROM dokumen,operator WHERE dokumen.operator_id=operator.operator_id AND operator.position='verifikasi2' AND Tanggal_Masuk BETWEEN  'star' AND '$end' ");
-            //   return $sql->result();
-            // }
-          //}
+          $start=$this->input->post('dateStart',TRUE);
+          $end=$this->input->post('dateEnd',TRUE);
+          $by = $this->input->post('by',true);
+          $id_login = $this->session->userdata('ses_id');
 
-          // $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = 'jurnalis' AND operator.position='verifikasi1' AND dokumen.`operator_id`=`operator`.`operator_id` ORDER BY Tanggal_Masuk DESC");
-          // return $sql->result();
+          if ((empty($start)) && (empty($end))) {
+            $sql=$this->db->query("SELECT * FROM dokumen");
+            return $sql->result();
+          }if ((!empty($start)) && (!empty($end))) {
+            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Manager BETWEEN '$start' AND '$end' ");
+            return $sql->result();
+          }if ((!empty($start)) && (empty($end))) {
+            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Manager = '$start'");
+            return $sql->result();
+          }if ((empty($start)) && (!empty($end))) {
+            $sql=$this->db->query("SELECT * FROM dokumen WHERE Tgl_Out_Manager = '$end'");
+            return $sql->result();
+          }
+
         }
+
 
 
         // insert data

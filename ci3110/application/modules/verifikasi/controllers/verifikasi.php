@@ -200,6 +200,84 @@ class verifikasi extends MY_Controller{
         redirect(base_url('verifikasi'));
       }
 
+    public function custom_create(){
+      $count_rejected =$this->Verifikasi_model->count_rejected();
+      $countResponse =$this->Verifikasi_model->count_need_response();
+      $lastdate=$this->Verifikasi_model->get_last_date();
+      $lastnumber=$this->Verifikasi_model->get_last_num();
+       $data = array(
+         'content' => 'verifikasi/create_custom_date',
+         'sidebar'=>'verifikasi/sidebar',//Ini buat menu yang ditampilkan di module verifikasi {DIKIRIM KE TEMPLATE}
+         'navbar'=>'verifikasi/navbar',
+         'lastnumber'=>$lastnumber,
+         'lastdate'=>$lastdate,
+         'countResponse' => $countResponse,
+         'count_rejected' => $count_rejected,
+         'action'=>'verifikasi/custom_create_action',
+         'module'=>'verifikasi',
+         'titlePage'=>'verifikasi',
+         'controller'=>'verifikasi'
+        );
+      $this->template->load($data);
+    }
+    public function custom_create_action()
+        {
+          //INISIALISASI TANGGAL
+          $lastdate=$this->Verifikasi_model->get_last_date_custom();
+          $lastmonth= date("m", strtotime($lastdate->Tanggal_Masuk));
+          $monthnow=date('m');
+          $yearnow=date('Y');
+
+          //PENENTUAN NOMOR BERDASARKAN TANGGAL
+          // if ($lastmonth!=$monthnow) {
+          //   $lastnumber=1;
+          //   $nownumber=($lastnumber->maks+1);
+          // }elseif ($lastmonth==$monthnow) {
+          //   $lastnumber=$this->Verifikasi_model->get_last_num();
+          //   $nownumber=($lastnumber->maks+1);
+          //   $numrows=$this->Verifikasi_model->get_num_row($nownumber);
+          //   if ($num_rows->nomor>1) {
+          //     $lastnumber=$lastnumber+1;
+          //   }
+          // }
+          $timezone = date_default_timezone_set('Asia/Jakarta');
+          $lastnumber=$this->Verifikasi_model->get_last_num_custom();
+          $nownumber=($lastnumber->maks+1);
+          $now = $this->input->post('customDate',TRUE);
+          //$now = date('Y-m-d H:i:s');
+          //PEMBUATAN KODE UNIK
+          $pk1 = sprintf("%04s", $nownumber);
+          $pk2 = $this->input->post('kode_ver');
+          // $pk3 = date("m/Y");
+          $pk3 = date("m/Y", strtotime($now));
+          $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
+
+          $role = $this->session->userdata('akses');
+          if ($role=='verifikasi1') {
+              $lokasi = "jurnalis";
+          }else{
+              $lokasi = $role."/jurnalis";
+          }
+
+
+          $data = array(
+            'No' => $nownumber,
+            'operator_id' => $this->input->post('operator_id',TRUE),
+            'Tanggal_Masuk' => $now,
+            'tgl_out_verif' => $now,
+            'No_Verifikasi' => $primarykey,
+            'Kode_Ver' => $this->input->post('kode_ver',TRUE),
+            'Mata_Uang' => $this->input->post('mata_uang',TRUE),
+            'User' => $this->input->post('user',TRUE),
+            'Keterangan' => $this->input->post('keterangan',TRUE),
+            'Jumlah' => $this->input->post('jumlah',TRUE),
+            'Lok_Dokumen' => $lokasi
+          );
+          $this->Verifikasi_model->insert($data);
+          $this->session->set_flashdata('message', 'Create Record Success');
+          redirect(base_url('verifikasi'));
+        }
+
   //LOAD HALAMAN EDIT
   public function edit_profil($operator_id){
     $countResponse =$this->Verifikasi_model->count_need_response();

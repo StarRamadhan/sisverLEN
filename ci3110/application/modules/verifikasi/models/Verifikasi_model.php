@@ -132,10 +132,15 @@
         //get max nomor
         function get_last_num(){
           $table=$this->table;
-          //$sql=$this->db->query("SELECT No from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
           $sql=$this->db->query("SELECT MAX(No) as maks from dokumen where  MONTH(Tanggal_Masuk)=MONTH(CURRENT_DATE) and YEAR(Tanggal_Masuk)=YEAR(CURRENT_DATE)");
           return $sql->row();
         }
+        function get_last_num_custom(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT MAX(NO) AS maks FROM dokumen WHERE  MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(Tanggal_Masuk)=YEAR(CURRENT_DATE)");
+          return $sql->row();
+        }
+
 
         //get nomor untuk validasi agar tidak terjadi duplikat nomor
         function get_num_row($nownumber){
@@ -147,6 +152,11 @@
         function get_last_date(){
           $table=$this->table;
           $sql=$this->db->query("SELECT Tanggal_Masuk from dokumen order by Tanggal_Masuk DESC limit 1"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->row();
+        }
+        function get_last_date_custom(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT Tanggal_Masuk FROM dokumen WHERE MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) ORDER BY Tanggal_Masuk DESC LIMIT 1"); //ganti * untuk custom field yang ditampilkan pada table
           return $sql->row();
         }
 

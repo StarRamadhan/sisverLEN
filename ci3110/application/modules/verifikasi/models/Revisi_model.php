@@ -101,7 +101,7 @@
         {
             $hakakses = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT * FROM revisi WHERE revisi.Operator_Id='$hakakses' ORDER BY revisi.No DESC");
+            $sql=$this->db->query("SELECT * FROM revisi WHERE revisi.Operator_Id='$hakakses' and Status_Revisi IS NULL ORDER BY revisi.No DESC");
             return $sql->num_rows();
         }
 

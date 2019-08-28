@@ -91,13 +91,13 @@
             $sql=$this->db->query("SELECT * FROM dokumen");
             return $sql->result();
           }if ((!empty($start)) && (!empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' ");
+            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Jurnal BETWEEN '$start' AND '$end' ");
             return $sql->result();
           }if ((!empty($start)) && (empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$start'");
+            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Jurnal = '$start'");
             return $sql->result();
           }if ((empty($start)) && (!empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$end'");
+            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Jurnal = '$end'");
             return $sql->result();
           }
 

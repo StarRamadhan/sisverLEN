@@ -78,7 +78,7 @@
                                               <div class="form_line">
                                                 <textarea type="text" rows="4" cols="40" class="form-control" name="alasan" placeholder="Reason?" required></textarea>
                                               </div>
-                                              <div>
+                                              <div class="hidden">
                                                 <input type="text" class="form-control " name="tanggal_masuk" value="<?php echo $d->Tanggal_Masuk?>"required>
                                                 <input type="text" class="form-control " name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
                                                 <input type="text" class="form-control " name="kode_ver" value="<?php echo $d->Kode_Ver?>"required>
