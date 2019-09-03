@@ -1,7 +1,9 @@
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
-
+            <div class="header">
+                <h2>Create New Data</h2>
+            </div>
             <div class="body">
                 <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
                     <div class="form-group form-float">
@@ -23,7 +25,7 @@
                               <option value='verifikasi2'>Verification 2</option>;
                               <option value='verifikasi3'>Verification 3</option>;
                               <option value='manager'>Manager</option>;
-                              <option value='jurnal'>Journal</option>;
+                              <option value='jurnal'>Jurnal</option>;
                               <option value='admin'>Admin</option>;
 
                       </select>
@@ -41,8 +43,14 @@
                               <option value='nonactive'>Nonactive</option>;
                       </select>
                     </div>
-                        <a class='btn btn-info waves-effect' type='button' href="<?php echo base_url()?>admin/">BACK</a>
-                    <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                    <div class="row clearfix">
+                      <div class="col-md-6 text-left">
+                        <button class="btn btn-primary waves-effect waves-white" type="submit">SAVE</button>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <a class='btn btn-primary waves-effect waves-white' type='button' href="<?php echo base_url()?>admin/">CANCEL</a>
+                      </div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -8,19 +8,7 @@
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo strtoupper($this->session->userdata('ses_nama'));?></div>
-                <div class="email"><?php echo $this->session->userdata('akses')?></div>
-                <div class="btn-group user-helper-dropdown">
-                    <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="<?php echo base_url('login/logout');?>"><i class="material-icons">input</i>Sign Out</a></li>
-                    </ul>
-                </div>
+                <!-- <div class="email"><?php echo $this->session->userdata('akses')?></div> -->
             </div>
         </div>
         <!-- #User Info -->
@@ -29,24 +17,31 @@
             <ul class="list">
                 <li class="header">DASHBOARD</li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('manager/dokumen_not_acc');?>">
-                        <i class="material-icons">dashboard</i>
-                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Not Acc</span>
+                    <a href="<?php echo base_url('manager/');?>">
+                        <i class="material-icons">description</i>
+                        <span class="badge badge-pill bg-orange" style="color:white;"><?php echo $countResponse?></span>
+                        <span>Need Response</span>
                     </a>
                 </li>
-                <li class="li-trigger">
-                    <a href="<?php echo base_url('manager/dokumen_acc/');?>">
+                <!-- <li class="li-trigger">
+                    <a href="<?php echo base_url('jurnalis/dokumen_approved');?>">
                         <i class="material-icons">assignment_late</i>
                         <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>Document Acc</span>
+                        <span>Document Approved</span>
+                    </a>
+                </li> -->
+                <li class="li-trigger">
+                    <a href="<?php echo base_url('manager/dokumen_all');?>">
+                        <i class="material-icons">assignment</i>
+                        <!-- <span class="badge badge-pill bg-orange" style="color:white;">7</span> -->
+                        <span>All Document</span>
                     </a>
                 </li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('manager');?>">
-                        <i class="material-icons">dashboard</i>
-                        <span class="badge badge-pill bg-orange" style="color:white;">7</span>
-                        <span>All Document</span>
+                    <a href="<?php echo base_url('manager/dashboard');?>">
+                        <i class="material-icons">assignment</i>
+                        <!-- <span class="badge badge-pill bg-orange" style="color:white;">7</span> -->
+                        <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="header">SETTING</li>
@@ -57,7 +52,7 @@
                     </a>
                 </li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('manager');?>">
+                    <a href="<?php echo base_url('login/logout');?>">
                         <i class="material-icons">power_settings_new</i>
                         <span>Logout</span>
                     </a>

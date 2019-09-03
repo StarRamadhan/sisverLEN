@@ -18,71 +18,148 @@ class verifikasi extends MY_Controller{
 
   public function index()
   {
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $countResponse =$this->Verifikasi_model->count_need_response();
     $datauser=$this->Verifikasi_model->get_all();//panggil ke modell
     $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
-    $dataverif=$this->Verifikasi_model->get_data_verif();//panggil ke modell
     $lastdate=$this->Verifikasi_model->get_last_date();
-     $data = array(
-//       'titleNavbar'=>'PT. LEN (PERSERO) - UNIT VERIFIKASI',
-       'content'=>'verifikasi/dokumen/content',
+
+    $dataToday = $this->Verifikasi_model->get_data_today();
+    $dataThisMonth = $this->Verifikasi_model->get_data_thismonth();
+    $dataLastMonth = $this->Verifikasi_model->get_data_lastmonth();
+    $dataRejected = $this->Verifikasi_model->get_data_rejected();
+    //$dataThisYear = $this->Verifikasi_model->get_data_thisyear();
+    $data = array(
+       'content'=>'verifikasi/content',
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
        'datauser'=>$datauser,
+       'countResponse' => $countResponse,
+       'count_rejected' => $count_rejected,
        'datafield'=>$datafield,
-       'dataverif'=>$dataverif,
+       'dataToday' => $dataToday,
+       'dataThisMonth'=> $dataThisMonth,
+       'dataLastMonth' => $dataLastMonth,
+       //'dataThisYear'=>$dataThisYear,
+       'dataRejected' => $dataRejected,
+       'customSearch' =>'verifikasi/customSearch',
+       // 'dataverif'=>$dataverif,
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
        'controller'=>'verifikasi'
-       //'js'=> 'verifikasi/js',
-       // 'css'=>'user/user/css',
-       // 'js'=>'user/user/js',
-       //'lastnumber'=>$lastnumber,
       );
     $this->template->load($data);
   }
 
-  public function index_all()
-  {
-    $datauser=$this->Verifikasi_model->get_all_document();//panggil ke modell
-    $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
-    $dataverif=$this->Verifikasi_model->get_data_verif_all();//panggil ke modell
-    $lastdate=$this->Verifikasi_model->get_last_date();
-     $data = array(
-//       'titleNavbar'=>'PT. LEN (PERSERO) - UNIT VERIFIKASI',
-       'content'=>'verifikasi/dokumen/content_all',
+  public function customSearch(){
+    $countResponse =$this->Verifikasi_model->count_need_response();
+    $datauser=$this->Verifikasi_model->get_data_search();
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $data = array(
+       'content'=>'verifikasi/content_search',
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
+       //'customSearch' =>'jurnalis/customSearch',
+       'countResponse' => $countResponse,
+       'count_rejected' => $count_rejected,
        'datauser'=>$datauser,
-       'datafield'=>$datafield,
-       'dataverif'=>$dataverif,
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
        'controller'=>'verifikasi'
-       //'js'=> 'verifikasi/js',
-       // 'css'=>'user/user/css',
-       // 'js'=>'user/user/js',
-       //'lastnumber'=>$lastnumber,
+      );
+    $ses_startdate = $this->input->post('dateStart',TRUE);
+    $ses_enddate = $this->input->post('dateEnd',TRUE);
+    $ses_by = $this->input->post('by',TRUE);
+    $ses_category = $this->input->post('category',TRUE);
+    $ses_categoryValue = $this->input->post('categoryValue',TRUE);
+    $this->session->set_flashdata('ses_startdate', $ses_startdate);
+    $this->session->set_flashdata('ses_enddate', $ses_enddate);
+    $this->session->set_flashdata('ses_by', $ses_by);
+    $this->template->load($data);
+
+  }
+
+  public function document_need_response(){
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $countResponse =$this->Verifikasi_model->count_need_response();
+    $datauser=$this->Verifikasi_model->get_all_need_response();
+    $datafield = $this->Verifikasi_model->get_field();//panggil ke modell
+    $jurnalToday = $this->Verifikasi_model->get_jurnal_today();
+    $approveToday = $this->Verifikasi_model->get_approve_today();
+    $approveThisMonth = $this->Verifikasi_model->get_approve_thismonth();
+    $approveLastMonth = $this->Verifikasi_model->get_approve_lastmonth();
+    //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
+    $data = array(
+       'content'=>'verifikasi/content_need_response',
+       'navbar'=>'verifikasi/navbar',
+       'sidebar'=>'verifikasi/sidebar',
+       'datauser'=>$datauser,
+       'countResponse' =>$countResponse,
+       'count_rejected' => $count_rejected,
+       //'dataverif'=>$dataverif,
+       'datafield' =>$datafield,
+       'jurnalToday' =>$jurnalToday,
+       'approveToday' =>$approveToday,
+       'approveThisMonth' =>$approveThisMonth,
+       'approveLastMonth' =>$approveLastMonth,
+       'module'=>'verifikasi',
+       'titlePage'=>'verifikasi',
+       'controller'=>'verifikasi',
+       'reject'=>'verifikasi/verifikasi/reject',
+       'approve'=>'verifikasi/verifikasi/approve'
       );
     $this->template->load($data);
   }
+
+  public function reject(){
+    $data = array(
+      'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
+      'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
+      'kode_ver' =>$this->input->post('kode_ver',TRUE),
+      'keterangan' => $this->input->post('keterangan',TRUE),
+      'user' => $this->input->post('user',TRUE),
+      'mata_uang' => $this->input->post('mata_uang',TRUE),
+      'jumlah' => $this->input->post('jumlah',TRUE),
+      'tgl_out_verif' => $this->input->post('tgl_out_verif',TRUE),
+      'tgl_out_jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
+      'alasan_revisi' => $this->input->post('alasan',true),
+      'operator_id' => $this->input->post('operator_id',true)
+    );
+    $dataResponse = array(
+      'Lok_Dokumen' => 'reject',
+    );
+    $this->Verifikasi_model->insert_reject($data);
+    $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
+    $this->session->set_flashdata('rejectMessage', 'Reject Success');
+    redirect(base_url('verifikasi/document_need_response'));
+  }
+
+
+  public function approve(){
+    $now = date('Y-m-d');
+    $dataResponse = array(
+      'Lok_Dokumen' => 'Manager',
+      'Tgl_Out_Jurnal' =>$now
+    );
+    $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
+    $this->session->set_flashdata('approveMessage', 'Approve Success');
+    redirect(base_url('verifikasi/document_need_response'));
+  }
+
 
   public function create(){
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+    $countResponse =$this->Verifikasi_model->count_need_response();
     $lastdate=$this->Verifikasi_model->get_last_date();
     $lastnumber=$this->Verifikasi_model->get_last_num();
-    //$lastnumber=$this->Verifikasi_model->get_last_num();
-    //$numrows=$this->Verifikasi_model->get_num_row();
-    //$testing=$this->Verifikasi_model->get_num_row($nownumber);
-    //$datauser=$this->Verifikasi_model->get_all();//panggil ke modell
-    //$datafield=$this->Verifikasi_model->get_field();//panggil ke modell
      $data = array(
-       //'testing'=>$testing,
-       //'numrows'=>$numrows,
-       //'js'=> 'verifikasi/js',
        'content' => 'verifikasi/create_data',
        'sidebar'=>'verifikasi/sidebar',//Ini buat menu yang ditampilkan di module verifikasi {DIKIRIM KE TEMPLATE}
        'navbar'=>'verifikasi/navbar',
        'lastnumber'=>$lastnumber,
        'lastdate'=>$lastdate,
+       'countResponse' => $countResponse,
+       'count_rejected' => $count_rejected,
        'action'=>'verifikasi/create_action',
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
@@ -93,13 +170,13 @@ class verifikasi extends MY_Controller{
 
   public function create_action()
       {
-        //defining DATE
+        //INISIALISASI TANGGAL
         $lastdate=$this->Verifikasi_model->get_last_date();
-        //$numrows=$this->Verifikasi_model->get_num_row();
         $lastmonth= date("m", strtotime($lastdate->Tanggal_Masuk));
         $monthnow=date('m');
         $yearnow=date('Y');
-        //CASE OF DATE FOR NUMBERING
+
+        //PENENTUAN NOMOR BERDASARKAN TANGGAL
         if ($lastmonth!=$monthnow) {
           $lastnumber=1;
           $nownumber=($lastnumber->maks+1);
@@ -107,58 +184,151 @@ class verifikasi extends MY_Controller{
           $lastnumber=$this->Verifikasi_model->get_last_num();
           $nownumber=($lastnumber->maks+1);
           $numrows=$this->Verifikasi_model->get_num_row($nownumber);
-          if ($num_rows->nomor>1) {
+          if ($numrows->nomor>1) {
             $lastnumber=$lastnumber+1;
           }
 
         }
-//        $nownumber=($lastnumber->maks+1);
-
-        // $numrows=$this->Verifikasi_model->get_num_row($nownumber,$monthnow,$yearnow);
-        // if($numrows->num_rows() > 1){
-        //   $nownumber=$nownumber+1;
-        // }
-
         $timezone = date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
-
-        //MAKING PRIMARY KEY
+        //PEMBUATAN KODE UNIK
         $pk1 = sprintf("%04s", $nownumber);
         $pk2 = $this->input->post('kode_ver');
         $pk3 = date("m/Y");
-        $statusDok = "jurnal";
-        //$pk3 = date("m/Y", strtotime($lastdate->Tanggal_Masuk));
         $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
-        //$pk2 =
+
+        $role = $this->session->userdata('akses');
+        if ($role=='verifikasi1') {
+            $lokasi = "Jurnalis 1";
+        }elseif ($role=='verifikasi2') {
+            $lokasi = "Jurnalis 2";
+        }elseif ($role=='verifikasi3') {
+            $lokasi = "Jurnalis 3";
+        }
+
+
         $data = array(
           'No' => $nownumber,
           'operator_id' => $this->input->post('operator_id',TRUE),
           'Tanggal_Masuk' => $now,
-          'Tgl_Out_Verif' => $now,
-          'No_Verifikasi' => $primarykey,//$this->input->post('kode_ver',TRUE),
-          //'No_Verifikasi' => $this->input->post('kode_ver',TRUE),
+          'tgl_out_verif' => $now,
+          'No_Verifikasi' => $primarykey,
           'Kode_Ver' => $this->input->post('kode_ver',TRUE),
           'Mata_Uang' => $this->input->post('mata_uang',TRUE),
           'User' => $this->input->post('user',TRUE),
           'Keterangan' => $this->input->post('keterangan',TRUE),
           'Jumlah' => $this->input->post('jumlah',TRUE),
-          'Lok_Dokumen' => $statusDok
+          'Lok_Dokumen' => $lokasi
         );
-
         $this->Verifikasi_model->insert($data);
         $this->session->set_flashdata('message', 'Create Record Success');
         redirect(base_url('verifikasi'));
       }
 
+    public function custom_create(){
+      $count_rejected =$this->Verifikasi_model->count_rejected();
+      $countResponse =$this->Verifikasi_model->count_need_response();
+      $lastdate=$this->Verifikasi_model->get_last_date();
+      $lastnumber=$this->Verifikasi_model->get_last_num();
+       $data = array(
+         'content' => 'verifikasi/create_custom_date',
+         'sidebar'=>'verifikasi/sidebar',//Ini buat menu yang ditampilkan di module verifikasi {DIKIRIM KE TEMPLATE}
+         'navbar'=>'verifikasi/navbar',
+         'lastnumber'=>$lastnumber,
+         'lastdate'=>$lastdate,
+         'countResponse' => $countResponse,
+         'count_rejected' => $count_rejected,
+         'action'=>'verifikasi/custom_create_action',
+         'module'=>'verifikasi',
+         'titlePage'=>'verifikasi',
+         'controller'=>'verifikasi'
+        );
+      $this->template->load($data);
+    }
+    public function custom_create_action()
+        {
+          //INISIALISASI TANGGAL
+          $timezone = date_default_timezone_set('Asia/Jakarta');
+          $now1 = $this->input->post('customDate',TRUE);
+          $now2 = date('Y-m-d H:i:s');
+          $month1= date("m", strtotime($now1));
+          $month2= date("m", strtotime($now2));
+          if ($month1==$month2) {
+            $lastdate=$this->Verifikasi_model->get_last_date();
+          }elseif ($month1!=$month2) {
+            $lastdate=$this->Verifikasi_model->get_last_date_custom();
+          }
+
+          $lastmonth= date("m", strtotime($lastdate->Tanggal_Masuk));
+          //$monthnow=date('m', strtotime($now));
+          $monthnow=date('m', strtotime($now2));
+          $yearnow=date('Y');
+
+          //PENENTUAN NOMOR BERDASARKAN TANGGAL
+          if ($lastmonth!=$monthnow) {
+            $lastnumber=$this->Verifikasi_model->get_last_num_custom();
+            $nownumber=($lastnumber->maks+1);
+            $numrows=$this->Verifikasi_model->get_num_row($nownumber);
+            if ($numrows>1) {
+              $lastnumber=$lastnumber+1;
+            }
+          }elseif ($lastmonth==$monthnow) {
+            $lastnumber=$this->Verifikasi_model->get_last_num();
+            $nownumber=($lastnumber->maks+1);
+            $numrows=$this->Verifikasi_model->get_num_row($nownumber);
+            if ($numrows>1) {
+              $lastnumber=$lastnumber+1;
+            }
+          }
+
+          //PEMBUATAN KODE UNIK
+          $pk1 = sprintf("%04s", $nownumber);
+          $pk2 = $this->input->post('kode_ver');
+          // $pk3 = date("m/Y");
+          $pk3 = date("m/Y", strtotime($now1));
+          $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
+
+          $role = $this->session->userdata('akses');
+          if ($role=='verifikasi1') {
+              $lokasi = "Jurnalis 1";
+          }elseif ($role=='verifikasi2') {
+              $lokasi = "Jurnalis 2";
+          }elseif ($role=='verifikasi3') {
+              $lokasi = "Jurnalis 3";
+          }
+          $hoursNow = date('H:i:s');
+          $data = array(
+            'No' => $nownumber,
+            'operator_id' => $this->input->post('operator_id',TRUE),
+            'Tanggal_Masuk' => $now1." ".$hoursNow,
+            'Tgl_Out_Verif' => $now2,
+            'No_Verifikasi' => $primarykey,
+            'Kode_Ver' => $this->input->post('kode_ver',TRUE),
+            'Mata_Uang' => $this->input->post('mata_uang',TRUE),
+            'User' => $this->input->post('user',TRUE),
+            'Keterangan' => $this->input->post('keterangan',TRUE),
+            'Jumlah' => $this->input->post('jumlah',TRUE),
+            'Lok_Dokumen' => $lokasi
+          );
+          $this->Verifikasi_model->insert($data);
+          $this->session->set_flashdata('message', 'Create Record Success');
+          redirect(base_url('verifikasi'));
+        }
+
+  //LOAD HALAMAN EDIT
   public function edit_profil($operator_id){
+    $countResponse =$this->Verifikasi_model->count_need_response();
     $dataedit=$this->Verifikasi_model->get_by_id_profil($operator_id);
+    $count_rejected =$this->Verifikasi_model->count_rejected();
+
      $data = array(
        'content'=>'verifikasi/edit_profil',
        'sidebar'=>'verifikasi/sidebar',
        'navbar'=>'verifikasi/navbar',
-       //'role'=>$this->Verifikasi_model->gender_enums('user' , 'position' ),
        'action'=>'verifikasi/verifikasi/update_action',
        'dataedit'=>$dataedit,
+       'count_rejected' => $count_rejected,
+       'countResponse' => $countResponse,
        'module'=>'verifikasi',
        'titlePage'=>'verifikasi',
        'controller'=>'verifikasi'
@@ -166,170 +336,17 @@ class verifikasi extends MY_Controller{
     $this->template->load($data);
   }
 
-
-
+  //AKSI EDIT DATA
   public function update_action()
   {
           $data = array(
             'username' => $this->input->post('username',TRUE),
             'password_enc' => md5($this->input->post('password',TRUE)),
             'password' => $this->input->post('password',TRUE),
-            'position' => $this->input->post('position',TRUE),
             'phone_number' => $this->input->post('phone_number',TRUE),
           );
           $this->Verifikasi_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');
-          //echo "berhasil";
           redirect(base_url('verifikasi'));
-
-  }
-
-  // public function _rules()
-  // {
-  //     $this->form_validation->set_rules('username', 'username', 'trim|required');
-  //     //$this->form_validation->set_rules('password_enc', 'password_enc', 'trim|required');
-  //     $this->form_validation->set_rules('password', 'password', 'trim|required');
-  //     $this->form_validation->set_rules('position', 'position', 'trim|required');
-  //     $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
-  //
-  //
-  //     $this->form_validation->set_rules('no_verifikasi', 'no_verifikasi', 'trim');
-  //     $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-  // }
-
-  public function export_data(){
-    // Load plugin PHPExcel nya
-    include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-
-    // Panggil class PHPExcel nya
-    $excel = new PHPExcel();
-    // Settingan awal fil excel
-    $excel->getProperties()->setCreator('Sistem Verifikasi Len')
-                 ->setLastModifiedBy('Sistem Verifikasi Len')
-                 ->setTitle("Data Verifikasi")
-                 ->setSubject("Dokumen")
-                 ->setDescription("Laporan Dokumen")
-                 ->setKeywords("Dokumen");
-    // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
-    $style_col = array(
-      'font' => array('bold' => true), // Set font nya jadi bold
-      'alignment' => array(
-        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
-        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-      ),
-      'borders' => array(
-        'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border top dengan garis tipis
-        'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  // Set border right dengan garis tipis
-        'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border bottom dengan garis tipis
-        'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) // Set border left dengan garis tipis
-      )
-    );
-    // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
-    $style_row = array(
-      'alignment' => array(
-        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-      ),
-      'borders' => array(
-        'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border top dengan garis tipis
-        'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  // Set border right dengan garis tipis
-        'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border bottom dengan garis tipis
-        'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) // Set border left dengan garis tipis
-      )
-    );
-    $style_col2 = array(
-      'alignment' => array(
-        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
-        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-      ),
-      'borders' => array(
-        'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border top dengan garis tipis
-        'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  // Set border right dengan garis tipis
-        'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border bottom dengan garis tipis
-        'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) // Set border left dengan garis tipis
-      )
-    );
-    $excel->setActiveSheetIndex(0)->setCellValue('A1', "PT LEN INDUSTRI (PERSERO)"); // Set kolom A1 dengan tulisan "Dokumen Input"
-    $excel->getActiveSheet()->mergeCells('A1:C1'); // Set Merge Cell pada kolom A1 sampai E1
-    $excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); // Set bold kolom A1
-
-    $excel->setActiveSheetIndex(0)->setCellValue('A2', "WORKSHEET VERIFIKASI KELUAR"); // Set kolom A1 dengan tulisan "Dokumen Input"
-    $excel->getActiveSheet()->mergeCells('A2:C2'); // Set Merge Cell pada kolom A1 sampai E1
-    $excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); // Set bold kolom A1
-
-    $excel->setActiveSheetIndex(0)->setCellValue('A3', "BULAN :"); // Set kolom A1 dengan tulisan "Dokumen Input"
-    $excel->getActiveSheet()->getStyle('A3')->getFont()->setBold(TRUE); // Set bold kolom A1
-
-    $excel->setActiveSheetIndex(0)->setCellValue('A4', "TAHUN :"); // Set kolom A1 dengan tulisan "Dokumen Input"
-    $excel->getActiveSheet()->getStyle('A4')->getFont()->setBold(TRUE); // Set bold kolom A1
-
-    // Buat header tabel nya pada baris ke 3
-    $excel->setActiveSheetIndex(0)->setCellValue('A6', "NO"); // Set kolom A3 dengan tulisan "NO"
-    $excel->setActiveSheetIndex(0)->setCellValue('B6', "TGL MASUK"); // Set kolom B3 dengan tulisan "NIS"
-    $excel->setActiveSheetIndex(0)->setCellValue('C6', "KODE VER"); // Set kolom C3 dengan tulisan "NAMA"
-    $excel->setActiveSheetIndex(0)->setCellValue('D6', "NO VERIFIKASI"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
-    $excel->setActiveSheetIndex(0)->setCellValue('E6', "KETERANGAN"); // Set kolom E3 dengan tulisan "ALAMAT"
-    $excel->setActiveSheetIndex(0)->setCellValue('F6', "USER");
-    $excel->setActiveSheetIndex(0)->setCellValue('G6', "MU");
-    $excel->setActiveSheetIndex(0)->setCellValue('H6', "JUMLAH");
-    // Apply style header yang telah kita buat tadi ke masing-masing kolom header
-    $excel->getActiveSheet()->getStyle('A6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('B6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('C6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('D6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('E6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('F6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('G6')->applyFromArray($style_col);
-    $excel->getActiveSheet()->getStyle('H6')->applyFromArray($style_col);
-
-    // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-    $mydokumen = $this->Verifikasi_model->ambil_view();
-    $no = 1; // Untuk penomoran tabel, di awal set dengan 1
-    $numrow = 7; // Set baris pertama untuk isi tabel adalah baris ke 4
-    foreach($mydokumen as $data){ // Lakukan looping pada variabel siswa
-      $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
-      $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->Tanggal_Masuk);
-      $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->Kode_Ver);
-      $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->No_Verifikasi);
-      $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->Keterangan);
-      $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->User);
-      $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->Mata_Uang);
-      $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, number_format($data->Jumlah,2,",","."));
-
-
-      // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
-      $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_col2);
-      $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_col2);
-      $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_col2);
-      $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_col2);
-      $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row);
-      $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row);
-      $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_col2);
-      $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row);
-
-      $no++; // Tambah 1 setiap kali looping
-      $numrow++; // Tambah 1 setiap kali looping
-    }
-    // Set width kolom
-    $excel->getActiveSheet()->getColumnDimension('A')->setWidth(5); // Set width kolom A
-    $excel->getActiveSheet()->getColumnDimension('B')->setWidth(15); // Set width kolom B
-    $excel->getActiveSheet()->getColumnDimension('C')->setWidth(10); // Set width kolom C
-    $excel->getActiveSheet()->getColumnDimension('D')->setWidth(20); // Set width kolom D
-    $excel->getActiveSheet()->getColumnDimension('E')->setWidth(50); // Set width kolom E
-    $excel->getActiveSheet()->getColumnDimension('F')->setWidth(30);
-    $excel->getActiveSheet()->getColumnDimension('G')->setWidth(8);
-    $excel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
-    // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
-    $excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
-    // Set orientasi kertas jadi LANDSCAPE
-    $excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-    // Set judul file excel nya
-    $excel->getActiveSheet(0)->setTitle("Laporan Dokumen");
-    $excel->setActiveSheetIndex(0);
-    // Proses file excel
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Data Dokumen.xlsx"'); // Set nama file excel nya
-    header('Cache-Control: max-age=0');
-    $write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-    $write->save('php://output');
   }
 }

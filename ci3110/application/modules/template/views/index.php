@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>PT. LEN (PERSERO) - VERIFIKASI</title>
+    <title>PT. Len Industri (PERSERO) - Monitoring Dokumen Verifikasi</title>
     <!-- Favicon-->
-    <link rel="icon" href="<?php echo base_url()?>favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo base_url('images/favicon.ico')?>" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -24,6 +24,9 @@
     <!-- Animation Css -->
     <link href="<?php echo base_url()?>plugins/animate-css/animate.css" rel="stylesheet" />
 
+    <!-- Date Picker -->
+    <link href="<?php echo base_url()?>plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+
     <!-- Bootstrap Select Css -->
     <link href="<?php echo base_url()?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
@@ -32,6 +35,7 @@
 
     <!-- Custom Css -->
     <link href="<?php echo base_url()?>css/style.css" rel="stylesheet">
+
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo base_url()?>css/themes/all-themes.css" rel="stylesheet" />
@@ -59,7 +63,7 @@
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
+    <!-- <div class="search-bar">
         <div class="search-icon">
             <i class="material-icons">search</i>
         </div>
@@ -67,7 +71,7 @@
         <div class="close-search">
             <i class="material-icons">close</i>
         </div>
-    </div>
+    </div> -->
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <?php $this->load->view($navbar);?>
@@ -79,12 +83,6 @@
 
     <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
-                <h2>
-                    JQUERY DATATABLES
-                    <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>
-                </h2>
-            </div>
             <!-- Basic Examples -->
             <?php $this->load->view($content);?>
             <!-- #END# Basic Examples -->
@@ -95,7 +93,7 @@
 
     <!-- Jquery Core Js -->
     <script src="<?php echo base_url()?>plugins/jquery/jquery.min.js"></script>
-
+    <script src="<?php echo base_url()?>plugins/jquery/jquery.js"></script>
     <!-- Bootstrap Core Js -->
     <script src="<?php echo base_url()?>plugins/bootstrap/js/bootstrap.js"></script>
 
@@ -119,7 +117,6 @@
     <script src="<?php echo base_url()?>plugins/jquery-validation/jquery.validate.js"></script>
     <!-- FORM Validation Plugin Css -->
     <script src="<?php echo base_url()?>js/pages/forms/form-validation.js"></script>
-    <script src="<?php echo base_url()?>js/pages/ui/modals.js"></script>
 
 
     <!-- TABEL -->
@@ -136,11 +133,12 @@
 
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
-    <!-- <script src="<?php echo base_url()?>js/pages/forms/basic-form-elements.js"></script> -->
-    <!-- <?php //$this->load->view($js);?> -->
+
+    <!-- Bootstrap Datepicker Plugin Js -->
+    <script src="<?php echo base_url()?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
     <script src="<?php echo base_url()?>js/pages/tables/jquery-datatable.js"></script>
-
+    <script src="<?php echo base_url()?>js/pages/ui/modals.js"></script>
     <!-- Demo Js -->
     <script src="<?php echo base_url()?>js/demo.js"></script>
     <script>
@@ -148,21 +146,50 @@
       $('li').removeClass('active');
       $(this).parent().addClass('active');
     });
+
+    $('#dateStart').datepicker({
+        format: 'yyyy-mm-dd',
+        closeText: "Ok",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: true,
+    });
+    $('#dateEnd').datepicker({
+        format: 'yyyy-mm-dd',
+        closeText: "Ok",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: true,
+    });
+
+    //REFERENSI :
+  // var tgl1 = new Date();
+  // tgl1.setMonth(tgl1.getMonth()-1);
+  // tgl1.setDate(1);
+  // var tgl2 = new Date();
+  // tgl2.setMonth(tgl2.getMonth()-1);
+  // tgl2.setDate(15);
+
+    var tgl1 = new Date();
+    tgl1.setMonth(tgl1.getMonth());
+    tgl1.setDate(-8);
+    var tgl2 = new Date();
+    tgl2.setMonth(tgl2.getMonth());
+//    tgl2.setDate(15);
+  $('#customDate').datepicker({
+      startDate: tgl1,
+      endDate:tgl2,
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      clearBtn: true,
+  });
+
+  $("#buttonFilter").click(function(){
+    $("#formFilter").fadeToggle();
+  });
+
+
     </script>
-    <!-- <script>
-    jQuery(document).ready(function(){
-
-        jQuery('.li-trigger').click(function (event){
-            jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
-            localStorage.setItem('clicked', 'yes');
-        });
-
-        if(localStorage.getItem('clicked')) {
-          jQuery('.li-trigger').click();
-        }
-    });</script> -->
-
-
 </body>
 
 </html>
