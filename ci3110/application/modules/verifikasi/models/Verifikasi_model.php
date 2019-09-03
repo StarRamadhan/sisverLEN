@@ -53,14 +53,14 @@
         function get_data_today(){
           $id_O=$this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator_id=$id_O"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND `operator`.operator_id=$id_O");
           return $sql->num_rows();
         }
         //DASHBOARD THIS MONTH DOC
         function get_data_thismonth(){
           $id_O=$this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator_id=$id_O");
+          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND `operator`.operator_id=$id_O");
           return $sql->num_rows();
         }
         //DASHBOARD REVISION DOC
@@ -74,8 +74,9 @@
         function get_data_lastmonth(){
           $id_O=$this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator_id=$id_O"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT dokumen.* FROM dokumen join operator on dokumen.`operator_id` = operator.`operator_id` WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND `operator`.operator_id=$id_O");
           return $sql->num_rows();
+
         }
         //DASHBOARD THIS YEAR DOC
         // function get_data_thisyear(){
@@ -163,7 +164,7 @@
         {
             $hakakses = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' AND revisi.Status_Revisi IS NULL ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen join revisi on dokumen.`No_Verifikasi` = revisi.`No_Verifikasi` WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.Operator_Id='$hakakses' AND revisi.Status_Revisi IS NULL ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
         }
 
@@ -188,14 +189,7 @@
             $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.operator_id=dokumen.operator_id and operator.position='$role' ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
         }
-
-        // //get data dari tabel operator dan dokumen
-        // function get_data_verif(){
-        //   $table=$this->table;
-        //   $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,operator WHERE dokumen.`operator_id`=operator.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
-        //   return $sql->result();
-        // }
-
+      
         //get max nomor
         function get_last_num(){
           $table=$this->table;

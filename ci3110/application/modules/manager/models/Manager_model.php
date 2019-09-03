@@ -33,7 +33,7 @@
 
         function get_data_manager(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.*,operator.* FROM dokumen,`operator` WHERE dokumen.`operator_id`=`operator`.`operator_id`"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT * FROM dokumen JOIN operator ON dokumen.`operator_id` = operator.`operator_id`");
           return $sql->result();
         }
 
@@ -159,56 +159,102 @@
             $this->db->where($this->operator_id, $operator_id);
             $this->db->update($this->table_profil, $data);
         }
+
+        //////////////////
+        function get_ver1_today(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator.`position` = 'verifikasi1'");
+          return $sql->num_rows();
+        }
+        function get_ver1_thismonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
+          return $sql->num_rows();
+        }
+        function get_ver1_lastmonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
+          return $sql->num_rows();
+        }
+        function get_ver2_today(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator.`position` = 'verifikasi2'");
+          return $sql->num_rows();
+        }
+        function get_ver2_thismonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
+          return $sql->num_rows();
+        }
+        function get_ver2_lastmonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
+          return $sql->num_rows();
+        }
+        function get_ver3_today(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator.`position` = 'verifikasi3'");
+          return $sql->num_rows();
+        }
+        function get_ver3_thismonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
+          return $sql->num_rows();
+        }
+        function get_ver3_lastmonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
+          return $sql->num_rows();
+        }
         //////////////////
         function get_approve_jur1_today(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi1'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         //DASHBOARD REVISION DOC
         function get_approve_jur1_thismonth(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi1'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         //DASHBOARD LAST MONTH DOC
         function get_approve_jur1_lastmonth(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi1'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         ///////////////////////////
         function get_approve_jur2_today(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi2'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         function get_approve_jur2_thismonth(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi2'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
-        //DASHBOARD LAST MONTH DOC
         function get_approve_jur2_lastmonth(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikas2'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         /////////////////////////////////////
         function get_approve_jur3_today(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi3'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         function get_approve_jur3_thismonth(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikasi3'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         //DASHBOARD LAST MONTH DOC
         function get_approve_jur3_lastmonth(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT DISTINCT dokumen.* FROM dokumen,operator WHERE MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE) AND position='verifikas3'");
+          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
           return $sql->num_rows();
         }
         /////////////////////////////////////

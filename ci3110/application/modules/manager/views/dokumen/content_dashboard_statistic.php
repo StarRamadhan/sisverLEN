@@ -16,7 +16,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 1</div>
-                            <div class="number"><?php echo $dataToday?></div>
+                            <div class="number"><?php echo $dataVer1Today?></div>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 2</div>
-                            <div class="number"><?php echo $dataThisMonth?></div>
+                            <div class="number"><?php echo $dataVer2Today?></div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 3</div>
-                            <div class="number"><?php echo $dataLastMonth?></div>
+                            <div class="number"><?php echo $dataVer3Today?></div>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 1</div>
-                            <div class="number"><?php echo $dataToday?></div>
+                            <div class="number"><?php echo $dataVer1ThisMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 2</div>
-                            <div class="number"><?php echo $dataThisMonth?></div>
+                            <div class="number"><?php echo $dataVer2ThisMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 3</div>
-                            <div class="number"><?php echo $dataLastMonth?></div>
+                            <div class="number"><?php echo $dataVer3ThisMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 1</div>
-                            <div class="number"><?php echo $dataToday?></div>
+                            <div class="number"><?php echo $dataVer1LastMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 2</div>
-                            <div class="number"><?php echo $dataThisMonth?></div>
+                            <div class="number"><?php echo $dataVer2LastMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Ver 3</div>
-                            <div class="number"><?php echo $dataLastMonth?></div>
+                            <div class="number"><?php echo $dataVer3LastMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -198,8 +198,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 1</div>
-                            <div class="number"><?php echo $dataToday?></div>
+                            <div class="text">Jur 1</div>
+                            <div class="number"><?php echo $dataJurnal1ThisMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -209,8 +209,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 2</div>
-                            <div class="number"><?php echo $dataThisMonth?></div>
+                            <div class="text">Jur 2</div>
+                            <div class="number"><?php echo $dataJurnal2ThisMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -220,8 +220,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 3</div>
-                            <div class="number"><?php echo $dataLastMonth?></div>
+                            <div class="text">Jur 3</div>
+                            <div class="number"><?php echo $dataJurnal3ThisMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -244,8 +244,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 1</div>
-                            <div class="number"><?php echo $dataToday?></div>
+                            <div class="text">Jur 1</div>
+                            <div class="number"><?php echo $dataJurnal1LastMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -255,8 +255,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 2</div>
-                            <div class="number"><?php echo $dataThisMonth?></div>
+                            <div class="text">Jur 2</div>
+                            <div class="number"><?php echo $dataJurnal2LastMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -266,8 +266,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 3</div>
-                            <div class="number"><?php echo $dataLastMonth?></div>
+                            <div class="text">Jur 3</div>
+                            <div class="number"><?php echo $dataJurnal3LastMonth?></div>
                         </div>
                     </div>
                 </div>
@@ -282,7 +282,7 @@
 
               <div class="row clearfix">
                 <div class="block-header">
-                    <h2>JURNALIST LAST MONTH</h2>
+                    <h2>FINISH</h2>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="info-box-2 bg-pink hover-zoom-effect">
@@ -290,7 +290,7 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
-                            <div class="text">Ver 1</div>
+                            <div class="text">All Document</div>
                             <div class="number"><?php echo $dataToday?></div>
                         </div>
                     </div>

@@ -190,6 +190,19 @@ class Manager extends MY_Controller{
     $dataLastMonth = $this->Manager_model->get_data_lastmonth();
     $dataThisYear = $this->Manager_model->get_data_thisyear();
 
+
+    $dataVer1Today = $this->Manager_model->get_ver1_today();
+    $dataVer1ThisMonth = $this->Manager_model->get_ver1_thismonth();
+    $dataVer1LastMonth = $this->Manager_model->get_ver1_lastmonth();
+
+    $dataVer2Today = $this->Manager_model->get_ver2_today();
+    $dataVer2ThisMonth = $this->Manager_model->get_ver2_thismonth();
+    $dataVer2LastMonth = $this->Manager_model->get_ver2_lastmonth();
+
+    $dataVer3Today = $this->Manager_model->get_ver3_today();
+    $dataVer3ThisMonth = $this->Manager_model->get_ver3_thismonth();
+    $dataVer3LastMonth = $this->Manager_model->get_ver3_lastmonth();
+
     $dataJurnal1Today = $this->Manager_model->get_approve_jur1_today();
     $dataJurnal1ThisMonth = $this->Manager_model->get_approve_jur1_thismonth();
     $dataJurnal1LastMonth = $this->Manager_model->get_approve_jur1_lastmonth();
@@ -210,6 +223,17 @@ class Manager extends MY_Controller{
        'navbar'=>'manager/navbar',
        'sidebar'=>'manager/sidebar',
        'datauser'=>$datauser,
+
+       'dataVer1Today' => $dataVer1Today,
+       'dataVer1ThisMonth' => $dataVer1ThisMonth,
+       'dataVer1LastMonth' => $dataVer1LastMonth,
+       'dataVer2Today' => $dataVer2Today,
+       'dataVer2ThisMonth' => $dataVer2ThisMonth,
+       'dataVer2LastMonth' => $dataVer2LastMonth,
+       'dataVer3Today' => $dataVer3Today,
+       'dataVer3ThisMonth' => $dataVer3ThisMonth,
+       'dataVer3LastMonth' => $dataVer3LastMonth,
+
        'dataJurnal1Today'=> $dataJurnal1Today,
        'dataJurnal1ThisMonth'=> $dataJurnal1ThisMonth,
        'dataJurnal1LastMonth'=> $dataJurnal2LastMonth,
@@ -219,6 +243,7 @@ class Manager extends MY_Controller{
        'dataJurnal3Today'=> $dataJurnal3Today,
        'dataJurnal3ThisMonth'=> $dataJurnal3ThisMonth,
        'dataJurnal3LastMonth'=> $dataJurnal3LastMonth,
+
        'countResponse' => $countResponse,
        'dataToday' => $dataToday,
        'dataThisMonth'=> $dataThisMonth,
