@@ -5,8 +5,8 @@
                 <div class="card">
                   <div class="header">
                     <h2 class="card-inside-title">Filter</h2>
-                    <div class="row clearfix">
-                      <form method="post" id="form_advanced_validation" action="<?php //echo base_url().$customSearch ?>">
+                    <form method="post" id="form_advanced_validation" action="<?php echo base_url().$customSearch ?>">
+                      <div class="row clearfix">
                         <div class="col-md-4 text-left">
                           <div class="input-daterange input-group">
                               <div class="form-line">
@@ -28,14 +28,95 @@
                               </div>
                           </div>
                         </div>
+                        <div class="col-md-2">
+                          <div class="form-line">
+                            <select class="form-control show-tick" name="by" required>
+                              <!-- <option value="">-- Select One --</option> -->
+                                <?php
+                                      if ($this->session->userdata('ses_by')=='me') {
+                                        echo '<option value="me" selected> By Me </option>';
+                                      }else {
+                                        echo '<option value="me"> By Me </option>';
+                                      }
+                                      if ($this->session->flashdata('ses_by')=='all') {
+                                        echo '<option value="all" selected> All Document </option>';
+                                      }else {
+                                        echo '<option value="all"> All Document </option>';
+                                      }
+                                ?>
+                            </select>
+                          </div>
+                        </div>
                         <div class="col-md-3 text-left">
-                          <button type="submit" class="btn bg-blue-grey waves-effect waves-float">Search</button>&nbsp
+                          <button type="submit" class="btn bg-blue-grey waves-effect waves-float">Search</button>
                           <a type="button" href="<?php echo base_url('jurnalis/dokumen_all')?>" class="btn bg-blue-grey waves-effect waves-float">Reset</a>
                         </div>
-                      </form>
                     </div>
-
+                    <a id="buttonFilter" href="#"><small href="" class="card-inside-title">more filter?</small></a>
+                    <div id="formFilter" class="row clearfix" style="display:none;">
+                      <div class="col-md-2">
+                        <div class="form-line">
+                          <select id="category" class="form-control show-tick" name="category" required>
+                                  <option value="" selected> -- Category -- </option>
+                                  <option value="No_Verifikasi"> No Verifikasi </option>
+                                  <option value="Kode_Ver"> Kode Verifikasi </option>
+                                  <option value="Keterangan"> Keterangan </option>
+                                  <option value="User"> User </option>
+                                  <option value="Mata_Uang"> Mata Uang </option>
+                                  <option value="Lok_Dokumen"> Lokasi Dokumen </option>
+                            <!-- <?php
+                                  if ($this->session->userdata('ses_category')=='No_Verifikasi') {
+                                    echo '<option value="No_Verifikasi" selected> No Verifikasi </option>';
+                                  }else {
+                                    echo '<option value="No_Verifikasi"> No Verifikasi </option>';
+                                  }
+                                  if ($this->session->flashdata('ses_category')=='Kode_Ver') {
+                                    echo '<option value="Kode_Ver" selected> Kode Verifikasi </option>';
+                                  }else {
+                                    echo '<option value="Kode_Ver"> Kode Verifikasi </option>';
+                                  }
+                                  if ($this->session->flashdata('ses_category')=='Keterangan') {
+                                    echo '<option value="Keterangan" selected> Keterangan </option>';
+                                  }else {
+                                    echo '<option value="Keterangan"> Keterangan </option>';
+                                  }
+                                  if ($this->session->flashdata('ses_category')=='User') {
+                                    echo '<option value="User" selected> User </option>';
+                                  }else {
+                                    echo '<option value="User"> User </option>';
+                                  }
+                                  if ($this->session->flashdata('ses_category')=='Mata_Uang') {
+                                    echo '<option value="Mata_Uang" selected> Mata Uang </option>';
+                                  }else {
+                                    echo '<option value="Mata_Uang"> Mata Uang </option>';
+                                  }
+                                  if ($this->session->flashdata('ses_category')=='Lok_Dokumen') {
+                                    echo '<option value="Lok_Dokumen" selected> Lokasi Dokumen </option>';
+                                  }else {
+                                    echo '<option value="Lok_Dokumen"> Lokasi Dokumen </option>';
+                                  }
+                            ?> -->
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4 text-left">
+                        <div class="input-group">
+                            <div class="form-line">
+                                <!-- <?php if($this->session->flashdata('ses_categoryValue')) {
+                                  $flashStart=$this->session->flashdata('ses_categoryValue');
+                                  echo '<input type="text" id="categoryValue" class="form-control" value="'.$flashStart.'" name="categoryValue" placeholder="Value..." autocomplete="off" required>';
+                                }else{
+                                  echo '<input type="text" id="categoryValue" class="form-control" name="categoryValue" placeholder="Value..." autocomplete="off" required>';
+                                } ?> -->
+                                <input type="text" id="categoryValue" class="form-control" name="categoryValue" placeholder="Value..." autocomplete="off" required>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                   </form>
                   </div>
+
+
                     <?php if($this->session->flashdata('message')) {
                       $flashMessage=$this->session->flashdata('message');?>
                       <div class="alert alert-info alert-dismissible" role="alert">
@@ -50,7 +131,8 @@
                             <table class="table table-bordered table-striped table-hover js-exportable dataTable">
                               <thead>
                                 <tr>
-                                    <th>Tanggal</th>
+                                    <th>Tgl Masuk Verifikasi</th>
+                                    <th>Tgl Masuk Jurnalis</th>
                                     <th>No Verifikasi</th>
                                     <th>Kode Ver</th>
                                     <th>Keterangan</th>
@@ -63,7 +145,8 @@
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->Tanggal_Masuk?></td>
+                                    <td><?php echo date('Y-m-d', strtotime($d->Tanggal_Masuk));?></td>
+                                    <td><?php echo date('Y-m-d', strtotime($d->Tgl_Out_Verif));?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
@@ -73,24 +156,18 @@
                                     <td>
                                       <?php
                                           $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="jurnalis") {
-                                            $lokasi = "Jurnalis";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="verifikasi2/jurnalis") {
-                                            $lokasi = "Verifikasi2/Jurnalis";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="verifikasi3/jurnalis") {
-                                            $lokasi = "Verifikasi3/Jurnalis";
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="manager") {
-                                            $lokasi = "Manager";
-                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="finish") {
-                                            $lokasi = "Finish";
-                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
-                                          }elseif ($lok_dokumen=="reject") {
-                                            $lokasi = "Reject";
-                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lokasi.'</button>';
+                                          if ($lok_dokumen=="Jurnalis 1") {
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                          }elseif ($lok_dokumen=="Jurnalis 2") {
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                          }elseif ($lok_dokumen=="Jurnalis 3") {
+                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                          }elseif ($lok_dokumen=="Manager") {
+                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                          }elseif ($lok_dokumen=="Finish") {
+                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                          }elseif ($lok_dokumen=="Reject") {
+                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
                                           }
                                       ?>
                                     </td>

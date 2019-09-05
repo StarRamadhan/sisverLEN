@@ -8,14 +8,13 @@
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo strtoupper($this->session->userdata('ses_nama'));?></div>
-                <div class="email"><?php echo $this->session->userdata('akses')?></div>
             </div>
         </div>
         <!-- #User Info -->
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
-                <li class="header">DASHBOARD</li>
+                <li class="header">MAIN MENU</li>
                 <li class="li-trigger">
                     <a href="<?php echo base_url('jurnalis/');?>">
                         <i class="material-icons">description</i>

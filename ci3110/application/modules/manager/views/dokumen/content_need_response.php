@@ -1,6 +1,55 @@
 
         <!-- Basic Examples -->
         <div class="row clearfix">
+          <div class="block-header">
+              <h2>DASHBOARD</h2>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box-2 bg-pink hover-zoom-effect">
+                  <div class="icon">
+                      <i class="material-icons">assignment</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">TODAY'S DOCUMENT</div>
+                      <div class="number"><?php echo $dataToday?></div>
+                  </div>
+              </div>
+
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box-2 bg-blue hover-zoom-effect">
+                  <div class="icon">
+                      <i class="material-icons">assignment</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">THIS MONTH'S DOCUMENT</div>
+                      <div class="number"><?php echo $dataThisMonth?></div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box-2 bg-orange hover-zoom-effect">
+                  <div class="icon">
+                      <i class="material-icons">assignment</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">LAST MONTH'S DOCUMENT</div>
+                      <div class="number"><?php echo $dataLastMonth?></div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box-2 bg-light-green hover-zoom-effect">
+                  <div class="icon">
+                      <i class="material-icons">assignment</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">THIS YEAR'S DOCUMENT</div>
+                      <div class="number"><?php echo $dataThisYear?></div>
+                  </div>
+              </div>
+          </div>
+        <div class="row clearfix">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -40,7 +89,7 @@
                                     <!-- <?php foreach ($datafield as $d): ?>
                                       <th><?php echo str_replace("_"," ",$d) ?></th>
                                     <?php endforeach; ?> -->
-                                    <th>Tanggal</th>
+                                    <th>Tanggal Masuk</th>
                                     <th>No Verifikasi</th>
                                     <th>Kode Ver</th>
                                     <th>Keterangan</th>
@@ -55,7 +104,7 @@
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->Tanggal_Masuk?></td>
+                                    <td><?php echo date('Y-m-d', strtotime($d->Tanggal_Masuk));?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
@@ -74,7 +123,7 @@
                                               <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
                                             </div>
                                             <div class="modal-body">
-                                              <h3>Are You Sure Want to Reject document : <?php echo $d->No_Verifikasi?></h3>
+                                              <h4>Are You Sure Want to Reject This Document :<br> <?php echo $d->No_Verifikasi?></h4><br>
                                               <div class="form_line">
                                                 <textarea type="text" rows="4" cols="40" class="form-control" name="alasan" placeholder="Reason?" required></textarea>
                                               </div>
@@ -113,7 +162,7 @@
                                             </div>
                                             <div class="modal-body">
                                               <input type="text" class="form-control hidden" name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
-                                              <h3>Are You Sure Want to Approve this Document : <?php echo $d->No_Verifikasi?></h3>
+                                              <h4>Are You Sure Want to Approve This Document :<br> <?php echo $d->No_Verifikasi?></h4><br>
                                               <br>
                                             </div>
                                             <div class="modal-footer">

@@ -55,7 +55,7 @@
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->Tanggal_Masuk?></td>
+                                    <td><?php echo date('Y-m-d', strtotime($d->Tanggal_Masuk));?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
@@ -74,7 +74,7 @@
                                               <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
                                             </div>
                                             <div class="modal-body">
-                                              <h3>Are You Sure Want to Reject document : <?php echo $d->No_Verifikasi?></h3>
+                                              <h4>Are You Sure Want to Reject document :<br> <?php echo $d->No_Verifikasi?></h4><br>
                                               <div class="form_line">
                                                 <textarea type="text" rows="4" cols="40" class="form-control" name="alasan" placeholder="Reason?" required></textarea>
                                               </div>
@@ -109,11 +109,11 @@
                                         <div class="modal-dialog" role="document">
                                           <div class="modal-content modal-col-green">
                                             <div class="modal-header">
-                                              <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
+                                              <h4 class="modal-title" id="defaultModalLabel">Confirm</h4>
                                             </div>
                                             <div class="modal-body">
                                               <input type="text" class="form-control hidden" name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
-                                              <h3>Are You Sure Want to Approve this Document : <?php echo $d->No_Verifikasi?></h3>
+                                              <h4>Are You Sure Want to Approve this Document : <?php echo $d->No_Verifikasi?></h4>
                                               <br>
                                             </div>
                                             <div class="modal-footer">

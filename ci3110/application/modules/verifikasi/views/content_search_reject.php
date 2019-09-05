@@ -31,17 +31,19 @@
                         <div class="col-md-2">
                           <div class="form-line">
                             <select class="form-control show-tick" name="by" required>
-                              <option value="">-- Select One --</option>
-                                <?php if ($this->session->flashdata('ses_by')=='all') {
-                                        echo '<option value="all" selected> All Document </option>';
-                                      }else {
-                                        echo '<option value="all"> All Document </option>';
-                                      }
+                              <!-- <option value="">-- Select One --</option> -->
+                                <?php
                                       if ($this->session->userdata('ses_by')=='me') {
                                         echo '<option value="me" selected> For Me </option>';
                                       }else {
                                         echo '<option value="me"> For Me </option>';
-                                }?>
+                                      }
+                                      if ($this->session->flashdata('ses_by')=='all') {
+                                        echo '<option value="all" selected> All Document </option>';
+                                      }else {
+                                        echo '<option value="all"> All Document </option>';
+                                      }
+                                ?>
                             </select>
                           </div>
                         </div>

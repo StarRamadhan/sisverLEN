@@ -1,16 +1,9 @@
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header">
-            <!-- <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a> -->
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" href="<?php echo base_url('jurnalis')?>">PT. LEN (PERSERO) - UNIT VERIFIKASI</a>
+            <img style="margin-left:30px;float:left;" src="<?php echo base_url('images/Logo-Len.png');?>" width="40" height="50">
+            <a href="<?php echo base_url('jurnalis');?>" class="navbar-brand">&nbsp PT Len Industri (Persero) - JURNALIS</a>
         </div>
-        <!-- <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-
-
-                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-            </ul>
-        </div> -->
     </div>
 </nav>

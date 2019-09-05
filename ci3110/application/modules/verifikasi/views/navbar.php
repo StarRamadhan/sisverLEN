@@ -1,16 +1,18 @@
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header">
-            <!-- <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a> -->
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" href="#">PT. LEN (PERSERO) - UNIT VERIFIKASI</a>
+            <?php
+              $roleTitle = $this->session->userdata('akses');
+            if ($roleTitle=='verifikasi1') {
+              $text = 'VERIFIKASI 1';
+            }elseif ($roleTitle=='verifikasi2') {
+              $text = 'VERIFIKASI 2';
+            }elseif ($roleTitle=='verifikasi3') {
+              $text = 'VERIFIKASI 3';
+            }?>
+            <img style="margin-left:30px;" src="<?php echo base_url('images/Logo-Len.png');?>" width="40" height="50">
+            <a href="<?php echo base_url('verifikasi');?>" class="navbar-brand" style="float:right;">&nbsp PT Len Industri (Persero) - <?php echo $text?></a>
         </div>
-        <!-- <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-
-
-                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-            </ul>
-        </div> -->
     </div>
 </nav>

@@ -36,11 +36,11 @@
         {
             $role = $this->session->userdata('akses');
             if ($role=="verifikasi1") {
-              $lokasi = "jurnalis";
+              $lokasi = "Jurnalis 1";
             }elseif ($role=="verifikasi2") {
-              $lokasi = "verifikasi2/jurnalis";
+              $lokasi = "Jurnalis 2";
             }elseif ($role=="verifikasi3") {
-              $lokasi = "verifikasi3/jurnalis";
+              $lokasi = "Jurnalis 3";
             }
             $table=$this->table;
             $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.position='$role' AND dokumen.`operator_id`=`operator`.`operator_id` ORDER BY Tanggal_Masuk DESC");
@@ -49,44 +49,117 @@
             // return $this->db->get($this->table)->result();
         }
 
+        //DASHBOARD TODAY DOC
+        function get_data_today(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE DATE(Tgl_Out_Verif)=DATE(CURRENT_DATE())"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->num_rows();
+        }
+        //DASHBOARD THIS MONTH DOC
+        function get_data_thismonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->num_rows();
+        }
+        //DASHBOARD LAST MONTH DOC
+        function get_data_lastmonth(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->num_rows();
+        }
+        //DASHBOARD THIS YEAR DOC
+        function get_data_thisyear(){
+          $table=$this->table;
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
+          return $sql->num_rows();
+        }
+
         function get_data_search(){
           $table=$this->table;
           $start=$this->input->post('dateStart',TRUE);
           $end=$this->input->post('dateEnd',TRUE);
           $by = $this->input->post('by',true);
+          $cat = $this->input->post('category',true);
+          $catValue = $this->input->post('categoryValue',TRUE);
           $id_login = $this->session->userdata('ses_id');
 
           if ((empty($start)) && (empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login'");
-              return $sql->result();
+                if ($cat=="") {
+                  $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' ORDER BY Tanggal_Masuk DESC");
+                  return $sql->result();
+                }elseif ($cat!="") {
+                  $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                  return $sql->result();
+                }
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM dokumen");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }
-          }if ((!empty($start)) && (!empty($end))) {
+          }
+
+          if ((!empty($start)) && (!empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' ");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' AND $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' ");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }
-          }if ((!empty($start)) && (empty($end))) {
+          }
+
+          if ((!empty($start)) && (empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$start'");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$start' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$start' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$start'");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$start' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$start' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }
-          }if ((empty($start)) && (!empty($end))) {
+          }
+
+          if ((empty($start)) && (!empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$end'");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$end' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$end' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$end'");
-              return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$end' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$end' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
             }
           }
         }
@@ -96,7 +169,7 @@
         {
             $hakakses = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' AND revisi.Status_Revisi IS NULL ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT dokumen.Operator_Id,revisi.* FROM dokumen,revisi WHERE dokumen.Lok_Dokumen = 'Reject' AND dokumen.No_Verifikasi=revisi.No_Verifikasi AND dokumen.Operator_Id='$hakakses' AND revisi.Status_Revisi IS NULL ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
         }
 
@@ -110,11 +183,11 @@
         {
             $role = $this->session->userdata('akses');
             if ($role=="verifikasi1") {
-              $lokasi = "jurnalis";
+              $lokasi = "Jurnalis 1";
             }elseif ($role=="verifikasi2") {
-              $lokasi = "verifikasi2/jurnalis";
+              $lokasi = "Jurnalis 2";
             }elseif ($role=="verifikasi3") {
-              $lokasi = "verifikasi3/jurnalis";
+              $lokasi = "Jurnalis 3";
             }
             // $akses = $this->session->userdata('akses');
             $table=$this->table;
@@ -146,7 +219,7 @@
         function get_num_row($nownumber){
           $table=$this->table;
           $sql=$this->db->query("SELECT COUNT(NO) AS nomor FROM dokumen WHERE NO=$nownumber"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql;
+          return $sql->num_rows();
         }
         //get tanggal terakhir yang diinput
         function get_last_date(){

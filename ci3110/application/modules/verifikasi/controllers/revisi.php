@@ -97,12 +97,14 @@ class revisi extends MY_Controller{
       $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
       date_default_timezone_set('Asia/Jakarta');
       $role = $this->session->userdata('akses');
-      if ($this->session->userdata('akses')=='verifikasi1') {
-        $lokasi = "jurnalis";
-      }else {
-        $lokasi = $role."/jurnalis";
+      if ($role=='verifikasi1') {
+          $lokasi = "Jurnalis 1";
+      }elseif ($role=='verifikasi2') {
+          $lokasi = "Jurnalis 2";
+      }elseif ($role=='verifikasi3') {
+          $lokasi = "Jurnalis 3";
       }
-      $now = date('Y-m-d');
+      $now = date('Y-m-d H:i:s');
           $data_dokumen = array(
             'tanggal_masuk' =>$this->input->post('tanggal_masuk',true),
             'kode_ver' =>$this->input->post('kode_ver',TRUE),

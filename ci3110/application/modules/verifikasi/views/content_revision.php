@@ -4,6 +4,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
+                     <h2 class="card-inside-title">Filter</h2>
                       <div class="row clearfix">
                         <form method="post" id="form_advanced_validation" action="<?php echo base_url().$customSearchReject ?>">
                           <div class="col-md-4 text-left">
@@ -49,7 +50,7 @@
                                     <!-- <?php foreach ($datafield as $d): ?>
                                       <th><?php echo str_replace("_"," ",$d) ?></th>
                                     <?php endforeach; ?> -->
-                                    <th>Tanggal</th>
+                                    <th>Tanggal Masuk</th>
                                     <th>No Verifikasi</th>
                                     <th>Keterangan</th>
                                     <th>User</th>

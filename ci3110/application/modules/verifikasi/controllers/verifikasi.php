@@ -23,6 +23,10 @@ class verifikasi extends MY_Controller{
     $datauser=$this->Verifikasi_model->get_all();//panggil ke modell
     $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
     $lastdate=$this->Verifikasi_model->get_last_date();
+    $dataToday = $this->Verifikasi_model->get_data_today();
+    $dataThisMonth = $this->Verifikasi_model->get_data_thismonth();
+    $dataLastMonth = $this->Verifikasi_model->get_data_lastmonth();
+    $dataThisYear = $this->Verifikasi_model->get_data_thisyear();
     $data = array(
        'content'=>'verifikasi/content',
        'navbar'=>'verifikasi/navbar',
@@ -31,6 +35,10 @@ class verifikasi extends MY_Controller{
        'countResponse' => $countResponse,
        'count_rejected' => $count_rejected,
        'datafield'=>$datafield,
+       'dataToday' => $dataToday,
+       'dataThisMonth'=> $dataThisMonth,
+       'dataLastMonth' => $dataLastMonth,
+       'dataThisYear'=>$dataThisYear,
        'customSearch' =>'verifikasi/customSearch',
        // 'dataverif'=>$dataverif,
        'module'=>'verifikasi',
@@ -48,7 +56,7 @@ class verifikasi extends MY_Controller{
        'content'=>'verifikasi/content_search',
        'navbar'=>'verifikasi/navbar',
        'sidebar'=>'verifikasi/sidebar',
-       //'customSearch' =>'jurnalis/customSearch',
+       'customSearch' =>'verifikasi/customSearch',
        'countResponse' => $countResponse,
        'count_rejected' => $count_rejected,
        'datauser'=>$datauser,
@@ -59,9 +67,13 @@ class verifikasi extends MY_Controller{
     $ses_startdate = $this->input->post('dateStart',TRUE);
     $ses_enddate = $this->input->post('dateEnd',TRUE);
     $ses_by = $this->input->post('by',TRUE);
+    $ses_category = $this->input->post('category',TRUE);
+    $ses_categoryValue = $this->input->post('categoryValue',TRUE);
     $this->session->set_flashdata('ses_startdate', $ses_startdate);
     $this->session->set_flashdata('ses_enddate', $ses_enddate);
     $this->session->set_flashdata('ses_by', $ses_by);
+    $this->session->set_flashdata('ses_category', $ses_category);
+    $this->session->set_flashdata('ses_categoryValue', $ses_categoryValue);
     $this->template->load($data);
 
   }
@@ -103,7 +115,7 @@ class verifikasi extends MY_Controller{
       'operator_id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
-      'Lok_Dokumen' => 'reject',
+      'Lok_Dokumen' => 'Reject',
     );
     $this->Verifikasi_model->insert_reject($data);
     $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -113,9 +125,10 @@ class verifikasi extends MY_Controller{
 
 
   public function approve(){
-    $now = date('Y-m-d');
+    date_default_timezone_set("Asia/Jakarta");
+    $now = date('Y-m-d H:i:s');
     $dataResponse = array(
-      'Lok_Dokumen' => 'manager',
+      'Lok_Dokumen' => 'Manager',
       'Tgl_Out_Jurnal' =>$now
     );
     $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -148,6 +161,7 @@ class verifikasi extends MY_Controller{
   public function create_action()
       {
         //INISIALISASI TANGGAL
+        $timezone = date_default_timezone_set('Asia/Jakarta');
         $lastdate=$this->Verifikasi_model->get_last_date();
         $lastmonth= date("m", strtotime($lastdate->Tanggal_Masuk));
         $monthnow=date('m');
@@ -161,7 +175,7 @@ class verifikasi extends MY_Controller{
           $lastnumber=$this->Verifikasi_model->get_last_num();
           $nownumber=($lastnumber->maks+1);
           $numrows=$this->Verifikasi_model->get_num_row($nownumber);
-          if ($num_rows->nomor>1) {
+          if ($numrows->nomor>1) {
             $lastnumber=$lastnumber+1;
           }
 
@@ -176,9 +190,11 @@ class verifikasi extends MY_Controller{
 
         $role = $this->session->userdata('akses');
         if ($role=='verifikasi1') {
-            $lokasi = "jurnalis";
-        }else{
-            $lokasi = $role."/jurnalis";
+            $lokasi = "Jurnalis 1";
+        }elseif ($role=='verifikasi2') {
+            $lokasi = "Jurnalis 2";
+        }elseif ($role=='verifikasi3') {
+            $lokasi = "Jurnalis 3";
         }
 
 
@@ -223,48 +239,60 @@ class verifikasi extends MY_Controller{
     public function custom_create_action()
         {
           //INISIALISASI TANGGAL
-          $lastdate=$this->Verifikasi_model->get_last_date_custom();
+          $timezone = date_default_timezone_set('Asia/Jakarta');
+          $now1 = $this->input->post('customDate',TRUE);
+          $now2 = date('Y-m-d H:i:s');
+          $month1= date("m", strtotime($now1));
+          $month2= date("m", strtotime($now2));
+          if ($month1==$month2) {
+            $lastdate=$this->Verifikasi_model->get_last_date();
+          }elseif ($month1!=$month2) {
+            $lastdate=$this->Verifikasi_model->get_last_date_custom();
+          }
+
           $lastmonth= date("m", strtotime($lastdate->Tanggal_Masuk));
-          $monthnow=date('m');
+          //$monthnow=date('m', strtotime($now));
+          $monthnow=date('m', strtotime($now2));
           $yearnow=date('Y');
 
           //PENENTUAN NOMOR BERDASARKAN TANGGAL
-          // if ($lastmonth!=$monthnow) {
-          //   $lastnumber=1;
-          //   $nownumber=($lastnumber->maks+1);
-          // }elseif ($lastmonth==$monthnow) {
-          //   $lastnumber=$this->Verifikasi_model->get_last_num();
-          //   $nownumber=($lastnumber->maks+1);
-          //   $numrows=$this->Verifikasi_model->get_num_row($nownumber);
-          //   if ($num_rows->nomor>1) {
-          //     $lastnumber=$lastnumber+1;
-          //   }
-          // }
-          $timezone = date_default_timezone_set('Asia/Jakarta');
-          $lastnumber=$this->Verifikasi_model->get_last_num_custom();
-          $nownumber=($lastnumber->maks+1);
-          $now = $this->input->post('customDate',TRUE);
-          //$now = date('Y-m-d H:i:s');
+          if ($lastmonth!=$monthnow) {
+            $lastnumber=$this->Verifikasi_model->get_last_num_custom();
+            $nownumber=($lastnumber->maks+1);
+            $numrows=$this->Verifikasi_model->get_num_row($nownumber);
+            if ($numrows>1) {
+              $lastnumber=$lastnumber+1;
+            }
+          }elseif ($lastmonth==$monthnow) {
+            $lastnumber=$this->Verifikasi_model->get_last_num();
+            $nownumber=($lastnumber->maks+1);
+            $numrows=$this->Verifikasi_model->get_num_row($nownumber);
+            if ($numrows>1) {
+              $lastnumber=$lastnumber+1;
+            }
+          }
+
           //PEMBUATAN KODE UNIK
           $pk1 = sprintf("%04s", $nownumber);
           $pk2 = $this->input->post('kode_ver');
           // $pk3 = date("m/Y");
-          $pk3 = date("m/Y", strtotime($now));
+          $pk3 = date("m/Y", strtotime($now1));
           $primarykey = $pk1.'/'.$pk2.'/'.$pk3;
 
           $role = $this->session->userdata('akses');
           if ($role=='verifikasi1') {
-              $lokasi = "jurnalis";
-          }else{
-              $lokasi = $role."/jurnalis";
+              $lokasi = "Jurnalis 1";
+          }elseif ($role=='verifikasi2') {
+              $lokasi = "Jurnalis 2";
+          }elseif ($role=='verifikasi3') {
+              $lokasi = "Jurnalis 3";
           }
-
-
+          $hoursNow = date('H:i:s');
           $data = array(
             'No' => $nownumber,
             'operator_id' => $this->input->post('operator_id',TRUE),
-            'Tanggal_Masuk' => $now,
-            'tgl_out_verif' => $now,
+            'Tanggal_Masuk' => $now1." ".$hoursNow,
+            'Tgl_Out_Verif' => $now2,
             'No_Verifikasi' => $primarykey,
             'Kode_Ver' => $this->input->post('kode_ver',TRUE),
             'Mata_Uang' => $this->input->post('mata_uang',TRUE),

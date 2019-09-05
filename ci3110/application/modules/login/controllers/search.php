@@ -16,6 +16,6 @@ class Search extends MX_Controller {
 	public function result()
 	{
 		$data2['find'] = $this->search_model->findDocument();
-		$this->load->view('find_document', $data2);
+		$this->load->view('result', $data2);
 	}
 }

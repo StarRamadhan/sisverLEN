@@ -19,7 +19,12 @@ class Manager extends MY_Controller{
   public function index()
   {
     $countResponse =$this->Manager_model->count_need_response();
-    $datauser=$this->Manager_model->get_all_need_response();//panggil ke modell
+    $datauser=$this->Manager_model->get_all_need_response();
+    $dataToday = $this->Manager_model->get_data_today();
+    $dataThisMonth = $this->Manager_model->get_data_thismonth();
+    $dataLastMonth = $this->Manager_model->get_data_lastmonth();
+    $dataThisYear = $this->Manager_model->get_data_thisyear();
+
     //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
     $data = array(
        'content'=>'manager/dokumen/content_need_response',
@@ -27,6 +32,10 @@ class Manager extends MY_Controller{
        'sidebar'=>'manager/sidebar',
        'datauser'=>$datauser,
        'countResponse' => $countResponse,
+       'dataToday' => $dataToday,
+       'dataThisMonth'=> $dataThisMonth,
+       'dataLastMonth' => $dataLastMonth,
+       'dataThisYear'=>$dataThisYear,
        //'dataverif'=>$dataverif,
        'module'=>'manager',
        'titlePage'=>'manager',
@@ -52,7 +61,8 @@ class Manager extends MY_Controller{
       'operator_id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
-      'Lok_Dokumen' => 'reject',
+      'Lok_Dokumen' => 'Reject',
+      'Tgl_Out_Jurnal'=>'',
     );
     $this->Manager_model->insert($data);
     $this->Manager_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -62,9 +72,9 @@ class Manager extends MY_Controller{
 
   public function approve(){
     date_default_timezone_set("Asia/Jakarta");
-    $now = date('Y-m-d');
+    $now = date('Y-m-d H:i:s');
     $dataResponse = array(
-      'Lok_Dokumen' => 'finish',
+      'Lok_Dokumen' => 'Finish',
       'Tgl_Out_Manager' =>$now
     );
     $this->Manager_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -115,6 +125,7 @@ class Manager extends MY_Controller{
     $this->session->set_flashdata($ends, 'Date Ends');
   }
 
+  
   public function customSearch(){
     $countResponse =$this->Manager_model->count_need_response();
     $datauser=$this->Manager_model->get_data_search();
@@ -122,21 +133,25 @@ class Manager extends MY_Controller{
        'content'=>'manager/dokumen/content_search',
        'navbar'=>'manager/navbar',
        'sidebar'=>'manager/sidebar',
-       //'customSearch' =>'manager/customSearch',
-       'datauser'=>$datauser,
+       'customSearch' =>'manager/customSearch',
        'countResponse' => $countResponse,
+       // 'count_rejected' => $count_rejected,
+       'datauser'=>$datauser,
        'module'=>'manager',
        'titlePage'=>'manager',
        'controller'=>'manager'
       );
-      $ses_startdate = $this->input->post('dateStart',TRUE);
-      $ses_enddate = $this->input->post('dateEnd',TRUE);
-      $ses_by = $this->input->post('by',TRUE);
-      $this->session->set_flashdata('ses_startdate', $ses_startdate);
-      $this->session->set_flashdata('ses_enddate', $ses_enddate);
-      $this->session->set_flashdata('ses_by', $ses_by);
-      $this->template->load($data);
-
+    $ses_startdate = $this->input->post('dateStart',TRUE);
+    $ses_enddate = $this->input->post('dateEnd',TRUE);
+    $ses_by = $this->input->post('by',TRUE);
+    $ses_category = $this->input->post('category',TRUE);
+    $ses_categoryValue = $this->input->post('categoryValue',TRUE);
+    $this->session->set_flashdata('ses_startdate', $ses_startdate);
+    $this->session->set_flashdata('ses_enddate', $ses_enddate);
+    $this->session->set_flashdata('ses_by', $ses_by);
+    $this->session->set_flashdata('ses_category', $ses_category);
+    $this->session->set_flashdata('ses_categoryValue', $ses_categoryValue);
+    $this->template->load($data);
   }
 
   public function edit_profil($operator_id){
@@ -171,16 +186,82 @@ class Manager extends MY_Controller{
 
   }
 
-  // public function _rules()
-  // {
-  //     $this->form_validation->set_rules('username', 'username', 'trim|required');
-  //     //$this->form_validation->set_rules('password_enc', 'password_enc', 'trim|required');
-  //     $this->form_validation->set_rules('password', 'password', 'trim|required');
-  //     $this->form_validation->set_rules('position', 'position', 'trim|required');
-  //     $this->form_validation->set_rules('phone_number', 'phone_number', 'trim|required');
-  //
-  //
-  //     $this->form_validation->set_rules('no_verifikasi', 'no_verifikasi', 'trim');
-  //     $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-  // }
+  public function dashboard()
+  {
+    $countResponse =$this->Manager_model->count_need_response();
+    $datauser=$this->Manager_model->get_all_need_response();
+
+    $dataToday = $this->Manager_model->get_data_today();
+    $dataThisMonth = $this->Manager_model->get_data_thismonth();
+    $dataLastMonth = $this->Manager_model->get_data_lastmonth();
+    $dataThisYear = $this->Manager_model->get_data_thisyear();
+
+
+    $dataVer1Today = $this->Manager_model->get_ver1_today();
+    $dataVer1ThisMonth = $this->Manager_model->get_ver1_thismonth();
+    $dataVer1LastMonth = $this->Manager_model->get_ver1_lastmonth();
+
+    $dataVer2Today = $this->Manager_model->get_ver2_today();
+    $dataVer2ThisMonth = $this->Manager_model->get_ver2_thismonth();
+    $dataVer2LastMonth = $this->Manager_model->get_ver2_lastmonth();
+
+    $dataVer3Today = $this->Manager_model->get_ver3_today();
+    $dataVer3ThisMonth = $this->Manager_model->get_ver3_thismonth();
+    $dataVer3LastMonth = $this->Manager_model->get_ver3_lastmonth();
+
+    $dataJurnal1Today = $this->Manager_model->get_approve_jur1_today();
+    $dataJurnal1ThisMonth = $this->Manager_model->get_approve_jur1_thismonth();
+    $dataJurnal1LastMonth = $this->Manager_model->get_approve_jur1_lastmonth();
+
+    $dataJurnal2Today = $this->Manager_model->get_approve_jur2_today();
+    $dataJurnal2ThisMonth = $this->Manager_model->get_approve_jur2_thismonth();
+    $dataJurnal2LastMonth = $this->Manager_model->get_approve_jur2_lastmonth();
+
+    $dataJurnal3Today = $this->Manager_model->get_approve_jur3_today();
+    $dataJurnal3ThisMonth = $this->Manager_model->get_approve_jur3_thismonth();
+    $dataJurnal3LastMonth = $this->Manager_model->get_approve_jur3_lastmonth();
+
+
+
+    //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
+    $data = array(
+       'content'=>'manager/dokumen/content_dashboard_statistic',
+       'navbar'=>'manager/navbar',
+       'sidebar'=>'manager/sidebar',
+       'datauser'=>$datauser,
+
+       'dataVer1Today' => $dataVer1Today,
+       'dataVer1ThisMonth' => $dataVer1ThisMonth,
+       'dataVer1LastMonth' => $dataVer1LastMonth,
+       'dataVer2Today' => $dataVer2Today,
+       'dataVer2ThisMonth' => $dataVer2ThisMonth,
+       'dataVer2LastMonth' => $dataVer2LastMonth,
+       'dataVer3Today' => $dataVer3Today,
+       'dataVer3ThisMonth' => $dataVer3ThisMonth,
+       'dataVer3LastMonth' => $dataVer3LastMonth,
+
+       'dataJurnal1Today'=> $dataJurnal1Today,
+       'dataJurnal1ThisMonth'=> $dataJurnal1ThisMonth,
+       'dataJurnal1LastMonth'=> $dataJurnal2LastMonth,
+       'dataJurnal2Today'=> $dataJurnal2Today,
+       'dataJurnal2ThisMonth'=> $dataJurnal2ThisMonth,
+       'dataJurnal2LastMonth'=> $dataJurnal2LastMonth,
+       'dataJurnal3Today'=> $dataJurnal3Today,
+       'dataJurnal3ThisMonth'=> $dataJurnal3ThisMonth,
+       'dataJurnal3LastMonth'=> $dataJurnal3LastMonth,
+
+       'countResponse' => $countResponse,
+       'dataToday' => $dataToday,
+       'dataThisMonth'=> $dataThisMonth,
+       'dataLastMonth' => $dataLastMonth,
+       'dataThisYear'=>$dataThisYear,
+       //'dataverif'=>$dataverif,
+       'module'=>'manager',
+       'titlePage'=>'manager',
+       'controller'=>'manager',
+       'reject'=>'manager/manager/reject',
+       'approve'=>'manager/manager/approve'
+      );
+    $this->template->load($data);
+  }
 }

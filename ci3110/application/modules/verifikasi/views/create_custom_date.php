@@ -13,8 +13,8 @@
 
                     <div class="form-group form-float">
                         <div class="form-line" id="bs_datepicker_container">
-                            <input type="text" class="form-control" id='customDate' name="customDate">
-                            <label class="form-label">Select Date</label>
+                            <input type="text" placeholder="Select Date" class="form-control" id='customDate' name="customDate">
+                            <!-- <label class="form-label">Select Date</label> -->
                         </div>
                     </div>
                     <div class="form-group form-float">

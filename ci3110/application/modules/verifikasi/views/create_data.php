@@ -12,15 +12,16 @@
                     </div>
                     <div class="form-group form-float">
                       <select class="form-control show-tick" name="kode_ver" required>
-                          <option value="">-- Kode Verifikasi --</option>
                           <?php
                             if ($this->session->userdata('akses')=='verifikasi1') {
+                              echo "<option value=''>-- Kode Verifikasi --</option>";
                               echo "<option value='UM'>UM</option>";
                               echo "<option value='PB'>PB</option>";
                               echo "<option value='LN'>LN</option>";
                               echo "<option value='LK'>LK</option>";
                               echo "<option value='LB'>LB</option>";
                             }elseif ($this->session->userdata('akses')=='verifikasi2') {
+                              echo "<option value=''>-- Kode Verifikasi --</option>";
                               echo "<option value='LM'>LM</option>";
                               echo "<option value='UM'>UM</option>";
                               echo "<option value='PB'>PB</option>";

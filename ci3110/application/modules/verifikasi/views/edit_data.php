@@ -6,7 +6,7 @@
                 <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
                   <div class="hidden">
                     <div class="form-group form-float">
-                        <div class="form-line hidden">
+                        <div class="form-line">
                             <input type="text" class="form-control" name="no" value="<?php echo $dataedit->No?>" required readonly>
                             <label class="form-label">No Revisi</label>
                         </div>
@@ -169,7 +169,7 @@
                         <button class="btn btn-primary waves-effect" type="submit">UPDATE</button>
                       </div>
                       <div class="col-md-6 text-right">
-                        <a class='btn btn-primary waves-effect waves-blue' type='button' href="<?php echo base_url()?>verifikasi/revisi/">BACK</a>
+                        <a class='btn btn-primary waves-effect waves-blue' type='button' href="<?php echo base_url()?>verifikasi/revisi/">CANCEL</a>
                       </div>
                     </div>
                 </form>

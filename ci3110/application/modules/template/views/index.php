@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>PT. LEN (PERSERO) - VERIFIKASI</title>
+    <title>PT. Len Industri (PERSERO) - Monitoring Dokumen Verifikasi</title>
     <!-- Favicon-->
-    <link rel="icon" href="<?php echo base_url()?>favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo base_url('images/favicon.ico')?>" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -45,8 +45,8 @@
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
+            <div class="preloader pl-size-xl">
+                <div class="spinner-layer pl-green">
                     <div class="circle-clipper left">
                         <div class="circle"></div>
                     </div>
@@ -63,7 +63,7 @@
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
+    <!-- <div class="search-bar">
         <div class="search-icon">
             <i class="material-icons">search</i>
         </div>
@@ -71,7 +71,7 @@
         <div class="close-search">
             <i class="material-icons">close</i>
         </div>
-    </div>
+    </div> -->
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <?php $this->load->view($navbar);?>
@@ -131,6 +131,9 @@
     <script src="<?php echo base_url()?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="<?php echo base_url()?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
+    <!-- Chart Js -->
+    <script src="<?php echo base_url()?>plugins/chartjs/Chart.bundle.js"></script>
+
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
 
@@ -142,6 +145,16 @@
     <!-- Demo Js -->
     <script src="<?php echo base_url()?>js/demo.js"></script>
     <script>
+
+    // $('#category').on('change', function() {
+    //     if ((this.value)!="") {
+    //       $("#categoryValue").removeAttr("required");
+    //     }else if((this.value)==""){
+    //       $("#categoryValue").attr("required");
+    //     }
+    //
+    // });
+
     $('li > a').click(function() {
       $('li').removeClass('active');
       $(this).parent().addClass('active');
@@ -162,17 +175,20 @@
         clearBtn: true,
     });
 
+    //REFERENSI :
+  // var tgl1 = new Date();
+  // tgl1.setMonth(tgl1.getMonth()-1);
+  // tgl1.setDate(1);
+  // var tgl2 = new Date();
+  // tgl2.setMonth(tgl2.getMonth()-1);
+  // tgl2.setDate(15);
 
-  var tgl1 = new Date();
-  tgl1.setMonth(tgl1.getMonth()-1);
-  tgl1.setDate(1);
-  var tgl2 = new Date();
-  tgl2.setMonth(tgl2.getMonth()-1);
-  tgl2.setDate(15);
-   // lastmonth = new Date(tgl.getMonth()-1, date.getDate()+15);
-
-  // tgl.setDate(tgl.getDate()-10);
-
+    var tgl1 = new Date();
+    tgl1.setMonth(tgl1.getMonth());
+    tgl1.setDate(-8);
+    var tgl2 = new Date();
+    tgl2.setMonth(tgl2.getMonth());
+//    tgl2.setDate(15);
   $('#customDate').datepicker({
       startDate: tgl1,
       endDate:tgl2,
@@ -180,6 +196,59 @@
       autoclose: true,
       clearBtn: true,
   });
+
+  $("#buttonFilter").click(function(){
+    $("#formFilter").fadeToggle();
+  });
+
+  $(function () {
+      new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'line') {
+          config = {
+              type: 'line',
+              data: {
+                  labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  datasets: [
+                    {
+                      label: "My First dataset",
+                      data: [55, 59, 80, 81, 56, 55, 40],
+                      borderColor: 'rgba(0, 188, 212, 0.75)',
+                      backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                      pointBorderColor: 'rgba(0, 188, 212, 0)',
+                      pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                      pointBorderWidth: 1
+                    }, {
+                          label: "My Second dataset",
+                          data: [28, 48, 40, 19, 86, 27, 90],
+                          borderColor: 'rgba(233, 30, 99, 0.75)',
+                          backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                          pointBorderColor: 'rgba(233, 30, 99, 0)',
+                          pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                          pointBorderWidth: 1
+                      },
+                      {
+                            label: "My Second dataset",
+                            data: [18, 82, 61, 49, 74, 42, 100],
+                            borderColor: 'rgba(233, 30, 99, 0.75)',
+                            backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                            pointBorderColor: 'rgba(233, 30, 99, 0)',
+                            pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                            pointBorderWidth: 1
+                        }]
+              },
+              options: {
+                  responsive: true,
+                  legend: false
+              }
+          }
+      }
+      return config;
+  }
 
 
     </script>
