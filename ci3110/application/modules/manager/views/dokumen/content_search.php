@@ -7,7 +7,7 @@
                     <h2 class="card-inside-title">Filter</h2>
                     <form method="post" id="form_advanced_validation" action="<?php echo base_url().$customSearch ?>">
                       <div class="row clearfix">
-                        <div class="col-md-4 text-left">
+                        <div class="col-md-6 text-left">
                           <div class="input-daterange input-group">
                               <div class="form-line">
                                 <?php if($this->session->flashdata('ses_startdate')) {
@@ -26,25 +26,6 @@
                                   echo '<input type="text" id="dateEnd" class="form-control" name="dateEnd" placeholder="Date end..." autocomplete="off">';
                                 } ?>
                               </div>
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-line">
-                            <select class="form-control show-tick" name="by" required>
-                              <!-- <option value="">-- Select One --</option> -->
-                                <?php
-                                      if ($this->session->userdata('ses_by')=='me') {
-                                        echo '<option value="me" selected> By Me </option>';
-                                      }else {
-                                        echo '<option value="me"> By Me </option>';
-                                      }
-                                      if ($this->session->flashdata('ses_by')=='all') {
-                                        echo '<option value="all" selected> All Document </option>';
-                                      }else {
-                                        echo '<option value="all"> All Document </option>';
-                                      }
-                                ?>
-                            </select>
                           </div>
                         </div>
                         <div class="col-md-3 text-left">
@@ -70,12 +51,6 @@
                       <div class="col-md-4 text-left">
                         <div class="input-group">
                             <div class="form-line">
-                                <!-- <?php if($this->session->flashdata('ses_categoryValue')) {
-                                  $flashStart=$this->session->flashdata('ses_categoryValue');
-                                  echo '<input type="text" id="categoryValue" class="form-control" value="'.$flashStart.'" name="categoryValue" placeholder="Value..." autocomplete="off" required>';
-                                }else{
-                                  echo '<input type="text" id="categoryValue" class="form-control" name="categoryValue" placeholder="Value..." autocomplete="off" required>';
-                                } ?> -->
                                 <input type="text" id="categoryValue" class="form-control" name="categoryValue" placeholder="Value..." autocomplete="off" required>
                             </div>
                         </div>

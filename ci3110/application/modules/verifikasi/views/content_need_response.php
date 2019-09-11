@@ -88,7 +88,7 @@
                                                 <input type="text" class="form-control " name="jumlah" value="<?php echo $d->Jumlah?>"required>
                                                 <input type="text" class="form-control " name="tgl_out_verif" value="<?php echo $d->Tgl_Out_Verif?>"required>
                                                 <input type="text" class="form-control " name="tgl_out_jurnal" value="<?php echo $d->Tgl_Out_Jurnal?>"required>
-                                                <input type="text" class="form-control " name="operator_id" value="<?php echo $d->operator_id?>"required>
+                                                <input type="text" class="form-control " name="operator_id" value="<?php echo $d->Operator_Id?>"required>
                                               </div>
 
                                             </div>

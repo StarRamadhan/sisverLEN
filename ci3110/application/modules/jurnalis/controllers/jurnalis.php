@@ -79,21 +79,23 @@ class jurnalis extends MY_Controller{
     $now = date('Y-m-d H:i:s');
 
     $data = array(
-      'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
-      'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
-      'kode_ver' =>$this->input->post('kode_ver',TRUE),
-      'keterangan' => $this->input->post('keterangan',TRUE),
-      'user' => $this->input->post('user',TRUE),
-      'mata_uang' => $this->input->post('mata_uang',TRUE),
-      'jumlah' => $this->input->post('jumlah',TRUE),
-      'tgl_out_verif' => $this->input->post('tgl_out_verif',TRUE),
-      'tgl_out_jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
-      'alasan_revisi' => $this->input->post('alasan',true),
-      'operator_id' => $this->input->post('operator_id',true)
+      'Tanggal_Masuk' => $this->input->post('tanggal_masuk',TRUE),
+      'Tanggal_Reject' => $now,
+      'No_Verifikasi' => $this->input->post('no_verifikasi',TRUE),
+      'Kode_Ver' =>$this->input->post('kode_ver',TRUE),
+      'Keterangan' => $this->input->post('keterangan',TRUE),
+      'User' => $this->input->post('user',TRUE),
+      'Mata_Uang' => $this->input->post('mata_uang',TRUE),
+      'Jumlah' => $this->input->post('jumlah',TRUE),
+      'Tgl_Out_Verif' => $this->input->post('tgl_out_verif',TRUE),
+      'Tgl_Out_Jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
+      'Alasan_Revisi' => $this->input->post('alasan',true),
+      'Operator_Id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'Reject',
       'Tgl_Out_Verif'=>'',
+      'Jt_Jurnalis' =>'',
     );
     $this->Jurnal_model->insert($data);
     $this->Jurnal_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -134,7 +136,7 @@ class jurnalis extends MY_Controller{
 
     $dataResponse = array(
       'Lok_Dokumen' => 'Manager',
-      'Tgl_Out_Jurnal' =>$tgl_out_role,
+      'Tgl_Out_Jurnal' =>$now,
       'Jt_Manager' =>$jatuh_tempo
     );
 
@@ -186,29 +188,6 @@ class jurnalis extends MY_Controller{
     $this->session->set_flashdata($ends, 'Date Ends');
   }
 
-  // public function customSearch(){
-  //   $countResponse =$this->Jurnal_model->count_need_response();
-  //   $datauser=$this->Jurnal_model->get_data_search();
-  //   $data = array(
-  //      'content'=>'jurnalis/dokumen/content_search',
-  //      'navbar'=>'jurnalis/navbar',
-  //      'sidebar'=>'jurnalis/sidebar',
-  //      //'customSearch' =>'jurnalis/customSearch',
-  //      'countResponse' => $countResponse,
-  //      'datauser'=>$datauser,
-  //      'module'=>'jurnalis',
-  //      'titlePage'=>'jurnalis',
-  //      'controller'=>'jurnalis'
-  //     );
-  //     $ses_startdate = $this->input->post('dateStart',TRUE);
-  //     $ses_enddate = $this->input->post('dateEnd',TRUE);
-  //     $ses_by = $this->input->post('by',TRUE);
-  //     $this->session->set_flashdata('ses_startdate', $ses_startdate);
-  //     $this->session->set_flashdata('ses_enddate', $ses_enddate);
-  //     $this->session->set_flashdata('ses_by', $ses_by);
-  //     $this->template->load($data);
-  // }
-
   public function edit_profil($operator_id){
     $countResponse =$this->Jurnal_model->count_need_response();
     $dataedit=$this->Jurnal_model->get_by_id_profil($operator_id);
@@ -229,10 +208,10 @@ class jurnalis extends MY_Controller{
   public function update_action()
   {
           $data = array(
-            'username' => $this->input->post('username',TRUE),
-            'password_enc' => md5($this->input->post('password',TRUE)),
-            'password' => $this->input->post('password',TRUE),
-            'phone_number' => $this->input->post('phone_number',TRUE),
+            'Username' => $this->input->post('username',TRUE),
+            'Password_enc' => md5($this->input->post('password',TRUE)),
+            'Password' => $this->input->post('password',TRUE),
+            'Phone_Number' => $this->input->post('phone_number',TRUE),
           );
           $this->Jurnal_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');

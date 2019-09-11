@@ -7,7 +7,7 @@
     {
 
         public $table = 'operator';
-        public $id = 'operator_id';
+        public $id = 'Operator_id';
         public $order = 'DESC';
 
         function __construct()

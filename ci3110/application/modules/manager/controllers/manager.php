@@ -20,23 +20,22 @@ class Manager extends MY_Controller{
   {
     $countResponse =$this->Manager_model->count_need_response();
     $datauser=$this->Manager_model->get_all_need_response();
-    $dataToday = $this->Manager_model->get_data_today();
-    $dataApprovedJurnal = $this->Manager_model->get_data_approved_jurnal();
-    $dataRejected = $this->Manager_model->get_data_rejected();
-    $dataFinished = $this->Manager_model->get_data_finished();
-
-    //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
+    $countDocIn = $this->Manager_model->count_doc_in();
+    $cProgOntime = $this->Manager_model->count_manager_prog_ontime();
+    $cProgLate = $this->Manager_model->count_manager_prog_late();
+    $cFinishOntime = $this->Manager_model->count_manager_finish_ontime();
+    $cFinishLate = $this->Manager_model->count_manager_finish_late();
     $data = array(
        'content'=>'manager/dokumen/content_need_response',
        'navbar'=>'manager/navbar',
        'sidebar'=>'manager/sidebar',
        'datauser'=>$datauser,
        'countResponse' => $countResponse,
-       'dataToday' => $dataToday,
-       'dataApprovedJurnal'=> $dataApprovedJurnal,
-       'dataRejected' => $dataRejected,
-       'dataFinished'=>$dataFinished,
-       //'dataverif'=>$dataverif,
+       'countDocIn' => $countDocIn,
+       'cProgOntime' => $cProgOntime,
+       'cProgLate' => $cProgLate,
+       'cFinishOntime' => $cFinishOntime,
+       'cFinishLate' => $cFinishLate,
        'module'=>'manager',
        'titlePage'=>'manager',
        'controller'=>'manager',
@@ -51,20 +50,25 @@ class Manager extends MY_Controller{
     $now = date('Y-m-d H:i:s');
 
     $data = array(
-      'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
-      'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
-      'kode_ver' =>$this->input->post('kode_ver',TRUE),
-      'keterangan' => $this->input->post('keterangan',TRUE),
-      'user' => $this->input->post('user',TRUE),
-      'mata_uang' => $this->input->post('mata_uang',TRUE),
-      'jumlah' => $this->input->post('jumlah',TRUE),
-      'tgl_out_verif' => $this->input->post('tgl_out_verif',TRUE),
-      'tgl_out_jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
-      'alasan_revisi' => $this->input->post('alasan',true),
-      'operator_id' => $this->input->post('operator_id',true)
+      'Tanggal_Masuk' => $this->input->post('tanggal_masuk',TRUE),
+      'Tanggal_Reject' => $now,
+      'No_Verifikasi' => $this->input->post('no_verifikasi',TRUE),
+      'Kode_Ver' =>$this->input->post('kode_ver',TRUE),
+      'Keterangan' => $this->input->post('keterangan',TRUE),
+      'User' => $this->input->post('user',TRUE),
+      'Mata_Uang' => $this->input->post('mata_uang',TRUE),
+      'Jumlah' => $this->input->post('jumlah',TRUE),
+      'Tgl_Out_Verif' => $this->input->post('tgl_out_verif',TRUE),
+      'Tgl_Out_Jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
+      'Alasan_Revisi' => $this->input->post('alasan',true),
+      'Operator_Id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'Reject',
+      'Tgl_Out_Jurnal' =>'',
+      'Tgl_Out_Verif' => '',
+      'Jt_Jurnalis' =>'',
+      'Jt_Manager' => '',
     );
 
     $this->Manager_model->insert($data);

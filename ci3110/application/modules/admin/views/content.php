@@ -36,20 +36,20 @@
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->operator_id ?></td>
-                                    <td><?php echo $d->username ?>
+                                    <td><?php echo $d->Operator_Id ?></td>
+                                    <td><?php echo $d->Username ?>
                                       <?php
-                                      if ($d->status=='active') {
-                                        echo '<br><button type="button" class="btn bg-amber btn-xs waves-effect">'.$d->status.'</button></td>';
-                                      }elseif ($d->status=='nonactive') {
-                                        echo '<br><button type="button" class="btn bg-grey btn-xs waves-effect">'.$d->status.'</button></td>';
+                                      if ($d->Status=='active') {
+                                        echo '<br><button type="button" class="btn bg-amber btn-xs waves-effect">'.$d->Status.'</button></td>';
+                                      }elseif ($d->Status=='nonactive') {
+                                        echo '<br><button type="button" class="btn bg-grey btn-xs waves-effect">'.$d->Status.'</button></td>';
                                       }
                                        ?>
-                                    <td><?php echo $d->password ?></td>
-                                    <td><?php echo $d->position ?></td>
-                                    <td><?php echo $d->phone_number ?></td>
+                                    <td><?php echo $d->Password ?></td>
+                                    <td><?php echo $d->Position ?></td>
+                                    <td><?php echo $d->Phone_Number ?></td>
                                     <td>
-                                      <a class='btn bg-cyan waves-effect' type='button' href="<?php echo base_url()?>admin/edit/<?php echo $d->operator_id ?>">Edit</a>
+                                      <a class='btn bg-cyan waves-effect' type='button' href="<?php echo base_url()?>admin/edit/<?php echo $d->Operator_Id ?>">Edit</a>
                                     </td>
 
                                   </tr>

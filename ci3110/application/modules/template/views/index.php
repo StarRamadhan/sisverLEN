@@ -203,15 +203,15 @@
   });
 
   $(function () {
-      new Chart(document.getElementById("chartDokMasuk").getContext("2d"), getChartJs('line'));
+      new Chart(document.getElementById("chartDokMasuk").getContext("2d"), getChartJs('bar'));
       new Chart(document.getElementById("chartDokReject").getContext("2d"), getChartJs('bar'));
   });
 
   function getChartJs(type) {
       var config = null;
-      if (type === 'line') {
+      if (type === 'bar') {
           config = {
-              type: 'line',
+              type: 'bar',
               data: {
                 labels:[
                 <?php
@@ -225,7 +225,7 @@
                   datasets: [
                     {
                       label: "Dokumen Tepat Waktu",
-                      data: [55, 59, 80, 81, 56, 55, 40],
+                      data: [2300, 2500, 2415, 2391, 2532, 0, 1990],
                       borderColor: 'rgba(0, 188, 212, 0.75)',
                       backgroundColor: 'rgba(0, 188, 212, 0.3)',
                       pointBorderColor: 'rgba(0, 188, 212, 0)',
@@ -234,7 +234,7 @@
                     },
                     {
                         label: "Dokumen Telat",
-                        data: [28, 32, 61, 47, 74, 42, 100],
+                        data: [60, 45, 34, 72, 67, 49, 20],
                         borderColor: 'rgba(233, 30, 99, 0.75)',
                         backgroundColor: 'rgba(233, 30, 99, 0.3)',
                         pointBorderColor: 'rgba(233, 30, 99, 0)',
@@ -257,11 +257,7 @@
                       label: "My First dataset",
                       data: [65, 59, 80, 81, 56, 55, 40],
                       backgroundColor: 'rgba(0, 188, 212, 0.8)'
-                  }, {
-                          label: "My Second dataset",
-                          data: [28, 48, 40, 19, 86, 27, 90],
-                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
-                      }]
+                  }]
               },
               options: {
                   responsive: true,

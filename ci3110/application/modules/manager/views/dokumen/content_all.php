@@ -27,7 +27,7 @@
                           </div>
                         </div> -->
                         <div class="col-md-3 text-left">
-                          <button type="submit" class="btn bg-blue-grey waves-effect waves-float"><i class="material-icons">search</i></button>
+                          <button type="submit" class="btn bg-blue-grey waves-effect waves-float">Search</button>
                         </div>
                     </div>
                     <a id="buttonFilter" href="#"><small href="" class="card-inside-title">more filter?</small></a>

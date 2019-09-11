@@ -43,7 +43,7 @@
 
           if ((empty($start)) && (empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login'");
+              $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login'");
               return $sql->result();
             }elseif ($by == 'all') {
               $sql=$this->db->query("SELECT * FROM revisi");
@@ -51,7 +51,7 @@
             }
           }if ((!empty($start)) && (!empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' ");
+              $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' ");
               return $sql->result();
             }elseif ($by == 'all') {
               $sql=$this->db->query("SELECT * FROM revisi where Tanggal_Masuk BETWEEN '$start' AND '$end' ");
@@ -59,7 +59,7 @@
             }
           }if ((!empty($start)) && (empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$start'");
+              $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login' AND DATE(Tanggal_Masuk) = '$start'");
               return $sql->result();
             }elseif ($by == 'all') {
               $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$start'");
@@ -67,7 +67,7 @@
             }
           }if ((empty($start)) && (!empty($end))) {
             if ($by == 'me') {
-              $sql=$this->db->query("SELECT * FROM revisi where operator_id = '$id_login' AND DATE(Tanggal_Masuk) = '$end'");
+              $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login' AND DATE(Tanggal_Masuk) = '$end'");
               return $sql->result();
             }elseif ($by == 'all') {
               $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$end'");
@@ -117,7 +117,7 @@
             }
             //$akses = $this->session->userdata('akses');
             $table=$this->table_dokumen;
-            $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.operator_id=dokumen.operator_id and operator.position='$role' ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT * FROM dokumen,operator WHERE dokumen.Lok_Dokumen = '$lokasi' AND operator.Operator_Id=dokumen.Operator_Id and operator.Position='$role' ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
         }
         // insert data

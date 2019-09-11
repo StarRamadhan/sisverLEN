@@ -64,50 +64,12 @@
                                   <option value="User"> User </option>
                                   <option value="Mata_Uang"> Mata Uang </option>
                                   <option value="Lok_Dokumen"> Lokasi Dokumen </option>
-                            <!-- <?php
-                                  if ($this->session->userdata('ses_category')=='No_Verifikasi') {
-                                    echo '<option value="No_Verifikasi" selected> No Verifikasi </option>';
-                                  }else {
-                                    echo '<option value="No_Verifikasi"> No Verifikasi </option>';
-                                  }
-                                  if ($this->session->flashdata('ses_category')=='Kode_Ver') {
-                                    echo '<option value="Kode_Ver" selected> Kode Verifikasi </option>';
-                                  }else {
-                                    echo '<option value="Kode_Ver"> Kode Verifikasi </option>';
-                                  }
-                                  if ($this->session->flashdata('ses_category')=='Keterangan') {
-                                    echo '<option value="Keterangan" selected> Keterangan </option>';
-                                  }else {
-                                    echo '<option value="Keterangan"> Keterangan </option>';
-                                  }
-                                  if ($this->session->flashdata('ses_category')=='User') {
-                                    echo '<option value="User" selected> User </option>';
-                                  }else {
-                                    echo '<option value="User"> User </option>';
-                                  }
-                                  if ($this->session->flashdata('ses_category')=='Mata_Uang') {
-                                    echo '<option value="Mata_Uang" selected> Mata Uang </option>';
-                                  }else {
-                                    echo '<option value="Mata_Uang"> Mata Uang </option>';
-                                  }
-                                  if ($this->session->flashdata('ses_category')=='Lok_Dokumen') {
-                                    echo '<option value="Lok_Dokumen" selected> Lokasi Dokumen </option>';
-                                  }else {
-                                    echo '<option value="Lok_Dokumen"> Lokasi Dokumen </option>';
-                                  }
-                            ?> -->
                           </select>
                         </div>
                       </div>
                       <div class="col-md-4 text-left">
                         <div class="input-group">
                             <div class="form-line">
-                                <!-- <?php if($this->session->flashdata('ses_categoryValue')) {
-                                  $flashStart=$this->session->flashdata('ses_categoryValue');
-                                  echo '<input type="text" id="categoryValue" class="form-control" value="'.$flashStart.'" name="categoryValue" placeholder="Value..." autocomplete="off" required>';
-                                }else{
-                                  echo '<input type="text" id="categoryValue" class="form-control" name="categoryValue" placeholder="Value..." autocomplete="off" required>';
-                                } ?> -->
                                 <input type="text" id="categoryValue" class="form-control" name="categoryValue" placeholder="Value..." autocomplete="off" required>
                             </div>
                         </div>

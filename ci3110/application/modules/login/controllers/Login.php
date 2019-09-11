@@ -23,34 +23,34 @@ class Login extends MY_Controller{
     if($cek_user->num_rows() > 0){ //jika login sebagai Admin
       $data=$cek_user->row_array();
       $this->session->set_userdata('masuk',TRUE);
-      echo $data['position'];
+      echo $data['Position'];
 
-      if ($data['position']=='admin') {//AKSES KE Admin
+      if ($data['Position']=='admin') {//AKSES KE Admin
         $this->session->set_userdata('akses','admin');
-        $this->session->set_userdata('ses_id',$data['operator_id']);
-        $this->session->set_userdata('ses_nama',$data['username']);
+        $this->session->set_userdata('ses_id',$data['Operator_Id']);
+        $this->session->set_userdata('ses_nama',$data['Username']);
         redirect(base_url('admin/'));
-      }if ($data['position']=='manager') {//AKSES KE Manager
+      }if ($data['Position']=='manager') {//AKSES KE Manager
         $this->session->set_userdata('akses','manager');
-        $this->session->set_userdata('ses_id',$data['operator_id']);
-        $this->session->set_userdata('ses_nama',$data['username']);
-        redirect(base_url('manager'));
-      }if ($data['position']=='jurnalis') {//AKSES KE Jurnal
+        $this->session->set_userdata('ses_id',$data['Operator_Id']);
+        $this->session->set_userdata('ses_nama',$data['Username']);
+        redirect(base_url('manager/'));
+      }if ($data['Position']=='jurnalis') {//AKSES KE Jurnal
         $this->session->set_userdata('akses','jurnalis');
-        $this->session->set_userdata('ses_id',$data['operator_id']);
-        $this->session->set_userdata('ses_nama',$data['username']);
+        $this->session->set_userdata('ses_id',$data['Operator_Id']);
+        $this->session->set_userdata('ses_nama',$data['Username']);
         redirect(base_url('jurnalis'));
-      }if (($data['position']=='verifikasi1') || ($data['position']=='verifikasi2') || ($data['position']=='verifikasi3')) {//AKSES KE Verifikasi
-        if ($data['position'] == 'verifikasi1') {
+      }if (($data['Position']=='verifikasi1') || ($data['Position']=='verifikasi2') || ($data['Position']=='verifikasi3')) {//AKSES KE Verifikasi
+        if ($data['Position'] == 'verifikasi1') {
           $this->session->set_userdata('akses','verifikasi1');
-        }elseif ($data['position'] == 'verifikasi2') {
+        }elseif ($data['Position'] == 'verifikasi2') {
           $this->session->set_userdata('akses','verifikasi2');
-        }elseif ($data['position'] == 'verifikasi3') {
+        }elseif ($data['Position'] == 'verifikasi3') {
           $this->session->set_userdata('akses','verifikasi3');
         }
         //$this->session->set_userdata('akses','verifikasi');
-        $this->session->set_userdata('ses_id',$data['operator_id']);
-        $this->session->set_userdata('ses_nama',$data['username']);
+        $this->session->set_userdata('ses_id',$data['Operator_Id']);
+        $this->session->set_userdata('ses_nama',$data['Username']);
         redirect(base_url('verifikasi/'));
       }
 		}else{

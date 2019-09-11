@@ -104,23 +104,55 @@ class revisi extends MY_Controller{
       }elseif ($role=='verifikasi3') {
           $lokasi = "Jurnalis 3";
       }
+
+      $tgl_input = date('Y-m-d');
+      $hari_input = date('l', strtotime($tgl_input));
+      $batas_jam = date('H:i', strtotime($tgl_input));
+        if($batas_jam>'14:00'){
+          $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
+          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+        }elseif($batas_jam<='14:00'){
+          $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
+          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+        }
+
+        if(date('l', strtotime($tgl_out_role))=="Saturday"){
+          $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+        }
+        elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
+          $tgl_out_role;
+          $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+        }
+        elseif((date('l', strtotime($jatuh_tempo))=="Sunday")){
+          $tgl_out_role;
+          $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+        }elseif ((date('l', strtotime($tgl_out_role))=="Thursday") || (date('l', strtotime($tgl_out_role))=="Friday")) {
+          $tgl_out_role;
+          $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+        }else{
+          $tgl_out_role;
+          $jatuh_tempo;
+        }
+
       $now = date('Y-m-d H:i:s');
           $data_dokumen = array(
-            'tanggal_masuk' =>$this->input->post('tanggal_masuk',true),
-            'kode_ver' =>$this->input->post('kode_ver',TRUE),
-            'no_verifikasi' => $primarykey,
-            'keterangan' => $this->input->post('keterangan',TRUE),
-            'user' => $this->input->post('user',TRUE),
-            'mata_uang' => $this->input->post('mata_uang',TRUE),
-            'jumlah' => $this->input->post('jumlah',TRUE),
-            'tgl_out_verif' => $now,
-            'tgl_out_jurnal' => $this->input->post(""),
-            'lok_dokumen' => $lokasi
+            'Tanggal_Masuk' =>$this->input->post('tanggal_masuk',true),
+            'Kode_Ver' =>$this->input->post('kode_ver',TRUE),
+            'No_Verifikasi' => $primarykey,
+            'Keterangan' => $this->input->post('keterangan',TRUE),
+            'User' => $this->input->post('user',TRUE),
+            'Mata_Uang' => $this->input->post('mata_uang',TRUE),
+            'Jumlah' => $this->input->post('jumlah',TRUE),
+            'Tgl_Out_Verif' => $tgl_out_role,
+            'Tgl_Out_Jurnal' => '',
+            'lok_Dokumen' => $lokasi,
+            'Jt_Jurnalis' => $jatuh_tempo
           );
 
           $revisi_selesai = "Done";
           $data = array(
-            'status_revisi' => $revisi_selesai,
+            'Status_Revisi' => $revisi_selesai,
           );
 
           $this->Revisi_model->update_revisi($this->input->post('no', TRUE), $data);

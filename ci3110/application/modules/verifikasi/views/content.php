@@ -31,7 +31,7 @@
           <div class="col-md-9">
             <div class="col-md-6">
               <div class="block-header text-center">
-                  <h2><small>UNPROCESSED</small></h2>
+                  <h2><small>IN PROGRESS</small></h2>
               </div>
               <div class="col-md-6">
                   <div class="info-box bg-orange hover-zoom-effect">
@@ -58,7 +58,7 @@
             </div>
             <div class="col-md-6">
               <div class="block-header text-center">
-                  <h2><small>PROCESSED</small></h2>
+                  <h2><small>FINISH</small></h2>
               </div>
               <div class="col-md-6">
                   <div class="info-box bg-purple hover-zoom-effect">
@@ -124,7 +124,7 @@
                                   <ul class="dropdown-menu">
                                       <li><a href="<?php echo base_url('verifikasi/create');?>">Current Date</a></li>
                                       <li role="separator" class="divider"></li>
-                                      <li><a href="<?php echo base_url('verifikasi/custom_create');?>">Custom Date</a></li>
+                                      <li><a href="<?php echo base_url('verifikasi/custom_create');?>">Back Date</a></li>
                                   </ul>
                               </div>
                               <?php
