@@ -17,7 +17,7 @@
             <ul class="list">
                 <li class="header">MAIN MENU</li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('manager/dashboard');?>">
+                    <a href="<?php echo base_url('manager/dashboards');?>">
                         <i class="material-icons">dashboard</i>
                         <span>Dashboard</span>
                     </a>

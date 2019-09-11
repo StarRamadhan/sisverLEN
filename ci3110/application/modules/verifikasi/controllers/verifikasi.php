@@ -24,9 +24,9 @@ class verifikasi extends MY_Controller{
     $datafield=$this->Verifikasi_model->get_field();//panggil ke modell
     $lastdate=$this->Verifikasi_model->get_last_date();
     $dataToday = $this->Verifikasi_model->get_data_today();
-    $dataThisMonth = $this->Verifikasi_model->get_data_thismonth();
-    $dataLastMonth = $this->Verifikasi_model->get_data_lastmonth();
-    $dataThisYear = $this->Verifikasi_model->get_data_thisyear();
+    $dataApprovedJurnal = $this->Verifikasi_model->get_data_approved_jurnal();
+    $dataRejected = $this->Verifikasi_model->get_data_rejected();
+    $dataFinished = $this->Verifikasi_model->get_data_finished();
     $data = array(
        'content'=>'verifikasi/content',
        'navbar'=>'verifikasi/navbar',
@@ -36,9 +36,9 @@ class verifikasi extends MY_Controller{
        'count_rejected' => $count_rejected,
        'datafield'=>$datafield,
        'dataToday' => $dataToday,
-       'dataThisMonth'=> $dataThisMonth,
-       'dataLastMonth' => $dataLastMonth,
-       'dataThisYear'=>$dataThisYear,
+       'dataApprovedJurnal'=> $dataApprovedJurnal,
+       'dataRejected' => $dataRejected,
+       'dataFinished'=>$dataFinished,
        'customSearch' =>'verifikasi/customSearch',
        // 'dataverif'=>$dataverif,
        'module'=>'verifikasi',
@@ -101,6 +101,10 @@ class verifikasi extends MY_Controller{
   }
 
   public function reject(){
+
+    date_default_timezone_set("Asia/Jakarta");
+    $now = date('Y-m-d H:i:s');
+
     $data = array(
       'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
       'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
@@ -116,6 +120,8 @@ class verifikasi extends MY_Controller{
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'Reject',
+      'Tgl_Out_Verif' => '',
+      //'Jt_Verif' => $jatuh_tempo
     );
     $this->Verifikasi_model->insert_reject($data);
     $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -127,9 +133,38 @@ class verifikasi extends MY_Controller{
   public function approve(){
     date_default_timezone_set("Asia/Jakarta");
     $now = date('Y-m-d H:i:s');
+
+    //perhitungan jika input diatas jam 14.00
+    $tgl_input = $now;
+        $hari_input = date('l', strtotime($tgl_input));
+        $batas_jam = date('H:i', strtotime($tgl_input));
+          if($batas_jam>'14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }elseif($batas_jam<='14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }
+          if(date('l', strtotime($tgl_out_role))=="Saturday"){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }
+          elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
+            $tgl_out_role;
+            $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }
+          elseif((date('l', strtotime($jatuh_tempo))=="Sunday")){
+            $tgl_out_role;
+            $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }else{
+            $tgl_out_role;
+            $jatuh_tempo;
+          }
+
     $dataResponse = array(
       'Lok_Dokumen' => 'Manager',
-      'Tgl_Out_Jurnal' =>$now
+      'Tgl_Out_Jurnal' =>$tgl_out_role,
+      'Jt_Manager' =>$jatuh_tempo
     );
     $this->Verifikasi_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
     $this->session->set_flashdata('approveMessage', 'Approve Success');
@@ -180,7 +215,6 @@ class verifikasi extends MY_Controller{
           }
 
         }
-        $timezone = date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
         //PEMBUATAN KODE UNIK
         $pk1 = sprintf("%04s", $nownumber);
@@ -198,18 +232,50 @@ class verifikasi extends MY_Controller{
         }
 
 
+        //perhitungan jika input diatas jam 14.00
+        $tgl_input = $now;
+        $hari_input = date('l', strtotime($tgl_input));
+        $batas_jam = date('H:i', strtotime($tgl_input));
+          if($batas_jam>'14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+          }elseif($batas_jam<='14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+          }
+
+          if(date('l', strtotime($tgl_out_role))=="Saturday"){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+          }
+          elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
+            $tgl_out_role;
+            $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }
+          elseif((date('l', strtotime($jatuh_tempo))=="Sunday")){
+            $tgl_out_role;
+            $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }elseif ((date('l', strtotime($tgl_out_role))=="Thursday") || (date('l', strtotime($tgl_out_role))=="Friday")) {
+            $tgl_out_role;
+            $jatuh_tempo = date('l, Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }else{
+            $tgl_out_role;
+            $jatuh_tempo;
+          }
+
         $data = array(
           'No' => $nownumber,
           'operator_id' => $this->input->post('operator_id',TRUE),
           'Tanggal_Masuk' => $now,
-          'tgl_out_verif' => $now,
+          'tgl_out_verif' => $tgl_out_role,
           'No_Verifikasi' => $primarykey,
           'Kode_Ver' => $this->input->post('kode_ver',TRUE),
           'Mata_Uang' => $this->input->post('mata_uang',TRUE),
           'User' => $this->input->post('user',TRUE),
           'Keterangan' => $this->input->post('keterangan',TRUE),
           'Jumlah' => $this->input->post('jumlah',TRUE),
-          'Lok_Dokumen' => $lokasi
+          'Lok_Dokumen' => $lokasi,
+          'Jt_Jurnalis' => $jatuh_tempo
         );
         $this->Verifikasi_model->insert($data);
         $this->session->set_flashdata('message', 'Create Record Success');
@@ -288,18 +354,51 @@ class verifikasi extends MY_Controller{
               $lokasi = "Jurnalis 3";
           }
           $hoursNow = date('H:i:s');
+
+          //perhitungan jika input diatas jam 14.00
+          $tgl_input = $now2;
+              $hari_input = date('l', strtotime($tgl_input));
+              $batas_jam = date('H:i', strtotime($tgl_input));
+              	if($batas_jam>'14:00'){
+              		$tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
+              		$jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+              	}elseif($batas_jam<='14:00'){
+              		$tgl_out_role = date('Y-m-d', strtotime($tgl_input));
+              		$jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+              	}
+
+              	if(date('l', strtotime($tgl_out_role))=="Saturday"){
+              		$tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+              		$jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+              	}
+              	elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
+              		$tgl_out_role;
+              		$jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+              	}
+              	elseif((date('l', strtotime($jatuh_tempo))=="Sunday")){
+              		$tgl_out_role;
+              		$jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+              	}elseif ((date('l', strtotime($tgl_out_role))=="Thursday") || (date('l', strtotime($tgl_out_role))=="Friday")) {
+                  $tgl_out_role;
+                  $jatuh_tempo = date('l, Y-m-d', strtotime($jatuh_tempo."+2 day"));
+                }else{
+              		$tgl_out_role;
+              		$jatuh_tempo;
+              	}
+
           $data = array(
             'No' => $nownumber,
             'operator_id' => $this->input->post('operator_id',TRUE),
             'Tanggal_Masuk' => $now1." ".$hoursNow,
-            'Tgl_Out_Verif' => $now2,
+            'Tgl_Out_Verif' => $tgl_out_role,
             'No_Verifikasi' => $primarykey,
             'Kode_Ver' => $this->input->post('kode_ver',TRUE),
             'Mata_Uang' => $this->input->post('mata_uang',TRUE),
             'User' => $this->input->post('user',TRUE),
             'Keterangan' => $this->input->post('keterangan',TRUE),
             'Jumlah' => $this->input->post('jumlah',TRUE),
-            'Lok_Dokumen' => $lokasi
+            'Lok_Dokumen' => $lokasi,
+            'Jt_Jurnalis' => $jatuh_tempo
           );
           $this->Verifikasi_model->insert($data);
           $this->session->set_flashdata('message', 'Create Record Success');

@@ -195,6 +195,7 @@
       format: 'yyyy-mm-dd',
       autoclose: true,
       clearBtn: true,
+      daysOfWeekDisabled: [0,6]
   });
 
   $("#buttonFilter").click(function(){
@@ -202,44 +203,65 @@
   });
 
   $(function () {
-      new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
+      new Chart(document.getElementById("chartDokMasuk").getContext("2d"), getChartJs('line'));
+      new Chart(document.getElementById("chartDokReject").getContext("2d"), getChartJs('bar'));
   });
 
   function getChartJs(type) {
       var config = null;
-
       if (type === 'line') {
           config = {
               type: 'line',
               data: {
-                  labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                labels:[
+                <?php
+                  date_default_timezone_set("Asia/Jakarta");
+                  $now = date('m');
+                  for ($i = 0; $i < $now; ++$i) {
+                    $m = date("M", strtotime("January +$i months"));
+                    echo '"'.$m.'",';
+                  }
+                  ?>],
                   datasets: [
                     {
-                      label: "My First dataset",
+                      label: "Dokumen Tepat Waktu",
                       data: [55, 59, 80, 81, 56, 55, 40],
                       borderColor: 'rgba(0, 188, 212, 0.75)',
                       backgroundColor: 'rgba(0, 188, 212, 0.3)',
                       pointBorderColor: 'rgba(0, 188, 212, 0)',
                       pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
                       pointBorderWidth: 1
-                    }, {
+                    },
+                    {
+                        label: "Dokumen Telat",
+                        data: [28, 32, 61, 47, 74, 42, 100],
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+              },
+              options: {
+                  responsive: true,
+                  legend: false
+              }
+          }
+      }
+      else if (type === 'bar') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: ["January", "February", "March", "April", "May", "June", "July"],
+                  datasets: [{
+                      label: "My First dataset",
+                      data: [65, 59, 80, 81, 56, 55, 40],
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
                           label: "My Second dataset",
                           data: [28, 48, 40, 19, 86, 27, 90],
-                          borderColor: 'rgba(233, 30, 99, 0.75)',
-                          backgroundColor: 'rgba(233, 30, 99, 0.3)',
-                          pointBorderColor: 'rgba(233, 30, 99, 0)',
-                          pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
-                          pointBorderWidth: 1
-                      },
-                      {
-                            label: "My Second dataset",
-                            data: [18, 82, 61, 49, 74, 42, 100],
-                            borderColor: 'rgba(233, 30, 99, 0.75)',
-                            backgroundColor: 'rgba(233, 30, 99, 0.3)',
-                            pointBorderColor: 'rgba(233, 30, 99, 0)',
-                            pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
-                            pointBorderWidth: 1
-                        }]
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }]
               },
               options: {
                   responsive: true,

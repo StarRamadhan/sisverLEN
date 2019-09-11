@@ -51,26 +51,34 @@
 
         //DASHBOARD TODAY DOC
         function get_data_today(){
+          $id = $this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE DATE(Tgl_Out_Verif)=DATE(CURRENT_DATE())"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE DATE(Tanggal_Masuk)=DATE(CURRENT_DATE())
+                                 AND operator_id='$id'");
           return $sql->num_rows();
         }
         //DASHBOARD THIS MONTH DOC
-        function get_data_thismonth(){
+        function get_data_approved_jurnal(){
+          $id = $this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE DATE(Tgl_Out_Jurnal)=DATE(CURRENT_DATE())
+                                 AND operator_id='$id'");
           return $sql->num_rows();
         }
         //DASHBOARD LAST MONTH DOC
-        function get_data_lastmonth(){
+        function get_data_rejected(){
+          $id = $this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT * FROM revisi WHERE DATE(Tanggal_Masuk)=DATE(CURRENT_DATE())
+                                 AND operator_id='$id' "); //ganti * untuk custom field yang ditampilkan pada table
           return $sql->num_rows();
         }
         //DASHBOARD THIS YEAR DOC
-        function get_data_thisyear(){
+        function get_data_finished(){
+          $id = $this->session->userdata('ses_id');
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
+          $sql=$this->db->query("SELECT * FROM dokumen WHERE DATE(Tanggal_Masuk)=DATE(CURRENT_DATE()) AND Lok_Dokumen='Finish'
+                                 AND operator_id ='$id'"); //ganti * untuk custom field yang ditampilkan pada table
           return $sql->num_rows();
         }
 

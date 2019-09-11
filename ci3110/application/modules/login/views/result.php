@@ -46,35 +46,64 @@
 													<?php
 														$position = $data->Lok_Dokumen;
 														if ($position=="Reject") {
-															echo '<li class="active"><a href="#" data-toggle="tab">Verification</a></li>';
-														}else {
-															echo '<li><a href="#" data-toggle="tab">Verification</a></li>';
-														}
-
-														if ($position=="Jurnalis 1") {
-															echo '<li class="active"><a href="#" data-toggle="tab">Journalist 1</a></li>';
-														}elseif ($position=="Jurnalis 2") {
-															echo '<li class="active"><a href="#" data-toggle="tab">Journalist 2</a></li>';
-														}elseif ($position=="Jurnalis 3") {
-															echo '<li class="active"><a href="#" data-toggle="tab">Journalist 3</a></li>';
-														}else {
-															echo '<li><a href="#" data-toggle="tab">Journalist</a></li>';
-														}
-
-														if ($position=="Manager") {
-															echo '<li class="active"><a href="#" data-toggle="tab">Manager</a></li>';
-														}else {
-															echo '<li><a href="#" data-toggle="tab">Manager</a></li>';
-														}
-
-														if ($position=="Finish") {
-															echo '<li class="active"><a href="#" data-toggle="tab">Finish</a></li>';
-														}else {
-															echo '<li><a href="#" data-toggle="tab">Finish</a></li>';
+															echo '<li class="active"><a href="#" data-toggle="tab">Verification</a>
+																		<i class="material-icons">check_box_outline_blank</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Journalist</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Manager</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Finish</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+														}if($position=="Jurnalis 1") {
+															echo '<li><a href="#" data-toggle="tab">Verification</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li class="active"><a href="#" data-toggle="tab">Journalist 1</a>
+																		<i class="material-icons">check_box_outline_blank</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Manager</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Finish</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+														}if($position=="Jurnalis 2") {
+															echo '<li><a href="#" data-toggle="tab">Verification</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li class="active"><a href="#" data-toggle="tab">Journalist 2</a>
+																		<i class="material-icons">check_box_outline_blank</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Manager</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Finish</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+														}if($position=="Jurnalis 3") {
+															echo '<li><a href="#" data-toggle="tab">Verification</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li class="active"><a href="#" data-toggle="tab">Journalist 3</a>
+																		<i class="material-icons">check_box_outline_blank</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Manager</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Finish</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+														}if($position=="Manager") {
+															echo '<li><a href="#" data-toggle="tab">Verification</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Journalist</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li class="active"><a href="#" data-toggle="tab">Manager</a>
+																		<i class="material-icons">check_box_outline_blank</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Finish</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+														}if($position=="Finish") {
+															echo '<li><a href="#" data-toggle="tab">Verification</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Journalist</a>
+																		<i class="material-icons">check_box</i></li>';
+															echo '<li><a href="#" data-toggle="tab">Manager</a>
+																		<i class="material-icons">indeterminate_check_box</i></li>';
+															echo '<li class="active"><a href="#" data-toggle="tab">Finish</a>
+																		<i class="material-icons">check_box_outline_blank</i></li>';
 														}
 													?>
 												</ul>
 											</div>
+
                       <div class="tab-content">
                           <!-- <div class="tab-pane" id="details"> -->
                           <div class="" id="">
@@ -83,61 +112,75 @@
                                 	<h4 class="info-text"> Details :</h4>
                             	</div>
                               	<div class="col-md-12">
-																	<div class="input-group">
-																		<span class="input-group-addon">
-																			<i class="material-icons">calendar_today</i>
-																		</span>
-																		<div class="form-group label-floating">
-                                    	<label class="control-label"><b>Date In</b></label>
-	                                    <input class="form-control" value="<?php echo date('Y-m-d', strtotime($data->Tanggal_Masuk));?>" readonly>
-                                    </div>
-																	</div>
-																	<div class="input-group">
-																		<span class="input-group-addon">
-																			<i class="material-icons">vpn_key</i>
-																		</span>
-																		<div class="form-group label-floating">
-																			<label class="control-label"><b>No Verification</b></label>
-	                                    <input class="form-control" value="<?php echo $data->No_Verifikasi?>" readonly>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<span class="input-group-addon">
+																				<i class="material-icons">vpn_key</i>
+																			</span>
+																			<div class="form-group label-floating">
+																				<label class="control-label"><b>No Verification</b></label>
+																				<input class="form-control" value="<?php echo $data->No_Verifikasi?>" readonly>
+																			</div>
 																		</div>
 																	</div>
-																	<div class="input-group">
-																		<span class="input-group-addon">
-																			<i class="material-icons">description</i>
-																		</span>
-																		<div class="form-group label-floating">
-																			<label class="control-label"><b>Information</b></label>
-	                                    <input class="form-control" value="<?php echo $data->Keterangan?>" readonly>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<span class="input-group-addon">
+																				<i class="material-icons">calendar_today</i>
+																			</span>
+																			<div class="form-group label-floating">
+	                                    	<label class="control-label"><b>Date In</b></label>
+		                                    <input class="form-control" value="<?php echo date('Y-m-d', strtotime($data->Tanggal_Masuk));?>" readonly>
+	                                    </div>
 																		</div>
 																	</div>
-																	<div class="input-group">
-																		<span class="input-group-addon">
-																			<i class="material-icons">face</i>
-																		</span>
-																		<div class="form-group label-floating">
-                                    	<label class="control-label"><b>Person</b></label>
-	                                    	<input class="form-control" value="<?php echo $data->User?>" readonly>
-                                    </div>
-																	</div>
-																	<div class="input-group">
-																		<span class="input-group-addon">
-																			<i class="material-icons">monetization_on</i>
-																		</span>
-																		<div class="form-group label-floating">
-																			<label class="control-label"><b>Amount</b></label>
-																				<?php
-																				$jumlah = number_format($data->Jumlah,2,",",".");
-																				if ($data->Mata_Uang=="RP") {
-																						$mu = "IDR";
-																				}else {
-																					$mu = $data->Mata_Uang;
-																				}?>
-	                                    	<input class="form-control" value="<?php echo $jumlah." (".$mu.")";?>" readonly>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<span class="input-group-addon">
+																				<i class="material-icons">face</i>
+																			</span>
+																			<div class="form-group label-floating">
+																				<label class="control-label"><b>Person</b></label>
+																					<input class="form-control" value="<?php echo $data->User?>" readonly>
+																			</div>
 																		</div>
 																	</div>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<span class="input-group-addon">
+																				<i class="material-icons">monetization_on</i>
+																			</span>
+																			<div class="form-group label-floating">
+																				<label class="control-label"><b>Amount</b></label>
+																					<?php
+																					$jumlah = number_format($data->Jumlah,2,",",".");
+																					if ($data->Mata_Uang=="RP") {
+																							$mu = "IDR";
+																					}else {
+																						$mu = $data->Mata_Uang;
+																					}?>
+																					<input class="form-control" value="<?php echo $jumlah." (".$mu.")";?>" readonly>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-12">
+																		<div class="input-group">
+																			<span class="input-group-addon">
+																				<i class="material-icons">description</i>
+																			</span>
+																			<div class="form-group label-floating">
+																				<label class="control-label"><b>Information</b></label>
+																				<textarea class="form-control" readonly><?php echo $data->Keterangan?></textarea>
+																				<!-- <input class="form-control" value="<?php echo $data->Keterangan?>" readonly> -->
+																			</div>
+																		</div>
+																	</div>
+																	<!-- end of col 12 -->
                               	</div>
+																<!-- end of row -->
                           	</div>
                           </div>
+													<!-- end of content -->
                       </div>
 
 											<br>

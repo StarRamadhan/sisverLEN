@@ -21,9 +21,9 @@ class Manager extends MY_Controller{
     $countResponse =$this->Manager_model->count_need_response();
     $datauser=$this->Manager_model->get_all_need_response();
     $dataToday = $this->Manager_model->get_data_today();
-    $dataThisMonth = $this->Manager_model->get_data_thismonth();
-    $dataLastMonth = $this->Manager_model->get_data_lastmonth();
-    $dataThisYear = $this->Manager_model->get_data_thisyear();
+    $dataApprovedJurnal = $this->Manager_model->get_data_approved_jurnal();
+    $dataRejected = $this->Manager_model->get_data_rejected();
+    $dataFinished = $this->Manager_model->get_data_finished();
 
     //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
     $data = array(
@@ -33,9 +33,9 @@ class Manager extends MY_Controller{
        'datauser'=>$datauser,
        'countResponse' => $countResponse,
        'dataToday' => $dataToday,
-       'dataThisMonth'=> $dataThisMonth,
-       'dataLastMonth' => $dataLastMonth,
-       'dataThisYear'=>$dataThisYear,
+       'dataApprovedJurnal'=> $dataApprovedJurnal,
+       'dataRejected' => $dataRejected,
+       'dataFinished'=>$dataFinished,
        //'dataverif'=>$dataverif,
        'module'=>'manager',
        'titlePage'=>'manager',
@@ -47,6 +47,9 @@ class Manager extends MY_Controller{
   }
 
   public function reject(){
+    date_default_timezone_set("Asia/Jakarta");
+    $now = date('Y-m-d H:i:s');
+
     $data = array(
       'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
       'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
@@ -62,8 +65,8 @@ class Manager extends MY_Controller{
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'Reject',
-      'Tgl_Out_Jurnal'=>'',
     );
+
     $this->Manager_model->insert($data);
     $this->Manager_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
     $this->session->set_flashdata('rejectMessage', 'Reject Success');
@@ -73,10 +76,12 @@ class Manager extends MY_Controller{
   public function approve(){
     date_default_timezone_set("Asia/Jakarta");
     $now = date('Y-m-d H:i:s');
+
     $dataResponse = array(
       'Lok_Dokumen' => 'Finish',
-      'Tgl_Out_Manager' =>$now
+      'Tgl_Out_Manager' =>$tgl_out_manager,
     );
+
     $this->Manager_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
     $this->session->set_flashdata('approveMessage', 'Approve Success');
     redirect(base_url('manager'));
@@ -125,7 +130,33 @@ class Manager extends MY_Controller{
     $this->session->set_flashdata($ends, 'Date Ends');
   }
 
-  
+  public function dashboards()
+  {
+    $countResponse =$this->Manager_model->count_need_response();
+    $datauser=$this->Manager_model->get_all();//panggil ke modell
+    $dataverif=$this->Manager_model->get_data_manager();//panggil ke modell
+    $data = array(
+       'content'=>'manager/dokumen/content_dashboard',
+       'navbar'=>'manager/navbar',
+       'sidebar'=>'manager/sidebar',
+       'customSearch' =>'manager/customSearch',
+       'datauser'=>$datauser,
+       'countResponse' => $countResponse,
+       'dataverif'=>$dataverif,
+       'module'=>'manager',
+       'titlePage'=>'manager',
+       'controller'=>'manager',
+       'start' => $this->input->post('dateStart',TRUE),
+       'end' => $this->input->post('dateEnd',TRUE),
+      );
+    $starts = $this->input->post('dateStart',TRUE);
+    $ends = $this->input->post('dateEnd',TRUE);
+    $this->template->load($data);
+    $this->session->set_flashdata($starts, 'Date Starts');
+    $this->session->set_flashdata($ends, 'Date Ends');
+  }
+
+
   public function customSearch(){
     $countResponse =$this->Manager_model->count_need_response();
     $datauser=$this->Manager_model->get_data_search();

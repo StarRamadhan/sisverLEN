@@ -1,54 +1,90 @@
 
         <!-- Basic Examples -->
         <div class="row clearfix">
+          <?php if ($this->session->userdata('akses')!='verifikasi1') {?>
           <div class="block-header">
-              <h2>DASHBOARD</h2>
+              <h2><?php echo strtoupper(date('F'));?> DOCUMENT DASHBOARD</h2>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-pink hover-zoom-effect">
+          <div class="col-md-3">
+            <div class="block-header text-center">
+                <h2><small>DOCUMENT IN</small></h2>
+            </div>
+                <div class="info-box bg-cyan">
+                    <div class="icon">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL</div>
+                        <div class="number"><?php echo $dataMonth?></div>
+                    </div>
+                </div>
+              <!-- <div class="info-box-4 bg-orange hover-zoom-effect">
                   <div class="icon">
-                      <i class="material-icons">assignment</i>
+                      <i class="material-icons col-white">description</i>
                   </div>
                   <div class="content">
-                      <div class="text">TODAY'S DOCUMENT</div>
+                      <div class="text">DOC IN</div>
                       <div class="number"><?php echo $dataToday?></div>
                   </div>
-              </div>
-
+              </div> -->
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-blue hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">THIS MONTH'S DOCUMENT</div>
-                      <div class="number"><?php echo $dataThisMonth?></div>
-                  </div>
+          <div class="col-md-9">
+            <div class="col-md-6">
+              <div class="block-header text-center">
+                  <h2><small>UNPROCESSED</small></h2>
               </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-orange hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">LAST MONTH'S DOCUMENT</div>
-                      <div class="number"><?php echo $dataLastMonth?></div>
+              <div class="col-md-6">
+                  <div class="info-box bg-orange hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text">ON TIME </div>
+                          <div class="number"><?php echo $dataApprovedJurnal?></div>
+                      </div>
                   </div>
               </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-light-green hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">THIS YEAR'S DOCUMENT</div>
-                      <div class="number"><?php echo $dataThisYear?></div>
+              <div class="col-md-6">
+                  <div class="info-box bg-deep-orange hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text">LATE </div>
+                          <div class="number"><?php echo $dataApprovedJurnal?></div>
+                      </div>
                   </div>
               </div>
+            </div>
+            <div class="col-md-6">
+              <div class="block-header text-center">
+                  <h2><small>PROCESSED</small></h2>
+              </div>
+              <div class="col-md-6">
+                  <div class="info-box bg-purple hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text">ON TIME</div>
+                          <div class="number"><?php echo $dataRejected?></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="info-box bg-deep-purple hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text">LATE</div>
+                          <div class="number"><?php echo $dataFinished?></div>
+                      </div>
+                  </div>
+              </div>
+            </div>
           </div>
+        <?php }?>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -139,7 +175,7 @@
                      <?php if ($this->session->userdata('akses')=='verifikasi1'){ ?>
                        <div class="body">
                            <div class="table-responsive">
-                               <table class="table table-bordered table-striped table-hover js-exportable dataTable">
+                               <table class="table table-bordered table-striped table-hover js-exportable dataTable" id='1_all_dok_verif'>
                                  <thead>
                                    <tr>
                                        <th>Tanggal Masuk</th>

@@ -2,15 +2,15 @@
         <!-- Basic Examples -->
         <div class="row clearfix">
           <div class="block-header">
-              <h2>DASHBOARD</h2>
+              <h2>DASHBOARD TODAY'S VERIFICATION DOCUMENT</h2>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-pink hover-zoom-effect">
+              <div class="info-box-2 bg-orange hover-zoom-effect">
                   <div class="icon">
                       <i class="material-icons">assignment</i>
                   </div>
                   <div class="content">
-                      <div class="text">TODAY'S DOCUMENT</div>
+                      <div class="text">TODAY'S DOC</div>
                       <div class="number"><?php echo $dataToday?></div>
                   </div>
               </div>
@@ -22,19 +22,19 @@
                       <i class="material-icons">assignment</i>
                   </div>
                   <div class="content">
-                      <div class="text">THIS MONTH'S DOCUMENT</div>
-                      <div class="number"><?php echo $dataThisMonth?></div>
+                      <div class="text">APPROVED <small>By Journalist</small></div>
+                      <div class="number"><?php echo $dataApprovedJurnal?></div>
                   </div>
               </div>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-orange hover-zoom-effect">
+              <div class="info-box-2 bg-red hover-zoom-effect">
                   <div class="icon">
                       <i class="material-icons">assignment</i>
                   </div>
                   <div class="content">
-                      <div class="text">LAST MONTH'S DOCUMENT</div>
-                      <div class="number"><?php echo $dataLastMonth?></div>
+                      <div class="text">REJECTED</div>
+                      <div class="number"><?php echo $dataRejected?></div>
                   </div>
               </div>
           </div>
@@ -44,8 +44,8 @@
                       <i class="material-icons">assignment</i>
                   </div>
                   <div class="content">
-                      <div class="text">THIS YEAR'S DOCUMENT</div>
-                      <div class="number"><?php echo $dataThisYear?></div>
+                      <div class="text">FINISHED</div>
+                      <div class="number"><?php echo $dataFinished?></div>
                   </div>
               </div>
           </div>
