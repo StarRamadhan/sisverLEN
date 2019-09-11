@@ -107,6 +107,7 @@ class verifikasi extends MY_Controller{
 
     $data = array(
       'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
+      'tgl_reject' => $tnow;
       'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
       'kode_ver' =>$this->input->post('kode_ver',TRUE),
       'keterangan' => $this->input->post('keterangan',TRUE),

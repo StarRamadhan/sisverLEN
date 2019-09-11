@@ -79,7 +79,7 @@ class Manager extends MY_Controller{
 
     $dataResponse = array(
       'Lok_Dokumen' => 'Finish',
-      'Tgl_Out_Manager' =>$tgl_out_manager,
+      'Tgl_Out_Manager' =>$now,
     );
 
     $this->Manager_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
