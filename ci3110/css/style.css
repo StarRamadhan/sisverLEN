@@ -2402,7 +2402,7 @@ a {
   animation: none !important; }
 
 section.content {
-  margin: 100px 15px 0 315px;
+  margin: 100px 15px 0 265px;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
   -webkit-transition: 0.5s;
@@ -5560,7 +5560,11 @@ fieldset[disabled] .form-control {
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   border-radius: 2px; }
-
+  .badge-pill {
+      padding-right: .6em;
+      padding-left: .6em;
+      border-radius: 10rem;
+  }
 .list-group-item {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -6722,7 +6726,7 @@ fieldset[disabled] .form-control {
     overflow: visible; }
 
 .ls-closed .sidebar {
-  margin-left: -300px; }
+  margin-left: -250px; }
 
 .ls-closed section.content {
   margin-left: 15px; }
@@ -7520,7 +7524,7 @@ fieldset[disabled] .form-control {
   transition: all 0.5s;
   font-family: "Roboto", sans-serif;
   background: #fdfdfd;
-  width: 300px;
+  width: 250px;
   overflow: hidden;
   display: inline-block;
   height: calc(100vh - 70px);
