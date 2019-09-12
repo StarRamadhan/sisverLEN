@@ -45,8 +45,8 @@
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
+            <div class="preloader pl-size-xl">
+                <div class="spinner-layer pl-green">
                     <div class="circle-clipper left">
                         <div class="circle"></div>
                     </div>
@@ -131,6 +131,9 @@
     <script src="<?php echo base_url()?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="<?php echo base_url()?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
+    <!-- Chart Js -->
+    <script src="<?php echo base_url()?>plugins/chartjs/Chart.bundle.js"></script>
+
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
 
@@ -142,6 +145,16 @@
     <!-- Demo Js -->
     <script src="<?php echo base_url()?>js/demo.js"></script>
     <script>
+
+    // $('#category').on('change', function() {
+    //     if ((this.value)!="") {
+    //       $("#categoryValue").removeAttr("required");
+    //     }else if((this.value)==""){
+    //       $("#categoryValue").attr("required");
+    //     }
+    //
+    // });
+
     $('li > a').click(function() {
       $('li').removeClass('active');
       $(this).parent().addClass('active');
@@ -182,11 +195,91 @@
       format: 'yyyy-mm-dd',
       autoclose: true,
       clearBtn: true,
+      daysOfWeekDisabled: [0,6]
   });
 
   $("#buttonFilter").click(function(){
     $("#formFilter").fadeToggle();
   });
+
+  $(function () {
+      new Chart(document.getElementById("chartDokMasuk").getContext("2d"), getChartJs('bar'));
+      new Chart(document.getElementById("chartDokReject").getContext("2d"), getChartJs('line'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+      if (type === 'bar') {
+          config = {
+              type: 'bar',
+              data: {
+                labels:[
+                <?php
+                  date_default_timezone_set("Asia/Jakarta");
+                  $now = date('m');
+                  for ($i = 0; $i < $now; ++$i) {
+                    $m = date("M", strtotime("January +$i months"));
+                    echo '"'.$m.'",';
+                  }
+                  ?>],
+                  datasets: [
+                    {
+                      label: "Dokumen Masuk",
+                      data: [
+                        <?php
+                        date_default_timezone_set("Asia/Jakarta");
+                        $now = date('m');
+                        $dokBulan = [$dokJan,$dokFeb,$dokMar,$dokApr,$dokMei,$dokJun,$dokJul,$dokAgs,$dokSep,$dokOkt,$dokNov,$dokDes];
+                        for ($i=0; $i <= $now; $i++) {
+                          echo '"'.$dokBulan[$i].'",';
+                        }
+                      ?>],
+                      borderColor: 'rgba(0, 188, 212, 0.75)',
+                      backgroundColor: 'rgba(0, 188, 212, 0.5)',
+                      pointBorderColor: 'rgba(0, 188, 212, 0)',
+                      pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                      pointBorderWidth: 1
+                    }]
+              },
+              options: {
+                  responsive: true,
+                  legend: false
+              }
+          }
+      }
+      else if (type === 'line') {
+          config = {
+              type: 'line',
+              data: {
+                  labels: [<?php
+                    date_default_timezone_set("Asia/Jakarta");
+                    $now = date('m');
+                    for ($i = 0; $i < $now; ++$i) {
+                      $m = date("M", strtotime("January +$i months"));
+                      echo '"'.$m.'",';
+                    }
+                    ?>],
+                  datasets: [{
+                      label: "Dokumen Direject",
+                      data: [<?php
+                        date_default_timezone_set("Asia/Jakarta");
+                        $now = date('m');
+                        $rejBulan = [$rejJan,$rejFeb,$rejMar,$rejApr,$rejMei,$rejJun,$rejJul,$rejAgs,$rejSep,$rejOkt,$rejNov,$rejDes];
+                        for ($i=0; $i <= $now; $i++) {
+                          echo '"'.$rejBulan[$i].'",';
+                        }
+                      ?>],
+                      backgroundColor: 'rgba(255, 30, 0, 0.4)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: false
+              }
+          }
+      }
+      return config;
+  }
 
 
     </script>

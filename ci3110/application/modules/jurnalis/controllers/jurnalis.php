@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class jurnalis extends MY_Controller{
+class Jurnalis extends MY_Controller{
 
   public function __construct()
   {
@@ -20,10 +20,11 @@ class jurnalis extends MY_Controller{
   {
     $datauser=$this->Jurnal_model->get_all_need_response();//panggil ke modell
     $countResponse =$this->Jurnal_model->count_need_response();
-    $jurnalToday = $this->Jurnal_model->get_jurnal_today();
-    $approveToday = $this->Jurnal_model->get_approve_today();
-    $approveThisMonth = $this->Jurnal_model->get_approve_thismonth();
-    $approveLastMonth = $this->Jurnal_model->get_approve_lastmonth();
+    $countDocIn = $this->Jurnal_model->count_doc_in();
+    $cProgOntime = $this->Jurnal_model->count_jurnalis_prog_ontime();
+    $cProgLate = $this->Jurnal_model->count_jurnalis_prog_late();
+    $cFinishOntime = $this->Jurnal_model->count_jurnalis_finish_ontime();
+    $cFinishLate = $this->Jurnal_model->count_jurnalis_finish_late();
 
     //$dataverif=$this->Jurnal_model->get_data_jurnal();//panggil ke modell
     $data = array(
@@ -32,11 +33,12 @@ class jurnalis extends MY_Controller{
        'sidebar'=>'jurnalis/sidebar',
        'datauser'=>$datauser,
        'countResponse' => $countResponse,
-       'jurnalToday' =>$jurnalToday,
-       'approveToday' =>$approveToday,
-       'approveThisMonth' =>$approveThisMonth,
-       'approveLastMonth' =>$approveLastMonth,
-       //'dataverif'=>$dataverif,
+       'countDocIn' => $countDocIn,
+       'cProgOntime' => $cProgOntime,
+       'cProgLate' => $cProgLate,
+       'cFinishOntime' => $cFinishOntime,
+       'cFinishLate' => $cFinishLate,
+       'customSearch' =>'verifikasi/customSearch',
        'module'=>'jurnalis',
        'titlePage'=>'jurnalis',
        'controller'=>'jurnalis',
@@ -46,22 +48,56 @@ class jurnalis extends MY_Controller{
     $this->template->load($data);
   }
 
-  public function reject(){
+  public function customSearch(){
+    $countResponse =$this->Jurnal_model->count_need_response();
+    $datauser=$this->Jurnal_model->get_data_search();
     $data = array(
-      'tanggal_masuk' => $this->input->post('tanggal_masuk',TRUE),
-      'no_verifikasi' => $this->input->post('no_verifikasi',TRUE),
-      'kode_ver' =>$this->input->post('kode_ver',TRUE),
-      'keterangan' => $this->input->post('keterangan',TRUE),
-      'user' => $this->input->post('user',TRUE),
-      'mata_uang' => $this->input->post('mata_uang',TRUE),
-      'jumlah' => $this->input->post('jumlah',TRUE),
-      'tgl_out_verif' => $this->input->post('tgl_out_verif',TRUE),
-      'tgl_out_jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
-      'alasan_revisi' => $this->input->post('alasan',true),
-      'operator_id' => $this->input->post('operator_id',true)
+       'content'=>'jurnalis/dokumen/content_search',
+       'navbar'=>'jurnalis/navbar',
+       'sidebar'=>'jurnalis/sidebar',
+       'customSearch' =>'jurnalis/customSearch',
+       'countResponse' => $countResponse,
+       // 'count_rejected' => $count_rejected,
+       'datauser'=>$datauser,
+       'module'=>'jurnalis',
+       'titlePage'=>'jurnalis',
+       'controller'=>'jurnalis'
+      );
+    $ses_startdate = $this->input->post('dateStart',TRUE);
+    $ses_enddate = $this->input->post('dateEnd',TRUE);
+    $ses_by = $this->input->post('by',TRUE);
+    $ses_category = $this->input->post('category',TRUE);
+    $ses_categoryValue = $this->input->post('categoryValue',TRUE);
+    $this->session->set_flashdata('ses_startdate', $ses_startdate);
+    $this->session->set_flashdata('ses_enddate', $ses_enddate);
+    $this->session->set_flashdata('ses_by', $ses_by);
+    $this->session->set_flashdata('ses_category', $ses_category);
+    $this->session->set_flashdata('ses_categoryValue', $ses_categoryValue);
+    $this->template->load($data);
+  }
+
+  public function reject(){
+    date_default_timezone_set("Asia/Jakarta");
+    $now = date('Y-m-d H:i:s');
+
+    $data = array(
+      'Tanggal_Masuk' => $this->input->post('tanggal_masuk',TRUE),
+      'Tanggal_Reject' => $now,
+      'No_Verifikasi' => $this->input->post('no_verifikasi',TRUE),
+      'Kode_Ver' =>$this->input->post('kode_ver',TRUE),
+      'Keterangan' => $this->input->post('keterangan',TRUE),
+      'User' => $this->input->post('user',TRUE),
+      'Mata_Uang' => $this->input->post('mata_uang',TRUE),
+      'Jumlah' => $this->input->post('jumlah',TRUE),
+      'Tgl_Out_Verif' => $this->input->post('tgl_out_verif',TRUE),
+      'Tgl_Out_Jurnal' => $this->input->post('tgl_out_jurnal',TRUE),
+      'Alasan_Revisi' => $this->input->post('alasan',true),
+      'Operator_Id' => $this->input->post('operator_id',true)
     );
     $dataResponse = array(
       'Lok_Dokumen' => 'Reject',
+      'Tgl_Out_Verif'=>'',
+      'Jt_Jurnalis' =>'',
     );
     $this->Jurnal_model->insert($data);
     $this->Jurnal_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
@@ -71,11 +107,41 @@ class jurnalis extends MY_Controller{
 
   public function approve(){
     date_default_timezone_set("Asia/Jakarta");
-    $now = date('Y-m-d');
+    $now = date('Y-m-d H:i:s');
+
+    //perhitungan jika input diatas jam 14.00
+    $tgl_input = $now;
+        $hari_input = date('l', strtotime($tgl_input));
+        $batas_jam = date('H:i', strtotime($tgl_input));
+          if($batas_jam>'14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }elseif($batas_jam<='14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }
+          if(date('l', strtotime($tgl_out_role))=="Saturday"){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }
+          elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
+            $tgl_out_role;
+            $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }
+          elseif((date('l', strtotime($jatuh_tempo))=="Sunday")){
+            $tgl_out_role;
+            $jatuh_tempo = date('Y-m-d', strtotime($jatuh_tempo."+2 day"));
+          }else{
+            $tgl_out_role;
+            $jatuh_tempo;
+          }
+
     $dataResponse = array(
       'Lok_Dokumen' => 'Manager',
-      'Tgl_Out_Jurnal' =>$now
+      'Tgl_Out_Jurnal' =>$now,
+      'Jt_Manager' =>$jatuh_tempo
     );
+
     $this->Jurnal_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);
     $this->session->set_flashdata('approveMessage', 'Approve Success');
     redirect(base_url('jurnalis'));
@@ -124,29 +190,6 @@ class jurnalis extends MY_Controller{
     $this->session->set_flashdata($ends, 'Date Ends');
   }
 
-  public function customSearch(){
-    $countResponse =$this->Jurnal_model->count_need_response();
-    $datauser=$this->Jurnal_model->get_data_search();
-    $data = array(
-       'content'=>'jurnalis/dokumen/content_search',
-       'navbar'=>'jurnalis/navbar',
-       'sidebar'=>'jurnalis/sidebar',
-       //'customSearch' =>'jurnalis/customSearch',
-       'countResponse' => $countResponse,
-       'datauser'=>$datauser,
-       'module'=>'jurnalis',
-       'titlePage'=>'jurnalis',
-       'controller'=>'jurnalis'
-      );
-      $ses_startdate = $this->input->post('dateStart',TRUE);
-      $ses_enddate = $this->input->post('dateEnd',TRUE);
-      $ses_by = $this->input->post('by',TRUE);
-      $this->session->set_flashdata('ses_startdate', $ses_startdate);
-      $this->session->set_flashdata('ses_enddate', $ses_enddate);
-      $this->session->set_flashdata('ses_by', $ses_by);
-      $this->template->load($data);
-  }
-
   public function edit_profil($operator_id){
     $countResponse =$this->Jurnal_model->count_need_response();
     $dataedit=$this->Jurnal_model->get_by_id_profil($operator_id);
@@ -167,10 +210,10 @@ class jurnalis extends MY_Controller{
   public function update_action()
   {
           $data = array(
-            'username' => $this->input->post('username',TRUE),
-            'password_enc' => md5($this->input->post('password',TRUE)),
-            'password' => $this->input->post('password',TRUE),
-            'phone_number' => $this->input->post('phone_number',TRUE),
+            'Username' => $this->input->post('username',TRUE),
+            'Password_enc' => md5($this->input->post('password',TRUE)),
+            'Password' => $this->input->post('password',TRUE),
+            'Phone_Number' => $this->input->post('phone_number',TRUE),
           );
           $this->Jurnal_model->update($this->input->post('operator_id', TRUE), $data);
           $this->session->set_flashdata('flashMessage', 'Update Record Success');

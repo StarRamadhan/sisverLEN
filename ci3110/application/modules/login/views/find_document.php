@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>PT. LEN (PERSERO) - VERIFIKASI</title>
+    <title>PT. LEN (PERSERO) - Monitoring Dokumen</title>
     <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo base_url('images/favicon.ico')?>" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -23,6 +23,7 @@
 
     <!-- Custom Css -->
     <link href="<?php echo base_url()?>css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>application/modules/login/views/assets/css/material-bootstrap-wizard.css" rel="stylesheet" />
 
 </head>
 
@@ -32,6 +33,7 @@
             <a href="javascript:void(0);">RESULT :</a>
         </div>
         <div class="card">
+
             <div class="body">
               <?php
 
@@ -122,6 +124,13 @@
     <!-- Custom Js -->
     <script src="<?php echo base_url()?>js/admin.js"></script>
     <script src="<?php echo base_url()?>js/pages/examples/sign-in.js"></script>
+
+
+    <!-- <script src="assets/js/jquery.bootstrap.js" type="text/javascript"></script> -->
+
+    <!--  Plugin for the Wizard -->
+    <script src="<?php echo base_url()?>application/modules/login/views/assets/js/material-bootstrap-wizard.js"></script>
+
 </body>
 
 </html>

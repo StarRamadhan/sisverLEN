@@ -15,13 +15,19 @@
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
-                <li class="header">DASHBOARD</li>
+                <li class="header">MAIN MENU</li>
                 <li class="li-trigger">
-                    <a href="<?php echo base_url('manager/');?>">
-                        <i class="material-icons">description</i>
-                        <span class="badge badge-pill bg-orange" style="color:white;"><?php echo $countResponse?></span>
-                        <span>Need Response</span>
+                    <a href="<?php echo base_url('manager/dashboards');?>">
+                        <i class="material-icons">dashboard</i>
+                        <span>Dashboard</span>
                     </a>
+                </li>
+                <li class="li-trigger">
+                  <a href="<?php echo base_url('manager/');?>">
+                    <i class="material-icons">description</i>
+                    <span class="badge badge-pill bg-orange" style="color:white;"><?php echo $countResponse?></span>
+                    <span>Need Response</span>
+                  </a>
                 </li>
                 <!-- <li class="li-trigger">
                     <a href="<?php echo base_url('jurnalis/dokumen_approved');?>">
@@ -35,13 +41,6 @@
                         <i class="material-icons">assignment</i>
                         <!-- <span class="badge badge-pill bg-orange" style="color:white;">7</span> -->
                         <span>All Document</span>
-                    </a>
-                </li>
-                <li class="li-trigger">
-                    <a href="<?php echo base_url('manager/dashboard');?>">
-                        <i class="material-icons">assignment</i>
-                        <!-- <span class="badge badge-pill bg-orange" style="color:white;">7</span> -->
-                        <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="header">SETTING</li>

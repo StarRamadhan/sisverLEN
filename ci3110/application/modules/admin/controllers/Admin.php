@@ -55,12 +55,12 @@ class Admin extends MY_Controller{
       {
         $this->create();
         $data = array(
-					'username' => $this->input->post('username',TRUE),
-					'password_enc' => md5($this->input->post('password_enc',TRUE)),
-					'password' => $this->input->post('password',TRUE),
-					'position' => $this->input->post('position',TRUE),
-					'phone_number' => $this->input->post('phone_number',TRUE),
-          'status' => $this->input->post('status',TRUE),
+					'Username' => $this->input->post('username',TRUE),
+					'Password_Enc' => md5($this->input->post('password_enc',TRUE)),
+					'Password' => $this->input->post('password',TRUE),
+					'Position' => $this->input->post('position',TRUE),
+					'Phone_Number' => $this->input->post('phone_number',TRUE),
+          'Status' => $this->input->post('status',TRUE),
         );
 
         $this->Admin_model->insert($data);
@@ -88,12 +88,12 @@ class Admin extends MY_Controller{
   public function update_action()
   {
       $data = array(
-        'username' => $this->input->post('username',TRUE),
-        'password_enc' => md5($this->input->post('password',TRUE)),
-        'password' => $this->input->post('password',TRUE),
-        'position' => $this->input->post('position',TRUE),
-        'phone_number' => $this->input->post('phone_number',TRUE),
-        'status' => $this->input->post('status',TRUE),
+        'Username' => $this->input->post('username',TRUE),
+        'Password_Enc' => md5($this->input->post('password',TRUE)),
+        'Password' => $this->input->post('password',TRUE),
+        'Position' => $this->input->post('position',TRUE),
+        'Phone_Number' => $this->input->post('phone_number',TRUE),
+        'Status' => $this->input->post('status',TRUE),
       );
       $this->Admin_model->update($this->input->post('operator_id', TRUE), $data);
       $this->session->set_flashdata('flashMessage', 'Update Record Success');

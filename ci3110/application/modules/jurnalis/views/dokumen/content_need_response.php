@@ -2,53 +2,79 @@
         <!-- Basic Examples -->
         <div class="row clearfix">
           <div class="block-header">
-              <h2>DASHBOARD HISTORY YOUR DOCUMENT JOURNALIST</h2>
+              <h2>DOCUMENT DASHBOARD</h2>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-blue hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                    <div class="text">TODAY DOC INSIDE</div>
-                    <div class="number"><?php echo $jurnalToday?></div>
+          <div class="col-md-3">
+            <div class="block-header text-center">
+                <h2><small>DOCUMENT IN</small></h2>
+            </div>
+                <div class="info-box bg-cyan hover-zoom-effect">
+                    <div class="icon">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <div class="content">
+                        <div class="text"><small>TOTAL</small></div>
+                        <div class="number"><small><?php echo $countDocIn?></small></div>
+                    </div>
+                </div>
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-6">
+              <div class="block-header text-center">
+                  <h2><small>IN PROGRESS</small></h2>
+              </div>
+              <div class="col-md-6">
+                  <div class="info-box bg-orange hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text"><small>ON TIME</small></div>
+                          <div class="number"><small><?php echo $cProgOntime?></small></div>
+                      </div>
                   </div>
               </div>
+              <div class="col-md-6">
+                  <div class="info-box bg-deep-orange hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text"><small>LATE </small></div>
+                          <div class="number"><small><?php echo $cProgLate?></small></div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="block-header text-center">
+                  <h2><small>FINISH</small></h2>
+              </div>
+              <div class="col-md-6">
+                  <div class="info-box bg-purple hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text"><small>ON TIME</small></div>
+                          <div class="number"><small><?php echo $cFinishOntime?></small></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="info-box bg-deep-purple hover-zoom-effect">
+                      <div class="icon">
+                          <i class="material-icons">description</i>
+                      </div>
+                      <div class="content">
+                          <div class="text"><small>LATE</small></div>
+                          <div class="number"><small><?php echo $cFinishLate?></small></div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
 
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-orange hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">APPROVE TODAY</div>
-                      <div class="number"><?php echo $approveToday?></div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-light-green hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">APPROVE THIS MONTH</div>
-                      <div class="number"><?php echo $approveThisMonth?></div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-pink hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">Approve Last Month</div>
-                      <div class="number"><?php echo $approveLastMonth?></div>
-                  </div>
-              </div>
-          </div>
         <div class="row clearfix">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -98,13 +124,14 @@
                                     <th>Jumlah</th>
                                     <th style="text-align:center;">Action</th>
                                     <th style="text-align:center;">Action</th>
+                                    <th>Status</th>
                                 </tr>
                               </thead>
 
                               <tbody>
                                 <?php foreach ($datauser as $d): ?>
                                   <tr>
-                                    <td><?php echo $d->Tanggal_Masuk?></td>
+                                    <td><?php echo date('Y-m-d', strtotime($d->Tanggal_Masuk))?></td>
                                     <td><?php echo $d->No_Verifikasi?></td>
                                     <td><?php echo $d->Kode_Ver?></td>
                                     <td><?php echo $d->Keterangan?></td>
@@ -123,7 +150,7 @@
                                               <h4 class="modal-title" id="defaultModalLabel">Warning</h4>
                                             </div>
                                             <div class="modal-body">
-                                              <h3>Are You Sure Want to Reject document : <?php echo $d->No_Verifikasi?></h3>
+                                              <h4>Are You Sure Want to Reject This Document :<br> <?php echo $d->No_Verifikasi?></h4><br>
                                               <div class="form_line">
                                                 <textarea type="text" rows="4" cols="40" class="form-control" name="alasan" placeholder="Reason?" required></textarea>
                                               </div>
@@ -137,9 +164,8 @@
                                                 <input type="text" class="form-control " name="jumlah" value="<?php echo $d->Jumlah?>"required>
                                                 <input type="text" class="form-control " name="tgl_out_verif" value="<?php echo $d->Tgl_Out_Verif?>"required>
                                                 <input type="text" class="form-control " name="tgl_out_jurnal" value="<?php echo $d->Tgl_Out_Jurnal?>"required>
-                                                <input type="text" class="form-control " name="operator_id" value="<?php echo $d->operator_id?>"required>
+                                                <input type="text" class="form-control " name="operator_id" value="<?php echo $d->Operator_Id?>"required>
                                               </div>
-
                                             </div>
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancel</button>
@@ -162,7 +188,7 @@
                                             </div>
                                             <div class="modal-body">
                                               <input type="text" class="form-control hidden" name="no_verifikasi" value="<?php echo $d->No_Verifikasi?>"required>
-                                              <h3>Are You Sure Want to Approve this Document : <?php echo $d->No_Verifikasi?></h3>
+                                              <h4>Are You Sure Want to Approve this Document :<br> <?php echo $d->No_Verifikasi?></h4><br>
                                               <br>
                                             </div>
                                             <div class="modal-footer">
@@ -173,6 +199,19 @@
                                         </div>
                                       </div>
                                       </form>
+                                    </td>
+                                    <td><?php
+                                             date_default_timezone_set("Asia/Jakarta");
+                                             $ov = date('Y-m-d');
+                                             $jt = $d->Jt_Jurnalis;
+                                             if (($ov<$jt) &&($jt!=NULL)) {
+                                               echo 'Ongoing';
+                                             }elseif (($ov>=$jt) &&($jt!=NULL)) {
+                                               echo 'Late';
+                                             }elseif ($jt==null) {
+                                               echo '-';
+                                             }
+                                         ?>
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>

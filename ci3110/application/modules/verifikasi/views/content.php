@@ -1,55 +1,6 @@
 
         <!-- Basic Examples -->
         <div class="row clearfix">
-          <div class="block-header">
-              <h2>DASHBOARD HISTORY YOUR DOCUMENT VERIFICATION</h2>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-blue hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                    <div class="text">TODAY DOC</div>
-                    <div class="number"><?php echo $dataToday?></div>
-                  </div>
-              </div>
-
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-orange hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">THIS MONTH DOC</div>
-                      <div class="number"><?php echo $dataThisMonth?></div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-light-green hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">LAST MONTH DOC</div>
-                      <div class="number"><?php echo $dataLastMonth?></div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box-2 bg-pink hover-zoom-effect">
-                  <div class="icon">
-                      <i class="material-icons">assignment</i>
-                  </div>
-                  <div class="content">
-                      <div class="text">REJECTED</div>
-                      <div class="number"><?php echo $dataRejected?></div>
-                  </div>
-              </div>
-          </div>
-        <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
@@ -88,7 +39,7 @@
                                   <ul class="dropdown-menu">
                                       <li><a href="<?php echo base_url('verifikasi/create');?>">Current Date</a></li>
                                       <li role="separator" class="divider"></li>
-                                      <li><a href="<?php echo base_url('verifikasi/custom_create');?>">Custom Date</a></li>
+                                      <li><a href="<?php echo base_url('verifikasi/custom_create');?>">Back Date</a></li>
                                   </ul>
                               </div>
                               <?php
@@ -100,24 +51,25 @@
 
                         </div>
                       </div>
-                      <a id="buttonFilter" href="#"><h2 href="" class="card-inside-title" style="display:none;">more filter?</h2></a>
+                      <a id="buttonFilter" href="#"><small href="" class="card-inside-title">more filter?</small></a>
                       <div id="formFilter" class="row clearfix" style="display:none;">
                         <div class="col-md-2">
                           <div class="form-line">
-                            <select class="form-control show-tick" name="category" required>
-                              <option selected> -- Category -- </option>
+                            <select id="category" class="form-control show-tick" name="category" required>
+                              <option value="" selected> -- Category -- </option>
                               <option value="No_Verifikasi"> No Verifikasi </option>
                               <option value="Kode_Ver"> Kode Verifikasi </option>
                               <option value="Keterangan"> Keterangan </option>
                               <option value="User"> User </option>
-                              <option value="Mata Uang"> Mata Uang </option>
+                              <option value="Mata_Uang"> Mata Uang </option>
+                              <option value="Lok_Dokumen"> Lokasi Dokumen </option>
                             </select>
                           </div>
                         </div>
                         <div class="col-md-4 text-left">
                           <div class="input-group">
                               <div class="form-line">
-                                  <input type="text" id="dateStart" class="form-control" name='categoryValue' placeholder="Value..." autocomplete="off">
+                                  <input type="text" id="categoryValue" class="form-control" name='categoryValue' placeholder="Value..." autocomplete="off" required>
                               </div>
                           </div>
                         </div>
@@ -134,68 +86,149 @@
                       <?php
                       //echo "<script>alert('$flashMessage')</script>";
                      } ?>
-                    <div class="body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-exportable dataTable">
-                              <thead>
-                                <tr>
-                                    <th>Tanggal Masuk</th>
-                                    <th>No Verifikasi</th>
-                                    <th>Kode Ver</th>
-                                    <th>Keterangan</th>
-                                    <th>User</th>
-                                    <th>MU</th>
-                                    <th>Jumlah</th>
-                                    <th>Lokasi</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <?php foreach ($datauser as $d): ?>
-                                  <tr>
-                                    <td><?php echo date('Y-m-d', strtotime($d->Tanggal_Masuk));?></td>
-                                    <td><?php echo $d->No_Verifikasi?></td>
-                                    <td><?php echo $d->Kode_Ver?></td>
-                                    <td><?php echo $d->Keterangan?></td>
-                                    <td><?php echo $d->User?></td>
-                                    <td><?php echo $d->Mata_Uang?></td>
-                                    <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
-                                    <td>
-                                      <?php
-                                          $lok_dokumen = $d->Lok_Dokumen;
-                                          if ($lok_dokumen=="Jurnalis 1") {
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
-                                          }elseif ($lok_dokumen=="Jurnalis 2") {
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
-                                          }elseif ($lok_dokumen=="Jurnalis 3") {
-                                            echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
-                                          }elseif ($lok_dokumen=="Manager") {
-                                            echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
-                                          }elseif ($lok_dokumen=="Finish") {
-                                            echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
-                                          }elseif ($lok_dokumen=="Reject") {
-                                            echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
-                                          }
-                                      ?>
-                                    </td>
-                                  </tr>
-                                <?php endforeach; ?>
-                              </tbody>
-                              <tfoot>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>No Verifikasi</th>
-                                    <th>Kode Ver</th>
-                                    <th>Keterangan</th>
-                                    <th>User</th>
-                                    <th>MU</th>
-                                    <th>Jumlah</th>
-                                    <th>Lokasi</th>
-                                </tr>
-                              </tfoot>
-                            </table>
-                        </div>
-                      </div>
+
+                     <?php if ($this->session->userdata('akses')=='verifikasi1'){ ?>
+                       <div class="body">
+                           <div class="table-responsive">
+                               <table class="table table-bordered table-striped table-hover js-exportable dataTable" id='1_all_dok_verif'>
+                                 <thead>
+                                   <tr>
+                                       <th>Tanggal Masuk</th>
+                                       <th>No Verifikasi</th>
+                                       <th>Kode Ver</th>
+                                       <th>Keterangan</th>
+                                       <th>User</th>
+                                       <th>MU</th>
+                                       <th>Jumlah</th>
+                                       <th>Lokasi</th>
+                                   </tr>
+                                 </thead>
+                                 <tbody>
+                                   <?php foreach ($datauser as $d): ?>
+                                     <tr>
+                                       <td><?php echo date('Y-m-d', strtotime($d->Tanggal_Masuk));?></td>
+                                       <td><?php echo $d->No_Verifikasi?></td>
+                                       <td><?php echo $d->Kode_Ver?></td>
+                                       <td><?php echo $d->Keterangan?></td>
+                                       <td><?php echo $d->User?></td>
+                                       <td><?php echo $d->Mata_Uang?></td>
+                                       <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
+                                       <td>
+                                         <?php
+                                             $lok_dokumen = $d->Lok_Dokumen;
+                                             if ($lok_dokumen=="Jurnalis 1") {
+                                               echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                             }elseif ($lok_dokumen=="Jurnalis 2") {
+                                               echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                             }elseif ($lok_dokumen=="Jurnalis 3") {
+                                               echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                             }elseif ($lok_dokumen=="Manager") {
+                                               echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                             }elseif ($lok_dokumen=="Finish") {
+                                               echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                             }elseif ($lok_dokumen=="Reject") {
+                                               echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                             }
+                                         ?>
+                                       </td>
+                                     </tr>
+                                   <?php endforeach; ?>
+                                 </tbody>
+                                 <tfoot>
+                                   <tr>
+                                       <th>Tanggal</th>
+                                       <th>No Verifikasi</th>
+                                       <th>Kode Ver</th>
+                                       <th>Keterangan</th>
+                                       <th>User</th>
+                                       <th>MU</th>
+                                       <th>Jumlah</th>
+                                       <th>Lokasi</th>
+                                   </tr>
+                                 </tfoot>
+                               </table>
+                           </div>
+                         </div>
+                     <?php }else {?>
+                         <div class="body">
+                             <div class="table-responsive">
+                                 <table class="table table-bordered table-striped table-hover js-exportable-sampai-j dataTable">
+                                   <thead>
+                                     <tr>
+                                         <th>Tgl Masuk Verifikasi</th>
+                                         <th>Tgl Masuk Manager</th>
+                                         <th>No Verifikasi</th>
+                                         <th>Kode Ver</th>
+                                         <th>Keterangan</th>
+                                         <th>User</th>
+                                         <th>MU</th>
+                                         <th>Jumlah</th>
+                                         <th>Lokasi</th>
+                                         <th>Status</th>
+                                     </tr>
+                                   </thead>
+                                   <tbody>
+                                     <?php foreach ($datauser as $d): ?>
+                                       <tr>
+                                         <td><?php if (date('Y-m-d', strtotime($d->Tanggal_Masuk))=='1970-01-01') {echo '-';
+                                                   }else {echo date('Y-m-d', strtotime($d->Tanggal_Masuk));}?></td>
+                                         <td><?php if (date('Y-m-d', strtotime($d->Tgl_Out_Jurnal))=='1970-01-01') {echo '-';
+                                         }else {echo date('Y-m-d', strtotime($d->Tgl_Out_Jurnal));}?></td>
+                                         <td><?php echo $d->No_Verifikasi?></td>
+                                         <td><?php echo $d->Kode_Ver?></td>
+                                         <td><?php echo $d->Keterangan?></td>
+                                         <td><?php echo $d->User?></td>
+                                         <td><?php echo $d->Mata_Uang?></td>
+                                         <td><?php echo number_format($d->Jumlah,2,",",".");?></td>
+                                         <td>
+                                           <?php
+                                               $lok_dokumen = $d->Lok_Dokumen;
+                                               if ($lok_dokumen=="Jurnalis 1") {
+                                                 echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                               }elseif ($lok_dokumen=="Jurnalis 2") {
+                                                 echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                               }elseif ($lok_dokumen=="Jurnalis 3") {
+                                                 echo '<button type="button" class="btn bg-orange waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                               }elseif ($lok_dokumen=="Manager") {
+                                                 echo '<button type="button" class="btn bg-brown waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                               }elseif ($lok_dokumen=="Finish") {
+                                                 echo '<button type="button" class="btn bg-light-green waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                               }elseif ($lok_dokumen=="Reject") {
+                                                 echo '<button type="button" class="btn bg-red waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">'.$lok_dokumen.'</button>';
+                                               }
+                                           ?>
+                                         </td>
+                                         <td><?php
+                                                  $ov = $d->Tgl_Out_Verif;
+                                                  $jt = $d->Jt_Jurnalis;
+                                                  if ($ov<$jt) {
+                                                    echo 'On Time';
+                                                  }elseif ($ov>=$jt) {
+                                                    echo 'Late';
+                                                  }
+                                              ?></td>
+                                       </tr>
+                                     <?php endforeach; ?>
+                                   </tbody>
+                                   <tfoot>
+                                     <tr>
+                                         <th>Tgl Masuk Verifikasi</th>
+                                         <th>Tgl Masuk Manager</th>
+                                         <th>No Verifikasi</th>
+                                         <th>Kode Ver</th>
+                                         <th>Keterangan</th>
+                                         <th>User</th>
+                                         <th>MU</th>
+                                         <th>Jumlah</th>
+                                         <th>Lokasi</th>
+                                         <th>Status</th>
+                                     </tr>
+                                   </tfoot>
+                                 </table>
+                             </div>
+                           </div>
+
+                     <?php }?>
                     </div>
                 </div>
             </div>
-        </div>    

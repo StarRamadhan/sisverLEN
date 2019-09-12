@@ -6,7 +6,7 @@
                 <form method="post" id="form_advanced_validation" action="<?php echo base_url().$action ?>">
                   <div class="hidden">
                     <div class="form-group form-float">
-                        <div class="form-line hidden">
+                        <div class="form-line">
                             <input type="text" class="form-control" name="no" value="<?php echo $dataedit->No?>" required readonly>
                             <label class="form-label">No Revisi</label>
                         </div>
@@ -103,14 +103,14 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="keterangan" value="<?php echo $dataedit->Keterangan?>" required>
+                            <input type="text" class="form-control" name="keterangan" value="<?php echo $dataedit->Keterangan?>"autocomplete="off" required>
                             <label class="form-label">Keterangan</label>
                         </div>
                     </div>
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="user" value="<?php echo $dataedit->User?>" required>
+                            <input type="text" class="form-control" name="user" value="<?php echo $dataedit->User?>"autocomplete="off" required>
                             <label class="form-label">User</label>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="jumlah" value="<?php echo $dataedit->Jumlah?>" required>
+                            <input type="text" class="form-control" name="jumlah" value="<?php echo $dataedit->Jumlah?>"autocomplete="off" required>
                             <label class="form-label">Jumlah</label>
                         </div>
                     </div>

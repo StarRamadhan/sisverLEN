@@ -10,7 +10,7 @@
         public $id = 'No_Verifikasi';
         public $tgl_masuk = 'Tanggal_Masuk';
         public $order = 'DESC';
-        public $operator_id = 'operator_id';
+        public $operator_id = 'Operator_Id';
 
         public $tableProfil = "operator";
         public $tableRevisi = 'revisi';
@@ -33,42 +33,16 @@
 
         function get_data_manager(){
           $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen JOIN operator ON dokumen.`operator_id` = operator.`operator_id`");
+          $sql=$this->db->query("SELECT * FROM dokumen JOIN operator ON dokumen.`Operator_Id` = operator.`Operator_Id`");
           return $sql->result();
         }
 
-        //DASHBOARD TODAY DOC
-        function get_data_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->num_rows();
-        }
-        //DASHBOARD THIS MONTH DOC
-        function get_data_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->num_rows();
-        }
-        //DASHBOARD LAST MONTH DOC
-        function get_data_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->num_rows();
-        }
-        //DASHBOARD THIS YEAR DOC
-        function get_data_thisyear(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT * FROM dokumen WHERE YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)"); //ganti * untuk custom field yang ditampilkan pada table
-          return $sql->num_rows();
-        }
-        /////////////////////////////////////////////
+
         function get_all_acc()
         {
             $table=$this->table;
             $sql=$this->db->query("SELECT * FROM dokumen WHERE Lok_Dokumen = 'Manager'  ORDER BY Tanggal_Masuk DESC");
             return $sql->result();
-            // $this->db->order_by($this->tgl_masuk, $this->order);
-            // return $this->db->get($this->table)->result();
         }
         /////////////////////////////////////////////
         function get_all_need_response()
@@ -76,16 +50,12 @@
             $table=$this->table;
             $sql=$this->db->query("SELECT * FROM dokumen WHERE Lok_Dokumen = 'Manager' ORDER BY Tanggal_Masuk DESC");
             return $sql->result();
-            // $this->db->order_by($this->tgl_masuk, $this->order);
-            // return $this->db->get($this->table)->result();
         }
         function count_need_response()
         {
             $table=$this->table;
-            $sql=$this->db->query("SELECT * FROM dokumen WHERE Lok_Dokumen = 'Manager' ORDER BY Tanggal_Masuk DESC");
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE Lok_Dokumen = 'Manager' ORDER BY Tanggal_Masuk DESC");
             return $sql->num_rows();
-            // $this->db->order_by($this->tgl_masuk, $this->order);
-            // return $this->db->get($this->table)->result();
         }
         function update_need_response($no_verifikasi, $dataResponse)
         {
@@ -100,30 +70,124 @@
             return $this->db->get($this->table)->row();
         }
 
+
+        //DASHBOARD HITUNG DOKUMEN MANAGER BUlAN INI DAN KEMARIN
+        function count_all_doc_thisyear($tabel,$bulan)
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM $tabel WHERE (YEAR(Tanggal_Masuk)=YEAR(CURRENT_DATE()))
+                                   AND MONTH(Tanggal_Masuk)='$bulan'");
+            return $sql->num_rows();
+        }
+        //DASHBOARD HITUNG DOKUMEN MANAGER BUlAN INI DAN KEMARIN
+        function count_all_reject()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE Tgl_Out_Jurnal > '0000-00-00' AND
+                                   Lok_Dokumen='Manager' OR Lok_Dokumen='Finish' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
+            return $sql->num_rows();
+        }
+
+        //DASHBOARD HITUNG DOKUMEN MANAGER BUlAN INI DAN KEMARIN
+        function count_doc_in()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE Tgl_Out_Jurnal > '0000-00-00' AND
+                                   Lok_Dokumen='Manager' OR Lok_Dokumen='Finish' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
+            return $sql->num_rows();
+        }
+        //DASHBOARD HITUNG DOKUMEN MANAGER INPROGRESS ONTIME
+        function count_manager_prog_ontime()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE CURRENT_DATE()<`Jt_Manager`
+                                   AND `Lok_Dokumen`='Manager' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
+            return $sql->num_rows();
+        }
+
+        //DASHBOARD HITUNG DOKUMEN MANAGER INPROGRESS LATE
+        function count_manager_prog_late()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE CURRENT_DATE()>=`Jt_Manager`
+                                   AND `Lok_Dokumen`='Manager' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
+            return $sql->num_rows();
+        }
+
+        //DASHBOARD HITUNG DOKUMEN MANAGER FINISH ONTIME
+        function count_manager_finish_ontime()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE `Tgl_Out_Manager`<`Jt_Manager`
+                                   AND `Lok_Dokumen`='Finish' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
+            return $sql->num_rows();
+        }
+
+        //DASHBOARD HITUNG DOKUMEN MANAGER FINISH LATE
+        function count_manager_finish_late()
+        {
+            $table=$this->table;
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE `Tgl_Out_Manager`>=`Jt_Manager`
+                                   AND `Lok_Dokumen`='Finish' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
+            return $sql->num_rows();
+        }
+
   //get DATA SEARCH
         function get_data_search(){
           $table=$this->table;
           $start=$this->input->post('dateStart',TRUE);
           $end=$this->input->post('dateEnd',TRUE);
           $by = $this->input->post('by',true);
+          $cat = $this->input->post('category',true);
+          $catValue = $this->input->post('categoryValue',TRUE);
           $id_login = $this->session->userdata('ses_id');
 
           if ((empty($start)) && (empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen ORDER BY Tanggal_Masuk DESC");
-            return $sql->result();
-          }if ((!empty($start)) && (!empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Manager BETWEEN '$start' AND '$end' ORDER BY Tanggal_Masuk DESC");
-            return $sql->result();
-          }if ((!empty($start)) && (empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen where Tgl_Out_Manager = '$start' ORDER BY Tanggal_Masuk DESC");
-            return $sql->result();
-          }if ((empty($start)) && (!empty($end))) {
-            $sql=$this->db->query("SELECT * FROM dokumen WHERE Tgl_Out_Manager = '$end' ORDER BY Tanggal_Masuk DESC");
-            return $sql->result();
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
           }
 
-        }
+          if ((!empty($start)) && (!empty($end))) {
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where Tanggal_Masuk BETWEEN '$start' AND '$end' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
+          }
 
+          if ((!empty($start)) && (empty($end))) {
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$start' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$start' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
+          }
+
+          if ((empty($start)) && (!empty($end))) {
+              if ($cat=="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$end' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }elseif ($cat!="") {
+                $sql=$this->db->query("SELECT * FROM dokumen where DATE(Tanggal_Masuk) = '$end' and $cat LIKE '%$catValue%' ORDER BY Tanggal_Masuk DESC");
+                return $sql->result();
+              }
+          }
+        }
 
 
         // insert data
@@ -159,106 +223,6 @@
             $this->db->where($this->operator_id, $operator_id);
             $this->db->update($this->table_profil, $data);
         }
-
-        //////////////////
-        function get_ver1_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator.`position` = 'verifikasi1'");
-          return $sql->num_rows();
-        }
-        function get_ver1_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_ver1_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_ver2_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator.`position` = 'verifikasi2'");
-          return $sql->num_rows();
-        }
-        function get_ver2_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_ver2_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_ver3_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* FROM dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` WHERE Tgl_Out_Verif=CURRENT_DATE() AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE) AND operator.`position` = 'verifikasi3'");
-          return $sql->num_rows();
-        }
-        function get_ver3_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_ver3_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Verif`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Verif`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        //////////////////
-        function get_approve_jur1_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        //DASHBOARD REVISION DOC
-        function get_approve_jur1_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        //DASHBOARD LAST MONTH DOC
-        function get_approve_jur1_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi1' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        ///////////////////////////
-        function get_approve_jur2_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_approve_jur2_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_approve_jur2_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi2' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        /////////////////////////////////////
-        function get_approve_jur3_today(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND Tgl_Out_Jurnal=CURRENT_DATE() AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        function get_approve_jur3_thismonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        //DASHBOARD LAST MONTH DOC
-        function get_approve_jur3_lastmonth(){
-          $table=$this->table;
-          $sql=$this->db->query("SELECT dokumen.* from dokumen left join operator on dokumen.`operator_id` = operator.`operator_id` where operator.`position` = 'verifikasi3' AND MONTH(`Tgl_Out_Jurnal`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH) AND YEAR(`Tgl_Out_Jurnal`)=YEAR(CURRENT_DATE)");
-          return $sql->num_rows();
-        }
-        /////////////////////////////////////
-
     }
 
     /* Crudlab by Kostlab */

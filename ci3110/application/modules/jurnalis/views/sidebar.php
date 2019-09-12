@@ -14,7 +14,7 @@
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
-                <li class="header">DASHBOARD</li>
+                <li class="header">MAIN MENU</li>
                 <li class="li-trigger">
                     <a href="<?php echo base_url('jurnalis/');?>">
                         <i class="material-icons">description</i>
