@@ -9,7 +9,7 @@
               <div class="block-header text-center">
                   <h2><small>DOCUMENT IN</small></h2>
               </div>
-                  <div class="info-box bg-cyan">
+                  <div class="info-box bg-cyan hover-zoom-effect">
                       <div class="icon">
                           <i class="material-icons">description</i>
                       </div>
@@ -123,6 +123,7 @@
                                     <th>Jumlah</th>
                                     <th style="text-align:center;">Action</th>
                                     <th style="text-align:center;">Action</th>
+                                    <th>Status</th>
                                 </tr>
                               </thead>
 
@@ -198,6 +199,19 @@
                                         </div>
                                       </div>
                                       </form>
+                                    </td>
+                                    <td><?php
+                                             date_default_timezone_set("Asia/Jakarta");
+                                             $ov = date('Y-m-d');
+                                             $jt = $d->Jt_Jurnalis;
+                                             if (($ov<$jt) &&($jt!=NULL)) {
+                                               echo 'Ongoing';
+                                             }elseif (($ov>=$jt) &&($jt!=NULL)) {
+                                               echo 'Late';
+                                             }elseif ($jt==null) {
+                                               echo '-';
+                                             }
+                                         ?>
                                     </td>
                                   </tr>
                                 <?php endforeach; ?>

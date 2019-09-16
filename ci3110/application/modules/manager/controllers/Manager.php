@@ -170,7 +170,7 @@ class Manager extends MY_Controller{
        'rejOkt' => $this->Manager_model->count_all_doc_thisyear('revisi','10'),
        'rejNov' => $this->Manager_model->count_all_doc_thisyear('revisi','11'),
        'rejDes' => $this->Manager_model->count_all_doc_thisyear('revisi','12'),
-       
+
        'module'=>'manager',
        'titlePage'=>'manager',
        'controller'=>'manager',
@@ -244,84 +244,5 @@ class Manager extends MY_Controller{
           //echo "berhasil";
           redirect(base_url('manager'));
 
-  }
-
-  public function dashboard()
-  {
-    $countResponse =$this->Manager_model->count_need_response();
-    $datauser=$this->Manager_model->get_all_need_response();
-
-    $dataToday = $this->Manager_model->get_data_today();
-    $dataThisMonth = $this->Manager_model->get_data_thismonth();
-    $dataLastMonth = $this->Manager_model->get_data_lastmonth();
-    $dataThisYear = $this->Manager_model->get_data_thisyear();
-
-
-    $dataVer1Today = $this->Manager_model->get_ver1_today();
-    $dataVer1ThisMonth = $this->Manager_model->get_ver1_thismonth();
-    $dataVer1LastMonth = $this->Manager_model->get_ver1_lastmonth();
-
-    $dataVer2Today = $this->Manager_model->get_ver2_today();
-    $dataVer2ThisMonth = $this->Manager_model->get_ver2_thismonth();
-    $dataVer2LastMonth = $this->Manager_model->get_ver2_lastmonth();
-
-    $dataVer3Today = $this->Manager_model->get_ver3_today();
-    $dataVer3ThisMonth = $this->Manager_model->get_ver3_thismonth();
-    $dataVer3LastMonth = $this->Manager_model->get_ver3_lastmonth();
-
-    $dataJurnal1Today = $this->Manager_model->get_approve_jur1_today();
-    $dataJurnal1ThisMonth = $this->Manager_model->get_approve_jur1_thismonth();
-    $dataJurnal1LastMonth = $this->Manager_model->get_approve_jur1_lastmonth();
-
-    $dataJurnal2Today = $this->Manager_model->get_approve_jur2_today();
-    $dataJurnal2ThisMonth = $this->Manager_model->get_approve_jur2_thismonth();
-    $dataJurnal2LastMonth = $this->Manager_model->get_approve_jur2_lastmonth();
-
-    $dataJurnal3Today = $this->Manager_model->get_approve_jur3_today();
-    $dataJurnal3ThisMonth = $this->Manager_model->get_approve_jur3_thismonth();
-    $dataJurnal3LastMonth = $this->Manager_model->get_approve_jur3_lastmonth();
-
-
-
-    //$dataverif=$this->Manager_model->get_data_jurnal();//panggil ke modell
-    $data = array(
-       'content'=>'manager/dokumen/content_dashboard_statistic',
-       'navbar'=>'manager/navbar',
-       'sidebar'=>'manager/sidebar',
-       'datauser'=>$datauser,
-
-       'dataVer1Today' => $dataVer1Today,
-       'dataVer1ThisMonth' => $dataVer1ThisMonth,
-       'dataVer1LastMonth' => $dataVer1LastMonth,
-       'dataVer2Today' => $dataVer2Today,
-       'dataVer2ThisMonth' => $dataVer2ThisMonth,
-       'dataVer2LastMonth' => $dataVer2LastMonth,
-       'dataVer3Today' => $dataVer3Today,
-       'dataVer3ThisMonth' => $dataVer3ThisMonth,
-       'dataVer3LastMonth' => $dataVer3LastMonth,
-
-       'dataJurnal1Today'=> $dataJurnal1Today,
-       'dataJurnal1ThisMonth'=> $dataJurnal1ThisMonth,
-       'dataJurnal1LastMonth'=> $dataJurnal2LastMonth,
-       'dataJurnal2Today'=> $dataJurnal2Today,
-       'dataJurnal2ThisMonth'=> $dataJurnal2ThisMonth,
-       'dataJurnal2LastMonth'=> $dataJurnal2LastMonth,
-       'dataJurnal3Today'=> $dataJurnal3Today,
-       'dataJurnal3ThisMonth'=> $dataJurnal3ThisMonth,
-       'dataJurnal3LastMonth'=> $dataJurnal3LastMonth,
-
-       'countResponse' => $countResponse,
-       'dataToday' => $dataToday,
-       'dataThisMonth'=> $dataThisMonth,
-       'dataLastMonth' => $dataLastMonth,
-       'dataThisYear'=>$dataThisYear,
-       //'dataverif'=>$dataverif,
-       'module'=>'manager',
-       'titlePage'=>'manager',
-       'controller'=>'manager',
-       'reject'=>'manager/manager/reject',
-       'approve'=>'manager/manager/approve'
-      );
-    $this->template->load($data);
   }
 }

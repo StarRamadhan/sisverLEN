@@ -94,7 +94,8 @@
         {
             $table=$this->table;
             $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE Tgl_Out_Jurnal > '0000-00-00' AND
-                                   Lok_Dokumen='Manager' OR Lok_Dokumen='Finish' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+                                   (Lok_Dokumen='Manager' OR Lok_Dokumen='Finish')
+                                   AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
         }

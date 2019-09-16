@@ -45,7 +45,7 @@
             //KENAPA GAK GANTI LOK DOKUMEN SAMA OPERATOR ID?
             $sql=$this->db->query("SELECT dokumen.No_Verifikasi,operator.Operator_Id FROM dokumen,operator
                                    WHERE (operator.Position='verifikasi1' AND operator.Operator_Id=dokumen.Operator_Id
-                                   AND Tgl_Out_Verif > '0000-00-00') AND
+                                   AND Tgl_Out_Verif > '0000-00-00' AND Lok_Dokumen<>'Reject') AND
                                    (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
@@ -54,7 +54,9 @@
         function count_jurnalis_prog_ontime()
         {
             $table=$this->table;
-            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE CURRENT_DATE()<`Jt_Jurnalis`
+            $sql=$this->db->query("SELECT dokumen.No_Verifikasi,operator.Operator_Id FROM dokumen,operator
+                                   WHERE (operator.Position='verifikasi1' AND operator.Operator_Id=dokumen.Operator_Id)
+                                   AND CURRENT_DATE()<`Jt_Jurnalis`
                                    AND `Lok_Dokumen`='Jurnalis 1' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
@@ -64,7 +66,9 @@
         function count_jurnalis_prog_late()
         {
             $table=$this->table;
-            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE CURRENT_DATE()>=`Jt_Jurnalis`
+            $sql=$this->db->query("SELECT dokumen.No_Verifikasi,operator.Operator_Id FROM dokumen,operator
+                                   WHERE (operator.Position='verifikasi1' AND operator.Operator_Id=dokumen.Operator_Id)
+                                   AND CURRENT_DATE()>=`Jt_Jurnalis`
                                    AND `Lok_Dokumen`='Jurnalis 1' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
@@ -74,8 +78,10 @@
         function count_jurnalis_finish_ontime()
         {
             $table=$this->table;
-            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE `Tgl_Out_Jurnal`<`Jt_Jurnalis`
-                                   AND `Lok_Dokumen`='Manager' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+            $sql=$this->db->query("SELECT dokumen.No_Verifikasi,operator.Operator_Id FROM dokumen,operator
+                                   WHERE (operator.Position='verifikasi1' AND operator.Operator_Id=dokumen.Operator_Id)
+                                   AND `Tgl_Out_Jurnal`<`Jt_Jurnalis`
+                                   AND (`Lok_Dokumen`='Manager' OR Lok_Dokumen='Finish') AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
         }
@@ -84,8 +90,10 @@
         function count_jurnalis_finish_late()
         {
             $table=$this->table;
-            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE `Tgl_Out_Jurnal`>=`Jt_Jurnalis`
-                                   AND `Lok_Dokumen`='Manager' AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
+            $sql=$this->db->query("SELECT dokumen.No_Verifikasi,operator.Operator_Id FROM dokumen,operator
+                                   WHERE (operator.Position='verifikasi1' AND operator.Operator_Id=dokumen.Operator_Id)
+                                   AND `Tgl_Out_Jurnal`>=`Jt_Jurnalis`
+                                   AND (`Lok_Dokumen`='Manager' OR Lok_Dokumen='Finish') AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
         }

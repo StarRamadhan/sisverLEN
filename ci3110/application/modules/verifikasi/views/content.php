@@ -152,7 +152,7 @@
                      <?php }else {?>
                          <div class="body">
                              <div class="table-responsive">
-                                 <table class="table table-bordered table-striped table-hover js-exportable dataTable">
+                                 <table class="table table-bordered table-striped table-hover js-exportable-sampai-j dataTable">
                                    <thead>
                                      <tr>
                                          <th>Tgl Masuk Verifikasi</th>
@@ -221,6 +221,7 @@
                                          <th>MU</th>
                                          <th>Jumlah</th>
                                          <th>Lokasi</th>
+                                         <th>Status</th>
                                      </tr>
                                    </tfoot>
                                  </table>

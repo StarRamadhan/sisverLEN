@@ -62,7 +62,8 @@
             $table=$this->table;
             //KENAPA GAK GANTI LOK DOKUMEN SAMA OPERATOR ID?
             $sql=$this->db->query("SELECT * FROM dokumen
-                                   WHERE (Operator_Id='$op_id' AND Lok_Dokumen='Manager' OR Lok_Dokumen='$l_dok') AND
+                                   WHERE Operator_Id='$op_id' AND (Lok_Dokumen='Manager' OR Lok_Dokumen='$l_dok'
+                                   OR Lok_Dokumen='Finish') AND
                                    (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
@@ -73,7 +74,8 @@
             $op_id = $this->session->userdata('ses_id');
             $table=$this->table;
             $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE (CURRENT_DATE()<`Jt_Jurnalis`
-                                   AND `Lok_Dokumen`<>'Manager' AND `Lok_Dokumen`<>'Finish' AND Operator_Id='$op_id')
+                                   AND `Lok_Dokumen`<>'Manager' AND `Lok_Dokumen`<>'Finish' AND `Lok_Dokumen`<>'Reject'
+                                   AND Operator_Id='$op_id')
                                    AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
@@ -85,7 +87,7 @@
             $op_id = $this->session->userdata('ses_id');
             $table=$this->table;
             $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE (CURRENT_DATE()>=`Jt_Jurnalis`
-                                   AND `Lok_Dokumen`<>'Manager' AND `Lok_Dokumen`<>'Finish' AND `Lok_Dokumen`<>'Reject' 
+                                   AND `Lok_Dokumen`<>'Manager' AND `Lok_Dokumen`<>'Finish' AND `Lok_Dokumen`<>'Reject'
                                    AND Operator_Id='$op_id')
                                    AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
@@ -97,8 +99,8 @@
         {
             $op_id = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE (`Tgl_Out_Jurnal`<`Jt_Jurnalis`
-                                   AND `Lok_Dokumen`='Manager' AND Operator_Id='$op_id')
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE `Tgl_Out_Jurnal`<`Jt_Jurnalis` AND Operator_Id='$op_id'
+                                   AND (`Lok_Dokumen`='Manager' OR `Lok_Dokumen`='Finish')
                                    AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();
@@ -109,8 +111,8 @@
         {
             $op_id = $this->session->userdata('ses_id');
             $table=$this->table;
-            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE (`Tgl_Out_Jurnal`>=`Jt_Jurnalis`
-                                   AND `Lok_Dokumen`='Manager' AND Operator_Id='$op_id')
+            $sql=$this->db->query("SELECT No_Verifikasi FROM dokumen WHERE `Tgl_Out_Jurnal`>=`Jt_Jurnalis` AND Operator_Id='$op_id'
+                                   AND (`Lok_Dokumen`='Manager' OR `Lok_Dokumen`='Finish')
                                    AND (MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE())
                                    OR MONTH(`Tanggal_Masuk`)=MONTH(CURRENT_DATE-INTERVAL 1 MONTH))");
             return $sql->num_rows();

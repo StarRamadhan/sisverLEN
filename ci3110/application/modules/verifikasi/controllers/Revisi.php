@@ -137,7 +137,7 @@ class Revisi extends MY_Controller{
 
       $now = date('Y-m-d H:i:s');
           $data_dokumen = array(
-            'Tanggal_Masuk' =>$this->input->post('tanggal_masuk',true),
+            //'Tanggal_Masuk' =>$this->input->post('tanggal_masuk',true),
             'Kode_Ver' =>$this->input->post('kode_ver',TRUE),
             'No_Verifikasi' => $primarykey,
             'Keterangan' => $this->input->post('keterangan',TRUE),

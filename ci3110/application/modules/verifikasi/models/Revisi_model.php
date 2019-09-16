@@ -46,7 +46,7 @@
               $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login'");
               return $sql->result();
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM revisi");
+              $sql=$this->db->query("SELECT * FROM revisi where Status_Revisi='Done'");
               return $sql->result();
             }
           }if ((!empty($start)) && (!empty($end))) {
@@ -54,7 +54,7 @@
               $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login' AND Tanggal_Masuk BETWEEN '$start' AND '$end' ");
               return $sql->result();
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM revisi where Tanggal_Masuk BETWEEN '$start' AND '$end' ");
+              $sql=$this->db->query("SELECT * FROM revisi where Status_Revisi='Done' AND (Tanggal_Masuk BETWEEN '$start' AND '$end') ");
               return $sql->result();
             }
           }if ((!empty($start)) && (empty($end))) {
@@ -62,7 +62,7 @@
               $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login' AND DATE(Tanggal_Masuk) = '$start'");
               return $sql->result();
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$start'");
+              $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$start' AND Status_Revisi='Done'");
               return $sql->result();
             }
           }if ((empty($start)) && (!empty($end))) {
@@ -70,7 +70,7 @@
               $sql=$this->db->query("SELECT * FROM revisi where Operator_Id = '$id_login' AND DATE(Tanggal_Masuk) = '$end'");
               return $sql->result();
             }elseif ($by == 'all') {
-              $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$end'");
+              $sql=$this->db->query("SELECT * FROM revisi where DATE(Tanggal_Masuk) = '$end' AND Status_Revisi='Done'");
               return $sql->result();
             }
           }

@@ -57,7 +57,7 @@
                   </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-exportable dataTable">
+                            <table class="table table-bordered table-striped table-hover js-exportable-sampai-k dataTable">
                               <thead>
                                 <tr>
                                     <th>Tgl Masuk Verifikasi</th>
@@ -118,6 +118,5 @@
                 </div>
             </div>
         </div>
-    </div>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
