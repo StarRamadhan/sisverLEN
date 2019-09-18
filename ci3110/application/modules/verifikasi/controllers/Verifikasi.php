@@ -226,10 +226,13 @@ class Verifikasi extends MY_Controller{
         $role = $this->session->userdata('akses');
         if ($role=='verifikasi1') {
             $lokasi = "Jurnalis 1";
+            $hari = 4;
         }elseif ($role=='verifikasi2') {
             $lokasi = "Jurnalis 2";
+            $hari = 3;
         }elseif ($role=='verifikasi3') {
             $lokasi = "Jurnalis 3";
+            $hari = 3;
         }
 
 
@@ -239,15 +242,15 @@ class Verifikasi extends MY_Controller{
         $batas_jam = date('H:i', strtotime($tgl_input));
           if($batas_jam>'14:00'){
             $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
-            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+".$hari." day"));
           }elseif($batas_jam<='14:00'){
             $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
-            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+".$hari." day"));
           }
 
           if(date('l', strtotime($tgl_out_role))=="Saturday"){
             $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
-            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+            $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+".$hari." day"));
           }
           elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
             $tgl_out_role;

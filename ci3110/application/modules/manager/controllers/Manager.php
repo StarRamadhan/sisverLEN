@@ -80,10 +80,22 @@ class Manager extends MY_Controller{
   public function approve(){
     date_default_timezone_set("Asia/Jakarta");
     $now = date('Y-m-d H:i:s');
-
+    $tgl_input = $now;
+        $hari_input = date('l', strtotime($tgl_input));
+        $batas_jam = date('H:i', strtotime($tgl_input));
+          if($batas_jam>'14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
+          }elseif($batas_jam<='14:00'){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
+          }
+          if(date('l', strtotime($tgl_out_role))=="Saturday"){
+            $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
+          }else{
+            $tgl_out_role;
+          }
     $dataResponse = array(
       'Lok_Dokumen' => 'Finish',
-      'Tgl_Out_Manager' =>$now,
+      'Tgl_Out_Manager' =>$tgl_out_role,
     );
 
     $this->Manager_model->update_need_response($this->input->post('no_verifikasi', TRUE), $dataResponse);

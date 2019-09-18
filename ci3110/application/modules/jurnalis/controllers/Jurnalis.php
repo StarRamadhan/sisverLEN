@@ -138,7 +138,7 @@ class Jurnalis extends MY_Controller{
 
     $dataResponse = array(
       'Lok_Dokumen' => 'Manager',
-      'Tgl_Out_Jurnal' =>$now,
+      'Tgl_Out_Jurnal' =>$tgl_out_role,
       'Jt_Manager' =>$jatuh_tempo
     );
 

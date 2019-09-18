@@ -91,6 +91,7 @@ class Revisi extends MY_Controller{
 
   public function revisi_action($No_verifikasi, $No)
   {
+      $now = date('Y-m-d H:i:s');
       $pk1 = substr($this->input->post('no_verifikasi'),0,4);
       $pk2 = $this->input->post('kode_ver');
       $pk3 = substr($this->input->post('no_verifikasi'),-7);
@@ -99,26 +100,29 @@ class Revisi extends MY_Controller{
       $role = $this->session->userdata('akses');
       if ($role=='verifikasi1') {
           $lokasi = "Jurnalis 1";
+          $hari = 4;
       }elseif ($role=='verifikasi2') {
           $lokasi = "Jurnalis 2";
+          $hari = 3;
       }elseif ($role=='verifikasi3') {
           $lokasi = "Jurnalis 3";
+          $hari = 3;
       }
 
-      $tgl_input = date('Y-m-d');
+      $tgl_input = $now;
       $hari_input = date('l', strtotime($tgl_input));
       $batas_jam = date('H:i', strtotime($tgl_input));
         if($batas_jam>'14:00'){
           $tgl_out_role = date('Y-m-d', strtotime($tgl_input."+1 day"));
-          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+".$hari." day"));
         }elseif($batas_jam<='14:00'){
           $tgl_out_role = date('Y-m-d', strtotime($tgl_input));
-          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+".$hari." day"));
         }
 
         if(date('l', strtotime($tgl_out_role))=="Saturday"){
           $tgl_out_role = date('Y-m-d', strtotime($tgl_out_role."+2 day"));
-          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+4 day"));
+          $jatuh_tempo = date('Y-m-d', strtotime($tgl_out_role."+".$hari." day"));
         }
         elseif(date('l', strtotime($jatuh_tempo))=="Saturday"){
           $tgl_out_role;
@@ -135,7 +139,7 @@ class Revisi extends MY_Controller{
           $jatuh_tempo;
         }
 
-      $now = date('Y-m-d H:i:s');
+
           $data_dokumen = array(
             //'Tanggal_Masuk' =>$this->input->post('tanggal_masuk',true),
             'Kode_Ver' =>$this->input->post('kode_ver',TRUE),
